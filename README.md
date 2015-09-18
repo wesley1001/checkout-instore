@@ -9,6 +9,7 @@ App para o novo checkout instore
 
 - Rode o comando `npm start`
 
-- Acesse no browser: [Checkout Instore](http://localhost:3000)
+- Acesse no browser através do nome da loja
+> Exemplo: http://basedevmkp.vtexlocal.com.br:3000/#/
 
 Nessa URL, seu browser atualizará automaticamente quando os arquivos forem alterados.
