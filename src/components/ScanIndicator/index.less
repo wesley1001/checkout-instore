@@ -1,0 +1,61 @@
+@import "../../styles/variables.less";
+
+.ProductScan {
+  background: @LightGrey;
+  color: @DarkGrey;
+  display: block;
+  margin-top: 15px;
+  padding: 15px;
+  position: fixed;
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+
+    .image-wrapper {
+      margin: 15px 0 35px;
+      margin-top: 20px;
+    }
+
+    .image { width: 80%; }
+
+    .text { font-size: 1.5em; }
+}
+
+
+// Mobile
+@media only screen
+  and (max-device-width: 767px) {
+
+  .ProductScan {
+    .image { max-height: 120px; }
+  }
+}
+
+
+// Tablet
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px) {
+
+  .ProductScan {
+    .image { height: 270px; }
+
+    .text {
+      font-size: 2em;
+      padding: 30px 100px 0 100px;
+    }
+  }
+}
+
+
+// Tablet Portrait
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait) {
+
+  .ProductScan {
+    .image-wrapper { margin-top: 80px; }
+  }
+}

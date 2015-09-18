@@ -1,0 +1,47 @@
+.PaymentOption {
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  background-color: inherit;
+
+    .icon {
+      font-size: 35px;
+      float: left;
+      line-height: 1.1;
+      margin-right: 8px;
+      text-align: center;
+    }
+
+    .arrow {
+      color: #337ab7;
+      margin: 4px -5px 0 5px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+}
+
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+    .PaymentOption {
+      font-size: 1em;
+      line-height: 1.4em;
+      padding: 20px;
+      background-color: inherit;
+
+        .icon {
+          font-size: 55px;
+          margin-right: 15px;
+        }
+        .arrow {
+          font-size: 45px;
+          right: 20px;
+        }
+      }
+}
