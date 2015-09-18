@@ -6,8 +6,8 @@ class CartActions {
   getOrderForm() {
     this.dispatch();
 
-    Fetcher.getOrderForm().then((orderForm) => {
-      this.actions.orderFormSuccess.defer(orderForm);
+    Fetcher.getOrderForm().then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
     });
@@ -24,8 +24,8 @@ class CartActions {
   addToCart(data) {
     this.dispatch();
 
-    Fetcher.addToCart(data.orderFormId, data.item).then((orderForm) => {
-      this.actions.orderFormSuccess.defer(orderForm);
+    Fetcher.addToCart(data.orderFormId, data.item).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
     });
@@ -38,8 +38,8 @@ class CartActions {
   updateCart(data) {
     this.dispatch();
 
-    Fetcher.updateItems(data.orderFormId, data.item).then((orderForm) => {
-      this.actions.orderFormSuccess.defer(orderForm);
+    Fetcher.updateItems(data.orderFormId, data.item).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.updateFailed.defer('Erro ao atualizar produto no carrinho');
     });
@@ -50,15 +50,15 @@ class CartActions {
   }
 
   clearCart(orderForm) {
-    let items = orderForm.items;
+    let items = orderForm.items || [];
     items = items.map(item => {
       item.quantity = 0;
       return item;
     });
 
     items.forEach(item => {
-      Fetcher.updateItems(orderForm.orderFormId, [item]).then((orderForm) => {
-        this.actions.orderFormSuccess.defer(orderForm);
+      Fetcher.updateItems(orderForm.orderFormId, [item]).then((response) => {
+        this.actions.orderFormSuccess.defer(response.data);
       });
     });
   }
@@ -76,8 +76,8 @@ class CartActions {
   setCheckedIn(orderFormId) {
     this.dispatch();
 
-    Fetcher.setCheckedIn(orderFormId).then((orderForm) => {
-      this.actions.orderFormSuccess.defer(orderForm);
+    Fetcher.setCheckedIn(orderFormId).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao setar os dados da loja');
     });
@@ -96,8 +96,8 @@ class CartActions {
   startTransaction(data) {
     this.dispatch();
 
-    Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((orderForm) => {
-      this.actions.transactionSuccess.defer(orderForm);
+    Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {
+      this.actions.transactionSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao iniciar a transação');
     });

@@ -1,6 +1,4 @@
-let request = function(obj) {
-  return obj;
-}
+import axios from 'axios';
 
 class Fetcher {
   constructor() {
@@ -9,73 +7,7 @@ class Fetcher {
   }
 
   getOrderForm() {
-    return request({
-      url: this.checkoutUrl,
-      type: 'json'
-    });
-  }
-
-  setCheckedIn(orderFormId) {
-    return request({
-      url: `${this.checkoutUrl}/${orderFormId}/isCheckedIn`,
-      type: 'json',
-      method: 'put',
-      contentType: 'application/json',
-      data: JSON.stringify({isCheckedIn: true})
-    });
-  }
-
-  getProduct(code) {
-    return request({
-      url: `/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`,
-      type: 'json'
-    });
-  }
-
-  addToCart(orderForm, items) {
-    const checkoutRequest = {
-      orderItems: items,
-      expectedOrderFormSections: this.orderFormSections
-    };
-
-    return request({
-      url: `${this.checkoutUrl}/${orderForm}/items`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(checkoutRequest)
-    });
-  }
-
-  updateItems(orderForm, items) {
-    const checkoutRequest = {
-      orderItems: items,
-      expectedOrderFormSections: this.orderFormSections
-    };
-
-    return request({
-      url: `${this.checkoutUrl}/${orderForm}/items/update`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(checkoutRequest)
-    });
-  }
-
-  setPayment(orderForm, payment) {
-    const paymentRequest = {
-      expectedOrderFormSections: this.orderFormSections,
-      payments: [payment],
-      giftCards: []
-    };
-
-    return request({
-      url: `/api/checkout/pub/orderForm/${orderForm}/attachments/paymentData`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(paymentRequest)
-    });
+    return axios.get(this.checkoutUrl);
   }
 
   setClientProfile(orderForm, email) {
@@ -92,13 +24,7 @@ class Fetcher {
       stateInscription: ''
     };
 
-    return request({
-      url: `/api/checkout/pub/orderForm/${orderForm}/attachments/clientProfileData`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(clientProfileRequest)
-    });
+    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/clientProfileData`, clientProfileRequest);
   }
 
   setShipping(orderForm, address) {
@@ -107,13 +33,43 @@ class Fetcher {
       address
     };
 
-    return request({
-      url: `/api/checkout/pub/orderForm/${orderForm}/attachments/shippingData`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(shippingRequest)
-    });
+    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/shippingData`, shippingRequest);
+  }
+
+  setCheckedIn(orderFormId) {
+    return axios.put(`${this.checkoutUrl}/${orderFormId}/isCheckedIn`, {isCheckedIn: true});
+  }
+
+  getProduct(code) {
+    return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`);
+  }
+
+  addToCart(orderForm, items) {
+    const checkoutRequest = {
+      orderItems: items,
+      expectedOrderFormSections: this.orderFormSections
+    };
+
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items`, checkoutRequest);
+  }
+
+  updateItems(orderForm, items) {
+    const checkoutRequest = {
+      orderItems: items,
+      expectedOrderFormSections: this.orderFormSections
+    };
+
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update`, checkoutRequest);
+  }
+
+  setPayment(orderForm, payment) {
+    const paymentRequest = {
+      expectedOrderFormSections: this.orderFormSections,
+      payments: [payment],
+      giftCards: []
+    };
+
+    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/paymentData`, paymentRequest);
   }
 
   startTransaction(orderForm, value) {
@@ -127,13 +83,7 @@ class Fetcher {
       expectedOrderFormSections : this.orderFormSections
     };
 
-    return request({
-      url: `/api/checkout/pub/orderForm/${orderForm}/transaction`,
-      type: 'json',
-      method: 'post',
-      contentType: 'application/json',
-      data: JSON.stringify(transactionRequest)
-    });
+    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/transaction`, transactionRequest);
   }
 }
 

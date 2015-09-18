@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
 
   entry: [
     'webpack-hot-middleware/client',
@@ -72,5 +72,9 @@ module.exports = {
   ],
 
   quiet: true,
-  noInfo: true
+  noInfo: true,
+
+  proxy: {
+    '*': 'http://janus-edge.vtex.com.br/'
+  }
 };
