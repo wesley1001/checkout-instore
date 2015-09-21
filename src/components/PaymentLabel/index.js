@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
-import './index.less';  
+import './index.less';
 
 export default class PaymentLabel extends React.Component {
   static propTypes = {
-    iconLabel: React.PropTypes.string,
-    iconClass: React.PropTypes.string,
-    discount: React.PropTypes.number
+    iconLabel: PropTypes.string,
+    iconClass: PropTypes.string,
+    discount: PropTypes.number
   }
 
   constructor(props) {

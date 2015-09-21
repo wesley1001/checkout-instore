@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import CartActions from 'actions/CartActions';
 import ProductHelper from 'utils/ProductHelper';
@@ -7,10 +7,10 @@ import './index.less';
 
 export default class ProductDetail extends React.Component {
   static propTypes = {
-    name: React.PropTypes.string,
-    price: React.PropTypes.number,
-    quantity: React.PropTypes.number,
-    source: React.PropTypes.string
+    name: PropTypes.string,
+    price: PropTypes.number,
+    quantity: PropTypes.number,
+    source: PropTypes.string
   }
 
   static defaultProps = {

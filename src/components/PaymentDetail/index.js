@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import ProductHelper from 'utils/ProductHelper';
 
@@ -6,8 +6,8 @@ import './index.less';
 
 export default class PaymentDetail extends React.Component {
   static propTypes = {
-    value: React.PropTypes.number,
-    price: React.PropTypes.number
+    value: PropTypes.number,
+    price: PropTypes.number
   }
 
   static defaultProps = {

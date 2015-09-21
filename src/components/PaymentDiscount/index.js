@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 export default class PaymentDiscount extends React.Component {
   static propTypes = {
-    value: React.PropTypes.number
+    value: PropTypes.number
   }
 
   static defaultProps = {

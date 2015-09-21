@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
 import CheckoutActions from 'actions/CheckoutActions';
@@ -10,7 +10,7 @@ import './index.less';
 
 export default class PaymentOption extends React.Component {
   static propTypes = {
-    payment: React.PropTypes.object
+    payment: PropTypes.object
   }
 
   static defaultProps = {

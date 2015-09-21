@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import ProductDetail from 'components/ProductDetail';
 
@@ -6,8 +6,8 @@ import './index.less';
 
 export default class Product extends React.Component {
   static propTypes = {
-    data: React.PropTypes.object,
-    itemCount: React.PropTypes.number
+    data: PropTypes.object,
+    itemCount: PropTypes.number
   }
 
   static defaultProps = {

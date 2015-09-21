@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import ProductList from 'components/ProductList';
 import OrderHeader from 'components/OrderHeader';
@@ -6,9 +6,9 @@ import OrderHeader from 'components/OrderHeader';
 
 export default class ProductShowcase extends React.Component {
   static propTypes = {
-    products: React.PropTypes.array,
-    isUpdatingProduct: React.PropTypes.bool,
-    isAddingProduct: React.PropTypes.bool
+    products: PropTypes.array,
+    isUpdatingProduct: PropTypes.bool,
+    isAddingProduct: PropTypes.bool
   }
 
   static defaultProps = {

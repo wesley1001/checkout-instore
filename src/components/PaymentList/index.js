@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import _ from 'lodash';
 
 import PaymentOption from 'components/PaymentOption';
@@ -7,9 +7,9 @@ import'./index.less';
 
 export default class PaymentList extends React.Component {
   static propTypes = {
-    payments: React.PropTypes.array,
-    price: React.PropTypes.number,
-    installments: React.PropTypes.array
+    payments: PropTypes.array,
+    price: PropTypes.number,
+    installments: PropTypes.array
   }
 
   static defaultProps = {
