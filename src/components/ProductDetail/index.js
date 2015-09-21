@@ -6,10 +6,6 @@ import ProductHelper from 'utils/ProductHelper';
 import './index.less';
 
 export default class ProductDetail extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.func.isRequired
-  }
-
   static propTypes = {
     name: React.PropTypes.string,
     price: React.PropTypes.number,
@@ -38,7 +34,7 @@ export default class ProductDetail extends React.Component {
     product.index = this.props.index;
 
     if(this.props.orderSize - 1 === 0) {
-      this.context.router.transitionTo('instore_authentication');
+      this.props.history.pushState(null, '/');
     } else {
       CartActions.updateCart({
         orderFormId: this.props.orderFormId,

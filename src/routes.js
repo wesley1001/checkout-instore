@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, DefaultRoute } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 
@@ -9,10 +9,10 @@ import Cart from './pages/Cart';
 import Payment from './pages/Payment';
 
 export default (
-  <Route name='home' path='/' handler={App}>
-    <DefaultRoute name='instore_authentication' handler={Auth} />
-    <Route name='instore_shop' path='/shop' handler={Shop}/>
-    <Route name='cart' path='/cart' handler={Cart}/>
-    <Route name='payment' path='/payment' handler={Payment}/>
+  <Route path='/' component={App}>
+    <IndexRoute component={Auth} />
+    <Route path='/shop' component={Shop} />
+    <Route path='/cart' component={Cart} />
+    <Route path='/payment' component={Payment} />
   </Route>
 );

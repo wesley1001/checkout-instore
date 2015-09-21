@@ -69,7 +69,7 @@ export default class PaymentOption extends React.Component {
     let {iconClass, iconLabel, type} = this.composeIconsInfo();
 
     return (
-      <Link to="instore_payment" className="PaymentOption component btn btn-default" onClick={this.handleClick}>
+      <Link to="/payment" className="PaymentOption component btn btn-default" onClick={this.handleClick}>
         <PaymentLabel type={type} iconClass={iconClass} iconLabel={iconLabel}/>
         <i className="arrow text-muted fa fa-caret-right"></i>
 

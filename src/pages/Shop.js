@@ -18,10 +18,6 @@ import setViewport from 'utils/SetViewport';
 @setViewport
 @checkConnection
 export default class Shop extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.func.isRequired
-  }
-
   constructor(props) {
     super(props);
 
@@ -65,7 +61,7 @@ export default class Shop extends React.Component {
     this.setState({cart: state});
 
     if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
-      this.context.router.transitionTo('instore_cart');
+      this.props.history.pushState(null, '/cart');
     }
   }
 

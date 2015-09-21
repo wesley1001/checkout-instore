@@ -44,7 +44,7 @@ export default class PaymentInfo extends React.Component {
           orderFormId={orderFormId}
           installmentOptions={paymentData.installmentOptions}
         />
-        <p><Link to="instore_cart" onClick={this.handleClick}>Voltar para Lista de itens</Link></p>
+        <p><Link to="/cart" onClick={this.handleClick}>Voltar para Lista de itens</Link></p>
       </section>
     );
   }

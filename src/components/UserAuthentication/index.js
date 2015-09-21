@@ -2,14 +2,9 @@ import React from 'react';
 import {Link} from 'react-router';
 
 import CheckoutActions from 'actions/CheckoutActions';
-
 import './index.less';
 
 export default class Authentication extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.func.isRequired
-  }
-
   constructor(props) {
     super(props);
 
@@ -31,7 +26,7 @@ export default class Authentication extends React.Component {
 
     if(this.state.email) {
       CheckoutActions.addCustomerEmail({email: this.state.email, orderForm: this.props.orderForm.orderFormId});
-      this.context.router.transitionTo('instore_shop');
+      this.props.history.pushState(null, '/shop');
     }
   }
 
@@ -64,7 +59,7 @@ export default class Authentication extends React.Component {
             </div>
 
             <div className="anonymous">
-              <Link to="instore_shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
+              <Link to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
             </div>
           </form>
 

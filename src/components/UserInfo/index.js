@@ -20,7 +20,7 @@ export default class UserInfo extends React.Component {
     return (
       <p className="disclaimer">
         <span>Email do cliente: <strong>{email}</strong>. </span>
-        <Link to="instore_authentication" className="signout">Está incorreto?</Link>
+        <Link to="/" className="signout">Está incorreto?</Link>
       </p>
     );
   }

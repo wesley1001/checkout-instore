@@ -31,8 +31,8 @@
     "less-loader": "^2.2.0",
     "node-libs-browser": "^0.5.2",
     "react-proxy-loader": "^0.3.4",
-    "react-transform-catch-errors": "^0.2.0",
-    "react-transform-webpack-hmr": "^0.1.2",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.0",
     "redbox-react": "^1.0.1",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.5",
@@ -42,11 +42,14 @@
   },
   "dependencies": {
     "alt": "^0.17.1",
+    "axios": "^0.6.0",
+    "history": "^1.9.1",
     "immutable": "^3.7.4",
     "lodash": "^3.10.1",
     "offline-js": "^0.7.11",
     "react-bootstrap": "^0.25.1",
-    "react-document-title": "^2.0.0"
+    "react-document-title": "^2.0.0",
+    "react-router": "^1.0.0-rc1"
   },
   "homepage": "https://github.com/vtex/checkout-instore#readme",
   "engines": {

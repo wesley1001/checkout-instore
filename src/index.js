@@ -1,8 +1,11 @@
 import React from 'react';
+import {Router} from 'react-router';
+// import createBrowserHistory from 'history/lib/createBrowserHistory';
 import routes from './routes';
-import { create } from 'react-router';
 
-const router = create({routes});
+// let history = createBrowserHistory();
+
 const container = document.getElementById('app-container');
 
-router.run((Handler) => React.render((<Handler/>), container));
+React.render(<Router>{routes}</Router>, container);
+// React.render(<Router history={history}>{routes}</Router>, container);

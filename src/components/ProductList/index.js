@@ -29,7 +29,7 @@ export default class ProductList extends React.Component {
   }
 
   checkMoreProducts() {
-    const {products} = this.props;
+    const {products, history} = this.props;
 
     if (products.length > 1 && !this.state.isExpanded) {
       return (
@@ -51,6 +51,7 @@ export default class ProductList extends React.Component {
           itemCount={products.length}
           index={index}
           orderFormId={orderFormId}
+          history={history}
         />
       );
     });

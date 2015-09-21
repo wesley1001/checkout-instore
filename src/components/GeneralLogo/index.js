@@ -9,7 +9,7 @@ export default class Logo extends React.Component {
   render () {
     return (
       <div className="GeneralLogo component">
-        <Link className="logo" to="instore_authentication"><img src={logo_instore}/></Link>
+        <Link to="/" className="logo"><img src={logo_instore}/></Link>
       </div>
     );
   }

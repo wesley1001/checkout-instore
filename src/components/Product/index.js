@@ -24,6 +24,7 @@ export default class Product extends React.Component {
            orderSize={itemCount}
            product={product}
            orderFormId={orderFormId}
+           history={history}
          />
       </div>
     );

@@ -18,7 +18,7 @@ export default class ProductShowcase extends React.Component {
   }
 
   render() {
-    const {products, isAddingProduct, isUpdatingProduct, orderFormId} = this.props;
+    const {products, isAddingProduct, isUpdatingProduct, orderFormId, history} = this.props;
 
     return (
       <section className="ProductShowcase component">
@@ -30,6 +30,7 @@ export default class ProductShowcase extends React.Component {
             isAddingProduct={isAddingProduct}
             isUpdatingProduct={isUpdatingProduct}
             orderFormId={orderFormId}
+            history={history}
           />
 
         </section>

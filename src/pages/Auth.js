@@ -72,7 +72,7 @@ export default class Auth extends React.Component {
         </header>
 
         <div className="email full-pannel full-pannel-show">
-          <UserAuthentication orderForm={cart.get('orderForm')} />
+          <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
         </div>
 
         <ErrorNotifier message={cart.get('error') || checkout.get('error')} />

@@ -69,6 +69,7 @@ export default class Cart extends React.Component {
             cartError={cart.get('error')}
             lastSkuScanned={checkout.get('sku')}
             orderFormId={orderForm.orderFormId}
+            history={this.props.history}
           />
 
           <PaymentSelection
