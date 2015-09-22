@@ -36,10 +36,10 @@ export default class ProductDetail extends React.Component {
     if(this.props.orderSize - 1 === 0) {
       this.props.history.pushState(null, '/');
     } else {
-      CartActions.updateCart({
-        orderFormId: this.props.orderFormId,
-        item: [product]
-      });
+      // CartActions.updateCart({
+      //   orderFormId: this.props.orderFormId,
+      //   item: [product]
+      // });
     }
   }
 
