@@ -4,7 +4,8 @@
   "description": "Client side application consuming the VTEX Checkout API",
   "scripts": {
     "start": "node server.js",
-    "build": "webpack --progress --colors"
+    "build": "webpack --progress --colors",
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -30,11 +31,14 @@
     "file-loader": "^0.8.1",
     "http-proxy": "^1.11.2",
     "karma": "^0.13.10",
+    "karma-chai": "^0.1.0",
     "karma-chai-sinon": "^0.1.5",
     "karma-chrome-launcher": "^0.2.0",
     "karma-cli": "^0.1.0",
+    "karma-jasmine": "^0.3.6",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
+    "karma-sinon": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
     "less": "^2.4.0",

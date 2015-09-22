@@ -4,6 +4,10 @@ import {Link} from 'react-router';
 import './index.less';
 
 export default class UserInfo extends React.Component {
+  static defaultProps = {
+    email: ''
+  }
+
   constructor(props) {
     super(props);
 

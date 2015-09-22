@@ -7,7 +7,7 @@ module.exports = function (config) {
 
     singleRun: true,
 
-    frameworks: [ 'mocha', 'chai-sinon' ],
+    frameworks: [ 'jasmine' ],
 
     files: [
       'tests.webpack.js'
@@ -39,6 +39,5 @@ module.exports = function (config) {
     webpackServer: {
       noInfo: true
     }
-
   });
 };
