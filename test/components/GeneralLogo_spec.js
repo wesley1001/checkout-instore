@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import React from 'react/addons';
 import GeneralLogo from 'components/GeneralLogo';
 
@@ -17,14 +18,14 @@ describe('GeneralLogo', () => {
   });
 
   it('should have an empty text', () => {
-    expect(element.textContent).toBe('');
+    expect(element.textContent).to.be.empty;
   });
 
   it('should not have an empty className', () => {
-    expect(element.className).not.toBe('');
+    expect(element.className).not.to.be.empty;
   });
 
   it('should have one nested elements', () => {
-    expect(element.children.length).toBe(1);
+    expect(element.children.length).to.equal(1);
   });
 });

@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import React from 'react/addons';
 import UserInfo from 'components/UserInfo';
 
@@ -19,15 +20,15 @@ describe('UserInfo', () => {
     });
 
     it('should have an empty text', () => {
-      expect(element.textContent).toBe('');
+      expect(element.textContent).to.be.empty;
     });
 
     it('should not have an empty className', () => {
-      expect(element.className).not.toBe('');
+      expect(element.className).not.to.be.empty;
     });
 
     it('should not have any nested elements', () => {
-      expect(element.children.length).toBe(0);
+      expect(element.children.length).to.equal(0);
     });
   });
 
@@ -42,15 +43,15 @@ describe('UserInfo', () => {
     });
 
     it('should have an empty text', () => {
-      expect(element.textContent).toBe('');
+      expect(element.textContent).to.be.empty;
     });
 
     it('should not have an empty className', () => {
-      expect(element.className).not.toBe('');
+      expect(element.className).not.to.be.empty;
     });
 
     it('should not have any nested elements', () => {
-      expect(element.children.length).toBe(0);
+      expect(element.children.length).to.equal(0);
     });
   });
 
@@ -68,15 +69,15 @@ describe('UserInfo', () => {
     });
 
     it('should not have an empty className', () => {
-      expect(element.className).not.toBe('');
+      expect(element.className).not.to.be.empty;
     });
 
     it('should display the error message', () => {
-      expect(element.textContent).toBe(`Email do cliente: ${email}. Está incorreto?`);
+      expect(element.textContent).to.equal(`Email do cliente: ${email}. Está incorreto?`);
     });
 
     it('should have one nested elements', () => {
-      expect(element.children.length).toBe(1);
+      expect(element.children.length).to.equal(1);
     });
   });
 });

@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import React from 'react/addons';
 import OrderHeader from 'components/OrderHeader';
 
@@ -17,14 +18,14 @@ describe('OrderHeader', () => {
   });
 
   it('should not have an empty text', () => {
-    expect(element.textContent).not.toBe('');
+    expect(element.textContent).not.to.be.empty;
   });
 
   it('should not have an empty className', () => {
-    expect(element.className).not.toBe('');
+    expect(element.className).not.to.be.empty;
   });
 
   it('should have two nested elements', () => {
-    expect(element.children.length).toBe(2);
+    expect(element.children.length).to.equal(2);
   });
 });

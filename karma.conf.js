@@ -7,7 +7,15 @@ module.exports = function (config) {
 
     singleRun: true,
 
-    frameworks: [ 'jasmine' ],
+    frameworks: [ 'should', 'mocha' ],
+
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-mocha',
+      'karma-should',
+      'karma-sourcemap-loader',
+      'karma-webpack',
+    ],
 
     files: [
       'tests.webpack.js'

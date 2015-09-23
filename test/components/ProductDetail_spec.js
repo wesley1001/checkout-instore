@@ -1,23 +1,36 @@
-// import flux from 'flux';
-// import CartActions from 'actions/CartActions';
-// import {assert} from 'chai';
+// import {expect, assert} from 'chai';
+// import React from 'react/addons';
 // import sinon from 'sinon';
 //
-// import React from 'react/addons';
-// import ProductScan from 'components/ProductScan';
+// import ProductDetail from 'components/ProductDetail';
+// // import CartActions from 'actions/CartActions';
 //
-// var TestUtils = React.addons.TestUtils;
+// // const cartActionsMock = sinon.mock(CartActions);
+// let TestUtils = React.addons.TestUtils;
 //
-// describe('ProductScan', () => {
-//   var component;
+// describe('ProductDetail', () => {
+//   let component,
+//       element,
+//       CartActionsMock;
 //
 //   beforeEach(() => {
-//     component = TestUtils.renderIntoDocument(<ProductScan />);
+//     component = TestUtils.renderIntoDocument(<ProductDetail />);
+//     element = React.findDOMNode(component);
 //   });
 //
-//   it('should display the component', () => {
-//     console.log(document.querySelector('img'));
-//     console.log(React.findDOMNode(component).className);
-//     expect(component).toBeDefined;
+//   it('should render the element', () => {
+//     expect(element).toBeDefined;
+//   });
+//
+//   it('should have an empty text', () => {
+//     expect(element.textContent).toBe('');
+//   });
+//
+//   it('should not have an empty className', () => {
+//     expect(element.className).not.toBe('');
+//   });
+//
+//   it('should not have any nested elements', () => {
+//     expect(element.children.length).toBe(0);
 //   });
 // });

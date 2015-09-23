@@ -1,3 +1,4 @@
+import {expect} from 'chai';
 import React from 'react/addons';
 import GeneralFooter from 'components/GeneralFooter';
 
@@ -17,14 +18,14 @@ describe('GeneralFooter', () => {
   });
 
   it('should have an empty text', () => {
-    expect(element.textContent).toBe('');
+    expect(element.textContent).to.be.empty;
   });
 
   it('should not have an empty className', () => {
-    expect(element.className).not.toBe('');
+    expect(element.className).not.be.empty;
   });
 
   it('should not have any nested elements', () => {
-    expect(element.children.length).toBe(0);
+    expect(element.children.length).to.equal(0);
   });
 });
