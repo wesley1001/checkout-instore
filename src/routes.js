@@ -11,8 +11,8 @@ import Payment from './pages/Payment';
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={Auth} />
-    <Route path='/shop' component={Shop} />
-    <Route path='/cart' component={Cart} />
-    <Route path='/payment' component={Payment} />
+    <Route path='shop' component={Shop} />
+    <Route path='cart' component={Cart} />
+    <Route path='payment' component={Payment} />
   </Route>
 );

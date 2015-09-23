@@ -15,25 +15,30 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+app.use(function(req, res, next) {
+    req.headers['X-VTEX-Janus-Router-CurrentApp-EnvironmentType'] = 'beta';
+    next();
+});
+
 app.get('/instore', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// if (config.proxy) {
-//   var paths = Object.keys(config.proxy);
-//   paths.forEach(function (somePath) {
-//     console.log(somePath);
-//     var proxyOptions;
-//     if (typeof config.proxy[somePath] === 'string') {
-//       proxyOptions = {target: config.proxy[somePath], ws: true};
-//     } else {
-//       proxyOptions = config.proxy[somePath];
-//     }
-//     app.all(somePath, function (req, res) {
-//       proxy.web(req, res, proxyOptions);
-//     });
-//   });
-// }
+if (config.proxy) {
+  var paths = Object.keys(config.proxy);
+  paths.forEach(function (somePath) {
+    console.log(somePath);
+    var proxyOptions;
+    if (typeof config.proxy[somePath] === 'string') {
+      proxyOptions = {target: config.proxy[somePath], ws: true};
+    } else {
+      proxyOptions = config.proxy[somePath];
+    }
+    app.all(somePath, function (req, res) {
+      proxy.web(req, res, proxyOptions);
+    });
+  });
+}
 
 app.listen(3000, 'localhost', function(err) {
   if (err) {
