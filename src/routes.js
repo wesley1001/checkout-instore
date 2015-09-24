@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 
+import VendorAuth from './pages/VendorAuth';
 import Auth from './pages/Auth';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
