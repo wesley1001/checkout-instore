@@ -3,12 +3,16 @@ import React from 'react';
 import VendorActions from 'actions/VendorActions';
 import VendorStore from 'stores/VendorStore';
 
+import VendorAuthentication from 'components/VendorAuthentication';
+
+import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
 import checkConnection from 'utils/CheckConnection';
 import setViewport from 'utils/SetViewport';
 
+@vtexIdAuthenticated()
 @setViewport
 @checkConnection
-export default class VendorAuth extends React.Component {
+export default class VendorLogin extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,24 +21,23 @@ export default class VendorAuth extends React.Component {
 
   componentDidMount() {
     VendorStore.listen(this.onVendorChange);
+  }
 
-    VendorActions.login();
+  componentWillUnmount() {
+    VendorStore.unlisten(this.onVendorChange);
   }
 
   onVendorChange(state) {
-    if(state.get('logged')) {
-      let that = this;
-      setTimeout(() =>  {
-        console.log('redirecting...');
-        that.props.history.pushState(null, '/');
-      }, 0);
+    if(state.get('vendorId')) {
+      that.props.history.pushState(null, '/');
     }
   }
 
 
   render() {
     return (
-      <div>
+      <div className="vendor-component">
+        <VendorAuthentication/>
       </div>
     );
   }

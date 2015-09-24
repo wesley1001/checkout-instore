@@ -85,6 +85,24 @@ class Fetcher {
 
     return axios.post(`/api/checkout/pub/orderForm/${orderForm}/transaction`, transactionRequest);
   }
+
+  checkVtexIdAuth(cookie) {
+    let defer = new Promise();
+    if(!cookie) {
+      defer.reject();
+    }
+    else {
+      const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(req.cookies.VtexIdclientAutCookie)}`;
+
+      axios.get(`/api/checkout/pub/orderForm/${orderForm}/transaction`, transactionRequest).then(() => {
+        defer.resolve();
+      },() => {
+        defer.reject();
+      });
+    }
+
+    return defer.promise;
+  }
 }
 
 export default new Fetcher();

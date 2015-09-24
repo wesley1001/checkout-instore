@@ -74,6 +74,7 @@
     "axios": "^0.6.0",
     "history": "^1.9.1",
     "immutable": "^3.7.4",
+    "js-cookie": "^2.0.3",
     "lodash": "^3.10.1",
     "offline-js": "^0.7.11",
     "react-bootstrap": "^0.25.1",

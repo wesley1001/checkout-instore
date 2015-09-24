@@ -10,9 +10,13 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
+import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
+import vendorAuthenticated from 'utils/VendorAuthenticated';
 import checkConnection from 'utils/CheckConnection';
 import setViewport from 'utils/SetViewport';
 
+@vtexIdAuthenticated()
+@vendorAuthenticated()
 @setViewport
 @checkConnection
 export default class Auth extends React.Component {

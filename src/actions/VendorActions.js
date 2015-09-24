@@ -1,16 +1,18 @@
 import flux from '../flux';
 
 class VendorActions {
-  login() {
-    let that = this;
-    $(window).on('authenticatedUser.vtexid', (evt) => {
-      console.log('logged');
-      that.actions.LoginSuccess(evt);
-    });
-    vtexid.start({returnUrl: window.location.href });
+  setVendor(data) {
+    this.dispatch(data.id);
+
+    if(data.id.length > 0) {
+      this.actions.LoginSuccess.defer(data);
+    }
+    else {
+      this.actions.LoginFail.defer('Ocorreu um erro ao identifcar o vendendor');
+    }
   }
   LoginSuccess(data){
-    this.dispatch();
+    this.dispatch(data);
   }
   LoginFail(error){
     this.dispatch(error);
