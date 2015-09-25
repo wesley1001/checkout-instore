@@ -94,7 +94,6 @@ class Fetcher {
       else {
         const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(cookie)}`;
 
-        debugger;
         axios.get(url).then((response) => {
           if(response.data !== null) {
             resolve('authorized');
