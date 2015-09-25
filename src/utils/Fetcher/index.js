@@ -87,21 +87,28 @@ class Fetcher {
   }
 
   checkVtexIdAuth(cookie) {
-    let defer = new Promise();
-    if(!cookie) {
-      defer.reject();
-    }
-    else {
-      const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(req.cookies.VtexIdclientAutCookie)}`;
+    let promise = new Promise((resolve, reject) => {
+      if(!cookie) {
+        reject('cookies not found');
+      }
+      else {
+        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(cookie)}`;
 
-      axios.get(`/api/checkout/pub/orderForm/${orderForm}/transaction`, transactionRequest).then(() => {
-        defer.resolve();
-      },() => {
-        defer.reject();
-      });
-    }
+        debugger;
+        axios.get(url).then((response) => {
+          if(response.data !== null) {
+            resolve('authorized');
+          }
+          else {
+            reject('not authorized');
+          }
+        },() => {
+          reject('not authorized');
+        });
+      }
+    });
 
-    return defer.promise;
+    return promise;
   }
 }
 

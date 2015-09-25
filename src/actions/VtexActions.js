@@ -5,14 +5,15 @@ import Fetcher from 'utils/Fetcher';
 class VtexActions {
   login() {
     let that = this;
-    $(window).on('authenticatedUser.vtexid', (evt) => {
-      that.actions.VtexIdAuthSuccess(evt);
+    Fetcher.checkVtexIdAuth(Cookies.get('VtexIdclientAutCookie')).then(() => {
+      that.actions.VtexIdAuthSuccess();
+    }, () => {
+      $(window).on('authenticatedUser.vtexid', (evt) => {
+        that.actions.VtexIdAuthSuccess();
+      });
+
+      vtexid.start({returnUrl: window.location.href, canClose: false });
     });
-    // $(window).on('tokenRefreshed.vtexid', (evt) => {
-    //   console.log('2 - CHEGUEI ESTOU NO PARAISO');
-    //   that.actions.VtexIdAuthRefreshed(evt);
-    // });
-    vtexid.start({returnUrl: window.location.href, canClose: false });
   }
   logout() {
     vtexid.logout();
