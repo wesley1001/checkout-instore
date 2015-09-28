@@ -25,13 +25,13 @@ export default class Authentication extends React.Component {
     e.preventDefault();
 
     if(this.state.email) {
-      CheckoutActions.addCustomerEmail({email: this.state.email, orderForm: this.props.orderForm.orderFormId});
+      CheckoutActions.setClientData({email: this.state.email, orderForm: this.props.orderForm.orderFormId});
       this.props.history.pushState(null, '/shop');
     }
   }
 
   handleAnonymous() {
-    CheckoutActions.addCustomerEmail({email: '', orderForm: this.props.orderForm.orderFormId});
+    CheckoutActions.setClientData({email: '', orderForm: this.props.orderForm.orderFormId});
   }
 
   render() {

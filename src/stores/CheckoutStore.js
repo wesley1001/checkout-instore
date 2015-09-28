@@ -23,12 +23,12 @@ class CheckoutStore {
     });
   }
 
-  onAddCustomerEmail(email) {
+  onExecuteSetClientData(email) {
     this.setState(this.state.set('customerEmail', email));
     this.setState(this.state.set('error', ''));
   }
 
-  onSetEmailFailed(errorMessage) {
+  onSetClientDataFailed(errorMessage) {
     this.setState(this.state.set('error', errorMessage));
   }
 
