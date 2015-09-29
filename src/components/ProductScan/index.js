@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './index.less';
 import pinpad from 'assets/images/Pinpad_Bip.svg';
 
 export default class ScanIndicator extends React.Component {
