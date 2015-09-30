@@ -7,9 +7,10 @@ var log = function() {
   return console.log.apply(console, ['grunt-vtex >>>'.yellow].concat(slice.call(arguments)));
 };
 module.exports = function(grunt) {
-  var customConfig, defaultConfig, name, pkg, replaceMap, results, taskArray, taskName, tasks;
+  var customConfig, defaultConfig, name, pkg, replaceMap, results, taskArray, taskName, tasks, dryrun;
   pkg = grunt.file.readJSON('package.json');
-
+  dryrun = grunt.option('dry-run') ? '--dryrun' : '';
+  
   replaceMap = {};
   replaceMap['{{version}}'] = '' + pkg.version;
   replaceMap['/checkout-instore/'] = '//io.vtex.com.br/' + pkg.name + '/' + pkg.version + '/';
@@ -82,16 +83,16 @@ module.exports = function(grunt) {
 
     shell: {
       sync: {
-        command: 'aws s3 sync --size-only ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
+        command: 'aws s3 sync --size-only ' + dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
       },
       cp: {
-        command: 'aws s3 cp --recursive ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
+        command: 'aws s3 cp --recursive ' + dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
       },
       sync_br: {
-        command: 'aws s3 sync --size-only ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
+        command: 'aws s3 sync --size-only ' + dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
       },
       cp_br: {
-        command: 'aws s3 cp --recursive ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
+        command: 'aws s3 cp --recursive ' + dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
       }
     }
   };
