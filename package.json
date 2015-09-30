@@ -1,6 +1,7 @@
 {
   "name": "checkout-instore",
   "version": "0.3.0",
+  "deploy": "deploy/",
   "description": "Client side application consuming the VTEX Checkout API",
   "scripts": {
     "start": "node server.js",
@@ -31,6 +32,12 @@
     "expect": "^1.10.0",
     "express": "^4.13.3",
     "file-loader": "^0.8.1",
+    "glob": "^5.0.15",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.1",
+    "grunt-vtex": "^0.14.0",
+    "grunt-webpack": "^1.0.11",
     "http-proxy": "^1.11.2",
     "jsdom": "^6.5.1",
     "karma": "^0.13.10",
@@ -43,6 +50,7 @@
     "karma-webpack": "^1.7.0",
     "less": "^2.4.0",
     "less-loader": "^2.2.0",
+    "load-grunt-tasks": "^3.3.0",
     "mocha": "^2.3.3",
     "node-libs-browser": "^0.5.2",
     "phantomjs": "^1.9.18",

@@ -20,8 +20,8 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/instore', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/checkout-instore', function(req, res) {
+  res.sendFile(path.join(__dirname, './src/index.html'));
 });
 
 if (config.proxy) {
