@@ -80,8 +80,19 @@ module.exports = function(grunt) {
       }
     },
 
-    mocha: {
-
+    shell: {
+      sync: {
+        command: 'aws s3 sync --size-only ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
+      },
+      cp: {
+        command: 'aws s3 cp --recursive ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io-us/' + pkg.name + '/'
+      },
+      sync_br: {
+        command: 'aws s3 sync --size-only ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
+      },
+      cp_br: {
+        command: 'aws s3 cp --recursive ' + options.dryrun + ' ' + pkg.deploy + ' s3://vtex-io/' + pkg.name + '/'
+      }
     }
   };
 
