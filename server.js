@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/checkout-instore', function(req, res) {
+app.get('/checkout/instore', function(req, res) {
   res.sendFile(path.join(__dirname, './src/index.html'));
 });
 

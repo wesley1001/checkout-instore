@@ -10,7 +10,7 @@ var path = require('path');
 module.exports = {
 
   output: {
-    publicPath: '/script/',
+    publicPath: '/checkout-instore/script/',
     path: 'build/checkout-instore/script/',
     filename: 'app.js'
   },
