@@ -1,16 +1,18 @@
 var GruntVTEX = require('grunt-vtex');
 var webpackDistConfig = require('./webpack.dist.config.js');
-var webpackDevConfig = require('./webpack.config.js');
 var glob = require('glob');
 var slice = [].slice;
 var log = function() {
   return console.log.apply(console, ['grunt-vtex >>>'.yellow].concat(slice.call(arguments)));
 };
+
 module.exports = function(grunt) {
+  process.env.NODE_ENV = 'production';
+
   var customConfig, defaultConfig, name, pkg, replaceMap, results, taskArray, taskName, tasks, dryrun;
   pkg = grunt.file.readJSON('package.json');
   dryrun = grunt.option('dry-run') ? '--dryrun' : '';
-  
+
   replaceMap = {};
   replaceMap['{{version}}'] = '' + pkg.version;
   replaceMap['/checkout-instore/'] = '//io.vtex.com.br/' + pkg.name + '/' + pkg.version + '/';

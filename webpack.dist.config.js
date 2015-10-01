@@ -48,7 +48,11 @@ module.exports = {
     loaders: [{
       test: /\.js?$/,
       exclude: /node_modules/,
-      loaders: ['babel']
+      loader: 'babel',
+      query: {
+        stage: 0,
+        plugins: []
+      }
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
