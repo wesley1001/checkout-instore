@@ -38,6 +38,10 @@ if (config.proxy) {
     }
     app.all(somePath, function (req, res) {
       proxy.web(req, res, proxyOptions);
+
+      proxy.on('error', function (error, req, res) {
+        res.end();
+      });
     });
   });
 }

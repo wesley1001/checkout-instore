@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import { keys, assign } from 'lodash';
 import VendorStore from 'stores/VendorStore';
 
 function vtexIdAuthenticated(target) {
@@ -29,7 +28,7 @@ function vtexIdAuthenticated(target) {
       render() {
         return (
           <div className="vtexid-authenticated-component">
-            <Component />
+            <Component {...Object.assign({}, this.props, this.state)} />
           </div>
         );
       }
