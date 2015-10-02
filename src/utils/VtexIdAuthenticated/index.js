@@ -1,5 +1,5 @@
 /**
- *    @vendorAuthenticated
+ *    @vtexIdAuthenticated
  *    class MyComponent extends React.Component {
  *
  *    }

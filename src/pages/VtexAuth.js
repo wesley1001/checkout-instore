@@ -18,8 +18,6 @@ export default class VtexAuth extends React.Component {
   componentDidMount() {
     VendorStore.listen(this.onVendorChange);
 
-    console.log('CHEGUEI ESTOU NO PARAISO');
-
     VtexActions.login();
   }
 
@@ -31,7 +29,7 @@ export default class VtexAuth extends React.Component {
     if(state.get('vtexIdLogged')) {
       let that = this;
       setTimeout(() =>  {
-        that.props.history.pushState(null, '/vendor/login');
+        that.props.history.pushState(null, '/');
       }, 0);
     }
   }
