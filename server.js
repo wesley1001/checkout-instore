@@ -16,8 +16,10 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(function(req, res, next) {
+  if(!req.path.includes('catalog_system')) {
     req.headers['X-VTEX-Janus-Router-CurrentApp-EnvironmentType'] = 'beta';
-    next();
+  }
+  next();
 });
 
 app.get('/checkout/instore', function(req, res) {

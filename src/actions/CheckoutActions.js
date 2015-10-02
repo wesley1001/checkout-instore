@@ -30,8 +30,8 @@ class CheckoutActions {
   findProduct(code) {
     this.dispatch();
 
-    Fetcher.getProduct(code).then((sku) => {
-      this.actions.readSuccess.defer(sku.Id);
+    Fetcher.getProduct(code).then((response) => {
+      this.actions.readSuccess.defer(response.data.Id);
     }).catch(() => {
       this.actions.readFailed.defer('Produto não encontrado');
     });

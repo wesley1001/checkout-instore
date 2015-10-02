@@ -24,7 +24,7 @@ class Fetcher {
       stateInscription: ''
     };
 
-    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/clientProfileData`, clientProfileRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/clientProfileData`, clientProfileRequest);
   }
 
   setShipping(orderForm, address) {
@@ -33,7 +33,7 @@ class Fetcher {
       address
     };
 
-    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/shippingData`, shippingRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/shippingData`, shippingRequest);
   }
 
   setCheckedIn(orderFormId) {
@@ -69,7 +69,7 @@ class Fetcher {
       giftCards: []
     };
 
-    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/attachments/paymentData`, paymentRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/paymentData`, paymentRequest);
   }
 
   startTransaction(orderForm, value) {
@@ -83,7 +83,7 @@ class Fetcher {
       expectedOrderFormSections : this.orderFormSections
     };
 
-    return axios.post(`/api/checkout/pub/orderForm/${orderForm}/transaction`, transactionRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/transaction`, transactionRequest);
   }
 
   checkVtexIdAuth(cookie) {
