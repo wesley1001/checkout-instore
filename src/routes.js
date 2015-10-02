@@ -16,6 +16,5 @@ export default (
     <Route path='shop' component={Shop} />
     <Route path='cart' component={Cart} />
     <Route path='payment' component={Payment} />
-    <Route path="*" component={Auth}/>
   </Route>
 );
