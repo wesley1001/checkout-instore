@@ -7,8 +7,6 @@ var log = function() {
 };
 
 module.exports = function(grunt) {
-  process.env.NODE_ENV = 'production';
-
   var customConfig, defaultConfig, name, pkg, replaceMap, results, taskArray, taskName, tasks, dryrun;
   pkg = grunt.file.readJSON('package.json');
   dryrun = grunt.option('dry-run') ? '--dryrun' : '';
