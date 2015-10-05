@@ -3,23 +3,36 @@ import flux from '../flux';
 import Fetcher from 'utils/Fetcher';
 
 class CheckoutActions {
-  addCustomerEmail(data) {
+  setClientData(data) {
+    if(!data.orderForm) {
+      Fetcher.getOrderForm().then((response) => {
+        data.orderForm = response.data.orderForm;
+        this.actions.executeSetClientData.defer(data);
+      }).catch(() => {
+        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
+      });
+    } else {
+      this.actions.executeSetClientData.defer(data);
+    }
+  }
+
+  executeSetClientData(data) {
     this.dispatch(data.email);
 
     data.email = data.email || Date.now().toString() + '@vtex-instore.com';
 
     Fetcher.setClientProfile(data.orderForm, data.email).then(() => {
-      this.actions.setEmailSuccess.defer();
+      this.actions.setClientDataSuccess.defer();
     }).catch(() => {
-      this.actions.setEmailFailed.defer('Ocorreu um erro ao setar os dados do cliente');
+      this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
     });
   }
 
-  setEmailSuccess() {
+  setClientDataSuccess() {
     this.dispatch();
   }
 
-  setEmailFailed(errorMessage) {
+  setClientDataFailed(errorMessage) {
     this.dispatch(errorMessage);
   }
 

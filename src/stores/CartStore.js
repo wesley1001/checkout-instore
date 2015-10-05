@@ -45,7 +45,7 @@ class CartStore {
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onAddToCart() {
+  onExecuteAddToCart() {
     this.setState(this.state.set('addLoading', true));
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('addError', ''));
@@ -58,7 +58,7 @@ class CartStore {
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onUpdateCart() {
+  onExecuteUpdateCart() {
     this.setState(this.state.set('updateLoading', true));
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('updateError', ''));
@@ -71,11 +71,11 @@ class CartStore {
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onSetShipping() {
+  onExecuteSetShipping() {
     this.setState(this.state.set('error', ''));
   }
 
-  onSetCheckedIn() {
+  onExecuteSetCheckedIn() {
     this.setState(this.state.set('error', ''));
   }
 
