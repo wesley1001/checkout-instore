@@ -59,7 +59,7 @@ export default class Authentication extends React.Component {
             </div>
 
             <div className="anonymous">
-              <button className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</button>
+              <Link className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
             </div>
           </form>
 
