@@ -11,6 +11,9 @@ export default class ScanIndicator extends React.Component {
         <div className="image-wrapper">
           <img className="image" src={pinpad}/>
         </div>
+        <div className="productScan">
+          <button className="btn btn-default btn-lg btn-block btn-bottom">Digite o código do produto</button>
+        </div>
       </div>
     );
   }
