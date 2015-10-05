@@ -83,6 +83,9 @@ export default class Cart extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
+        <div className="productScan">
+          <button className="btn btn-default btn-lg btn-block btn-bottom">Digite o código do produto</button>
+        </div>
       </div>
     );
   }
