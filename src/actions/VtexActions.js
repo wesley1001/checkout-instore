@@ -10,7 +10,7 @@ class VtexActions {
     });
     vtexid.start({returnUrl: window.location.href, canClose: false });
   }
-  
+
   checkLogin() {
     let data = {};
     let that = this;
@@ -23,8 +23,9 @@ class VtexActions {
         console.log('error on get user profile data', err);
         that.actions.login();
       });
-
-      vtexid.start({returnUrl: window.location.href, canClose: false });
+    }, (err) => {
+      console.log('error on check user auth', err);
+      that.actions.login();
     });
   }
 
@@ -32,12 +33,9 @@ class VtexActions {
     vtexid.logout();
   }
 
-  VtexIdAuthRefreshed(){
-    this.dispatch();
-  }
-
-  VtexIdAuthSuccess(){
-    this.dispatch();
+  VtexIdAuthSuccess(data){
+    data.logged = true;
+    this.dispatch(data);
   }
 
   VtexIdAuthFail(error){
@@ -48,7 +46,6 @@ class VtexActions {
     return Fetcher.getStoreData('dreamshop', storeId).then((response) => {
       this.actions.GetStoreInfoSuccess(response);
     }).catch((err) => {
-      this.actions.GetStoreInfoFail(err);
     });
   }
 

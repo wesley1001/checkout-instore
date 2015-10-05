@@ -16,22 +16,21 @@ class VendorStore {
     });
   }
 
-  onVtexIdAuthRefreshed(data) {
-    this.setState(this.state.set('vtexIdLogged', true));
-  }
   onVtexIdAuthSuccess(data) {
-    this.setState(this.state.set('vtexIdLogged', true));
-    this.setState(this.state.set('vendorId', undefined));
+    this.setState(this.state.set('vtexIdLogged', data.logged));
+    this.setState(this.state.set('user', data.user));
+    this.setState(this.state.set('store', data.store));
   }
+
   onVtexIdAuthFailed(error) {
     this.setState(this.state.set('vtexIdLogged', false));
-    this.setState(this.state.set('vendorId', undefined));
+    this.setState(this.state.set('user', undefined));
+    this.setState(this.state.set('store', undefined));
   }
+
   onGetStoreInfoSuccess(data) {
     let store = Object.assign({}, this.state.get('store'), data);
     this.setState(this.state.set('store', store));
-  }
-  onGetStoreInfoFail(error) {
   }
 }
 

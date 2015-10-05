@@ -13,7 +13,7 @@ export default class VtexAuth extends React.Component {
   componentDidMount() {
     VendorStore.listen(this.onVendorChange);
 
-    VtexActions.login();
+    VtexActions.checkLogin();
   }
 
   componentWillUnmount() {

@@ -96,7 +96,7 @@ class Fetcher {
 
         axios.get(url).then((response) => {
           if(response.data !== null) {
-            resolve('authorized');
+            resolve(response.data);
           }
           else {
             reject('not authorized');
@@ -112,6 +112,7 @@ class Fetcher {
 
   getProfileSystemData(accountName, email) {
     const entity = 'VN', query = `user=${email}`, fields = ['store'];
+
     const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
 
     let configs = {
@@ -147,9 +148,7 @@ class Fetcher {
       }
     };
 
-    return axios.get(url, configs).then((response) => {
-      return response.data;
-    });
+    return axios.get(url, configs).then((response) => response.data);
   }
 }
 

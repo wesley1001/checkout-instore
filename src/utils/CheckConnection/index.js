@@ -11,7 +11,6 @@ require('offline-js/js/reconnect');
 import './offline-dark.css';
 import './offline-pt-br.css';
 import './offline-pt-br-indicator.css';
-
 function checkConnection(target) {
   target.annotated = true;
 }
