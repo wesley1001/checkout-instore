@@ -29,7 +29,7 @@ export default class ProductList extends React.Component {
   }
 
   checkMoreProducts() {
-    const {products, history} = this.props;
+    const {products} = this.props;
 
     if (products.length > 1 && !this.state.isExpanded) {
       return (
@@ -43,23 +43,24 @@ export default class ProductList extends React.Component {
   }
 
     render () {
-    const {products, orderFormId} = this.props;
-    let items = products.map((product, index) => {
-      return (
-        <Product key={product.id}
-          product={product}
-          itemCount={products.length}
-          index={index}
-          orderFormId={orderFormId}
-          history={history}
-        />
-      );
-    });
+      const {products, orderFormId, history} = this.props;
 
-    return (
-      <section className="ProductList component">
-        {items}
-      </section>
-    );
-  }
+      let items = products.map((product, index) => {
+        return (
+          <Product key={product.id}
+            product={product}
+            itemCount={products.length}
+            index={index}
+            orderFormId={orderFormId}
+            history={history}
+          />
+        );
+      });
+
+      return (
+        <section className="ProductList component">
+          {items}
+        </section>
+      );
+    }
 }

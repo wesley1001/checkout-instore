@@ -16,7 +16,7 @@ export default class Product extends React.Component {
   }
 
   render () {
-    const {product, itemCount, orderFormId} = this.props;
+    const {product, itemCount, orderFormId, history} = this.props;
 
     return (
       <div className="Product component">
