@@ -40,7 +40,7 @@ export default class InstallmentOption extends React.Component {
     let selectInstallment = this.checkSelectedInstallment();
 
     return (
-      <button className="InstallmentOption component btn btn-default" value={installments} onClick={this.handleClick}>
+      <button className="InstallmentOption component btn btn-default btn-block" value={installments} onClick={this.handleClick}>
         {installments === 1 ? 'A vista: ' : installments + 'x de '}
         R$ {ProductHelper.formatPrice(((1 - discount) * price) / installments)}
         { selectInstallment }
