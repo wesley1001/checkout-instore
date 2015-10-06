@@ -4,6 +4,11 @@ import VendorStore from 'stores/VendorStore';
 
 import 'styles/main.less';
 
+import checkConnection from 'utils/CheckConnection';
+import setViewport from 'utils/SetViewport';
+
+@setViewport
+@checkConnection
 export default class App extends React.Component {
   constructor(props) {
     super(props);
