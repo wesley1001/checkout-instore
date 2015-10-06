@@ -13,12 +13,8 @@ import UserInfo from 'components/UserInfo';
 import ErrorNotifier from 'components/ErrorNotifier';
 
 import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
-import checkConnection from 'utils/CheckConnection';
-import setViewport from 'utils/SetViewport';
 
 @vtexIdAuthenticated()
-@setViewport
-@checkConnection
 export default class Cart extends React.Component {
   constructor(props) {
     super(props);

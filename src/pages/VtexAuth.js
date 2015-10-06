@@ -3,11 +3,6 @@ import React from 'react';
 import VtexActions from 'actions/VtexActions';
 import VendorStore from 'stores/VendorStore';
 
-import checkConnection from 'utils/CheckConnection';
-import setViewport from 'utils/SetViewport';
-
-@setViewport
-@checkConnection
 export default class VtexAuth extends React.Component {
   constructor(props) {
     super(props);
@@ -27,18 +22,15 @@ export default class VtexAuth extends React.Component {
 
   onVendorChange(state) {
     if(state.get('vtexIdLogged')) {
-      let that = this;
       setTimeout(() =>  {
-        that.props.history.pushState(null, '/');
+        this.props.history.pushState(null, '/');
       }, 0);
     }
   }
 
-
   render() {
     return (
-      <div>
-      </div>
+      <div></div>
     );
   }
 }
