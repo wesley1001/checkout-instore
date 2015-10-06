@@ -15,7 +15,7 @@ import ErrorNotifier from 'components/ErrorNotifier';
 import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
 
 @vtexIdAuthenticated()
-export default class Shop extends React.Component {
+export default class ShopPage extends React.Component {
   constructor(props) {
     super(props);
 

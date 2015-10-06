@@ -13,7 +13,7 @@ import ErrorNotifier from 'components/ErrorNotifier';
 import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
 
 @vtexIdAuthenticated()
-export default class Home extends React.Component {
+export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
 

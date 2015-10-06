@@ -13,7 +13,7 @@ import ErrorNotifier from 'components/ErrorNotifier';
 import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
 
 @vtexIdAuthenticated()
-export default class Payment extends React.Component {
+export default class PaymentPage extends React.Component {
   constructor(props) {
     super(props);
 
