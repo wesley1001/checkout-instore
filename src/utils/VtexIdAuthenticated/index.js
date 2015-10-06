@@ -28,7 +28,7 @@ function vtexIdAuthenticated(target) {
       render() {
         return (
           <div className="vtexid-authenticated-component">
-            <Component {...Object.assign({}, this.props, this.state)} />
+            {this.state.vendor.get('vtexIdLogged') ? <Component {...Object.assign({}, this.props, this.state)} /> : ''}
           </div>
         );
       }

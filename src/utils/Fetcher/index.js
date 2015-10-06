@@ -109,6 +109,48 @@ class Fetcher {
 
     return promise;
   }
+
+  getProfileSystemData(accountName, email) {
+    const entity = 'VN', query = `user=${email}`, fields = ['store'];
+    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
+
+    let configs = {
+      'headers': {
+        'Accept': 'application/vnd.vtex.ds.v10+json',
+        'Content-Type': 'application/vnd.vtex.ds.v10+json',
+        'VtexIdclientAutCookie': Cookies.get('VtexIdclientAutCookie'),
+        'REST-Range': 'resources=0-99'
+      }
+    };
+
+    return axios.get(url, configs).then((response) => {
+      let data = response.data;
+      if(data && data.length) {
+        return data[0];
+      }
+      return {store: undefined};
+    }, (err) => {
+      console.log('error', err);
+    });
+  }
+
+  getStoreData(accountName, id) {
+    const fields = ['name', 'tradePolicy'];
+    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
+
+    let configs = {
+      'headers': {
+        'Accept': 'application/vnd.vtex.ds.v10+json',
+        'Content-Type': 'application/vnd.vtex.ds.v10+json',
+        'VtexIdclientAutCookie': Cookies.get('VtexIdclientAutCookie'),
+        'REST-Range': 'resources=0-99'
+      }
+    };
+
+    return axios.get(url, configs).then((response) => {
+      return response.data;
+    });
+  }
 }
 
 export default new Fetcher();

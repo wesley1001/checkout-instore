@@ -2,7 +2,10 @@ import React from 'react';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
+import VendorStore from 'stores/VendorStore';
+
 import CartActions from 'actions/CartActions';
+import VtexActions from 'actions/VtexActions';
 
 import UserAuthentication from 'components/UserAuthentication';
 import Logo from 'components/GeneralLogo';
@@ -36,6 +39,11 @@ export default class HomePage extends React.Component {
       CartActions.getOrderForm();
     } else {
       CartActions.clearCart.defer(orderForm);
+    }
+
+    const storeData = VendorStore.getState().get('store');
+    if(storeData) {
+      VtexActions.getStoreInfo(storeData.store);
     }
   }
 

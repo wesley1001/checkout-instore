@@ -10,7 +10,9 @@ class VendorStore {
     this.bindActions(VtexActions);
 
     this.state = Immutable.Map({
-      vtexIdLogged: false
+      vtexIdLogged: false,
+      user: undefined,
+      store: undefined
     });
   }
 
@@ -24,6 +26,12 @@ class VendorStore {
   onVtexIdAuthFailed(error) {
     this.setState(this.state.set('vtexIdLogged', false));
     this.setState(this.state.set('vendorId', undefined));
+  }
+  onGetStoreInfoSuccess(data) {
+    let store = Object.assign({}, this.state.get('store'), data);
+    this.setState(this.state.set('store', store));
+  }
+  onGetStoreInfoFail(error) {
   }
 }
 
