@@ -25,10 +25,6 @@ class VtexActions {
     });
   }
 
-  logout() {
-    vtexid.logout();
-  }
-
   VtexIdAuthSuccess(data){
     data.logged = true;
     this.dispatch(data);

@@ -7,6 +7,7 @@ import checkConnection from 'utils/CheckConnection';
 import setViewport from 'utils/SetViewport';
 
 @setViewport
+@checkConnection
 export default class VtexAuth extends React.Component {
   constructor(props) {
     super(props);

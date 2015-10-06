@@ -6,6 +6,10 @@ class AuthenticationHelper {
     });
     vtexid.start({returnUrl: window.location.href, canClose: false });
   }
+
+  logout() {
+    vtexid.logout();
+  }
 }
 
 export default new AuthenticationHelper();
