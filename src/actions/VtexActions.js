@@ -5,6 +5,8 @@ import AuthenticationHelper from 'utils/AuthenticationHelper';
 
 class VtexActions {
   checkLogin() {
+    this.dispatch();
+
     Fetcher.checkVtexIdAuth(Cookies.get('VtexIdclientAutCookie')).then((userData) => {
       Fetcher.getProfileSystemData('dreamshop', userData.user).then((response) => {
         const data = {
