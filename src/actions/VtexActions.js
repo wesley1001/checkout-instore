@@ -7,8 +7,8 @@ class VtexActions {
   checkLogin() {
     this.dispatch();
 
-    Fetcher.checkVtexIdAuth(Cookies.get('VtexIdclientAutCookie')).then((userData) => {
-      Fetcher.getProfileSystemData('dreamshop', userData.user).then((response) => {
+    Fetcher.checkVtexIdAuth().then((userData) => {
+      Fetcher.getProfileSystemData('omniera', userData.user).then((response) => {
         const data = {
           user: userData,
           store: response

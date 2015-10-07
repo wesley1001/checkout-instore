@@ -7,6 +7,10 @@ class AuthenticationHelper {
     vtexid.start({returnUrl: window.location.href, canClose: false });
   }
 
+  getVtexAuthToken() {
+    return Cookies.get('VtexIdclientAutCookie') || '';
+  }
+
   logout() {
     vtexid.logout();
   }

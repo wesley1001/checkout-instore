@@ -1,3 +1,5 @@
+import AuthenticationHelper from 'utils/AuthenticationHelper';
+
 import axios from 'axios';
 
 class Fetcher {
@@ -86,13 +88,14 @@ class Fetcher {
     return axios.post(`${this.checkoutUrl}/${orderForm}/transaction`, transactionRequest);
   }
 
-  checkVtexIdAuth(cookie) {
+  checkVtexIdAuth() {
     let promise = new Promise((resolve, reject) => {
-      if(!cookie) {
-        reject('cookies not found');
+      const token = AuthenticationHelper.getVtexAuthToken();
+      if(!token) {
+        reject('token not found');
       }
       else {
-        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(cookie)}`;
+        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(token)}`;
 
         axios.get(url).then((response) => {
           if(response.data !== null) {
@@ -119,7 +122,7 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'VtexIdclientAutCookie': Cookies.get('VtexIdclientAutCookie'),
+        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };
@@ -143,7 +146,7 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'VtexIdclientAutCookie': Cookies.get('VtexIdclientAutCookie'),
+        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };
