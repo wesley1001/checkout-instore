@@ -4,8 +4,6 @@ import Fetcher from 'utils/Fetcher';
 
 class CartActions {
   getOrderForm() {
-    this.dispatch();
-
     Fetcher.getOrderForm().then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {

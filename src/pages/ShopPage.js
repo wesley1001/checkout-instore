@@ -12,9 +12,6 @@ import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
-
-@vtexIdAuthenticated()
 export default class ShopPage extends React.Component {
   constructor(props) {
     super(props);

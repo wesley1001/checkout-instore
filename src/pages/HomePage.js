@@ -13,9 +13,6 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
-
-@vtexIdAuthenticated()
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -36,14 +33,14 @@ export default class HomePage extends React.Component {
     const orderForm = this.state.cart.get('orderForm');
 
     if(!orderForm) {
-      CartActions.getOrderForm();
+      CartActions.getOrderForm.defer();
     } else {
       CartActions.clearCart.defer(orderForm);
     }
 
     const storeData = VendorStore.getState().get('store');
     if(storeData) {
-      VtexActions.getStoreInfo(storeData.store);
+      VtexActions.getStoreInfo.defer(storeData.store);
     }
   }
 

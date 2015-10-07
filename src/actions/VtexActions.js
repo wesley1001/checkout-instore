@@ -5,8 +5,6 @@ import AuthenticationHelper from 'utils/AuthenticationHelper';
 
 class VtexActions {
   checkLogin() {
-    this.dispatch();
-
     Fetcher.checkVtexIdAuth().then((userData) => {
       Fetcher.getProfileSystemData('omniera', userData.user).then((response) => {
         const data = {
@@ -35,10 +33,24 @@ class VtexActions {
   }
 
   getStoreInfo(storeId) {
-    return Fetcher.getStoreData('omniera', storeId).then((response) => {
-      this.actions.GetStoreInfoSuccess(response);
-    }).catch((err) => {
+    let promise = new Promise((resolve, reject) => {
+      if(!storeId) {
+        const reason = 'storeId is undefined. We\'ll use default trade policy';
+        this.actions.GetStoreInfoFail({message: reason});
+        reject(reason);
+      }
+
+      Fetcher.getStoreData('omniera', storeId).then((response) => {
+        this.actions.GetStoreInfoSuccess(response);
+        resolve(response);
+      }).catch((err) => {
+        const reason = 'Fail on get trade policy. We\'ll use default trade policy';
+        this.actions.GetStoreInfoFail({message: reason});
+        reject(reason);
+      });
     });
+
+    return promise;
   }
 
   GetStoreInfoSuccess(data){
@@ -46,6 +58,7 @@ class VtexActions {
   }
 
   GetStoreInfoFail(error){
+    console.log(error.message);
     this.dispatch(error);
   }
 }

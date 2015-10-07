@@ -11,7 +11,6 @@ import PaymentPage from './pages/PaymentPage';
 
 export default (
   <Route path='/' component={App}>
-    <Route path='vtex/auth' component={VtexAuth} />
     <IndexRoute component={HomePage} />
     <Route path='shop' component={ShopPage} />
     <Route path='cart' component={CartPage} />
