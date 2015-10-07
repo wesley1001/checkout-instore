@@ -35,7 +35,7 @@ class VtexActions {
   }
 
   getStoreInfo(storeId) {
-    return Fetcher.getStoreData('dreamshop', storeId).then((response) => {
+    return Fetcher.getStoreData('omniera', storeId).then((response) => {
       this.actions.GetStoreInfoSuccess(response);
     }).catch((err) => {
     });
@@ -48,7 +48,6 @@ class VtexActions {
   GetStoreInfoFail(error){
     this.dispatch(error);
   }
-
 }
 
 export default flux.createActions(VtexActions);
