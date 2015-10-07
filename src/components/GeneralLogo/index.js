@@ -8,7 +8,7 @@ import './index.less';
 export default class Logo extends React.Component {
   render () {
     return (
-      <div className="GeneralLogo component">
+      <div className="GeneralLogo component hide">
         <Link to="/" className="logo"><img src={logo_instore}/></Link>
       </div>
     );

@@ -11,7 +11,7 @@
   -ms-animation-name: @name;
           animation-name: @name;
 }
-.animation-duration(@duration: 0.8s) {
+.animation-duration(@duration: 1.2s) {
   -webkit-animation-duration: @duration;
   -moz-animation-duration: @duration;
   -ms-animation-duration: @duration;
@@ -40,4 +40,11 @@
   -moz-animation-direction: @direction;
   -ms-animation-direction: @direction;
           animation-direction: @direction;
+}
+
+
+.drop-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @r: 0, @g: 0, @b: 0, @alpha: 0.25) {
+  -webkit-box-shadow: @x @y @blur @spread rgba(@r, @g, @b, @alpha);
+  -moz-box-shadow:  @x @y @blur @spread rgba(@r, @g, @b, @alpha);
+  box-shadow:   @x @y @blur @spread rgba(@r, @g, @b, @alpha);
 }

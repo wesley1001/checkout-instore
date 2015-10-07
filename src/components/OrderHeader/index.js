@@ -3,7 +3,7 @@ import React from 'react';
 export default class OrderHeader extends React.Component {
   render() {
     return (
-        <h2 className="OrderHeader component title main-title">
+        <h2 className="OrderHeader component title main-title hide">
           <span className="main-title-name">Produtos</span>
           <span className="main-title-border"></span>
         </h2>

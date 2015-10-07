@@ -2,11 +2,10 @@
 @import '../../styles/mixins.less';
 
 .ScanIndicator {
-  background: @LightGrey;
+  // background: @LightGrey;
   color: @DarkGrey;
-  display: block;
-  margin-top: 15px;
-  padding: 15px;
+  // margin-top: 15px;
+  // padding: 15px;
   position: fixed;
   text-decoration: none;
   height: 100%;
@@ -18,25 +17,185 @@
     margin-top: 20px;
   }
 
-  .image { width: 80%; }
-
-  .text { font-size: 1.5em; }
-
-  .image,
+  .button-ref-left {
+    transform-origin: center left;
+    .border-radius(0 5px 5px 0);
+    .animation-name(buttonLeftBounce);
+  }
+  
+  .button-ref-right {
+    right: 0;
+    transform-origin: center right;
+    .border-radius(5px 0 0 5px);
+    .animation-name(buttonRightBounce);
+  }
+  
   .button-ref {
-    .animation-name(buttonBounce);
-    .animation-duration();
-    .animation-timing-function();
-    .animation-iteration-count(2);
+    position: fixed;
+    .animation-duration(6s);
+    .animation-timing-function;
+    .animation-iteration-count;
   }
 
   .button-ref {
-    background: red;
-    height: 50px;
-    width: 20px;
+    background: @DarkGrey;
+    height: 70px;
+    width: 15px;
+  }
+
+  .barcode-laser {
+    position: fixed;
+    top: -8px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .barcode-laser-light {
+    display: inline-block;
+    height: 16px;
+    width: 8px;
+    margin: 0 3px;
+    .animation-name(laserLightPulse);
+    .border-radius;
+    .animation-duration(6s);
+    .animation-timing-function(ease-in);
+    .animation-iteration-count;
   }
 }
 
+
+// Tablet Portrait
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait) {
+
+  .ProductScan {
+    .image-wrapper { margin-top: 80px; }
+  }
+}
+
+
+@keyframes buttonLeftBounce {
+  0% {
+    left: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  } 
+  15% {
+    left: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  20% {
+    left: 0;
+    background: rgba(0, 0, 0, 1);
+  }
+  75% {
+    left: 0;
+    background: rgba(0, 0, 0, 1);
+  }
+  80% {
+    left: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    left: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes buttonRightBounce {
+  0% {
+    right: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  } 
+  15% {
+    right: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  20% {
+    right: 0;
+    background: rgba(0, 0, 0, 1);
+  }
+  75% {
+    right: 0;
+    background: rgba(0, 0, 0, 1);
+  }
+  80% {
+    right: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    right: -10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes laserLightPulse {
+  0% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  17% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  18% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  25% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  32% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  37% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  42% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  47% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  52% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  57% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  62% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  67% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  72% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  77% {
+    background: red;
+    .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
+  }
+  77.5% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+  100% {
+    background: #f1c0c0;
+    .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
+  }
+}
 
 
 // Mobile
@@ -64,35 +223,3 @@
   }
 }
 
-
-// Tablet Portrait
-@media only screen
-  and (min-device-width: 768px)
-  and (max-device-width: 1024px)
-  and (orientation: portrait) {
-
-  .ProductScan {
-    .image-wrapper { margin-top: 80px; }
-  }
-}
-
-
-@keyframes buttonBounce { 
-    0% { 
-        opacity: 0; 
-        transform: scale(.3); 
-    } 
-
-    50% { 
-        opacity: 1; 
-        transform: scale(1.05); 
-    } 
-
-    70% { 
-        transform: scale(.9); 
-    } 
-
-    100% { 
-        transform: scale(1); 
-    } 
-} 

@@ -7,10 +7,16 @@ export default class ScanIndicator extends React.Component {
   render() {
     return (
       <div className="ScanIndicator component">
-        <div className="text">Adicione os produtos utilizando o leitor</div>
         <div className="image-wrapper">
-          <img className="image" src={pinpad}/>
-          <div className="button-ref"></div> 
+          <div className="barcode-laser">
+            <span className="barcode-laser-light"></span>
+            <span className="barcode-laser-light"></span>
+            <span className="barcode-laser-light"></span>
+            <span className="barcode-laser-light"></span>
+            <span className="barcode-laser-light"></span>
+          </div> 
+          <div className="button-ref button-ref-left"></div> 
+          <div className="button-ref button-ref-right"></div> 
         </div>
       </div>
     );
