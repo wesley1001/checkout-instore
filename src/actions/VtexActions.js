@@ -6,7 +6,8 @@ import AuthenticationHelper from 'utils/AuthenticationHelper';
 class VtexActions {
   checkLogin() {
     Fetcher.checkVtexIdAuth().then((userData) => {
-      Fetcher.getProfileSystemData('omniera', userData.user).then((response) => {
+      const storename = this.actions.GetStoreName();
+      Fetcher.getProfileSystemData(storename, userData.user).then((response) => {
         const data = {
           user: userData,
           store: response
@@ -40,7 +41,8 @@ class VtexActions {
         reject(reason);
       }
 
-      Fetcher.getStoreData('omniera', storeId).then((response) => {
+      const storename = this.actions.GetStoreName();
+      Fetcher.getStoreData(storename, storeId).then((response) => {
         this.actions.GetStoreInfoSuccess(response);
         resolve(response);
       }).catch((err) => {
@@ -60,6 +62,10 @@ class VtexActions {
   GetStoreInfoFail(error){
     console.log(error.message);
     this.dispatch(error);
+  }
+
+  GetStoreName() {
+    return window.location.hostname.split('.vtex')[0];
   }
 }
 
