@@ -38,7 +38,7 @@ class VtexActions {
       if(!storeId) {
         const reason = 'storeId is undefined. We\'ll use default trade policy';
         this.actions.GetStoreInfoFail({message: reason});
-        reject(reason);
+        return reject(reason);
       }
 
       const storename = this.actions.GetStoreName();
