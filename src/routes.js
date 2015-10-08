@@ -4,17 +4,17 @@ import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
 
 import VtexAuth from './pages/VtexAuth';
-import Auth from './pages/Auth';
-import Shop from './pages/Shop';
-import Cart from './pages/Cart';
-import Payment from './pages/Payment';
+import HomePage from './pages/HomePage';
+import ShopPage from './pages/ShopPage';
+import CartPage from './pages/CartPage';
+import PaymentPage from './pages/PaymentPage';
 
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={Auth} />
     <Route path='vtex/auth' component={VtexAuth} />
-    <Route path='shop' component={Shop} />
-    <Route path='cart' component={Cart} />
-    <Route path='payment' component={Payment} />
+    <IndexRoute component={HomePage} />
+    <Route path='shop' component={ShopPage} />
+    <Route path='cart' component={CartPage} />
+    <Route path='payment' component={PaymentPage} />
   </Route>
 );

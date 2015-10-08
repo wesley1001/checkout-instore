@@ -11,13 +11,9 @@ import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
 import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
-import checkConnection from 'utils/CheckConnection';
-import setViewport from 'utils/SetViewport';
 
 @vtexIdAuthenticated()
-@setViewport
-@checkConnection
-export default class Auth extends React.Component {
+export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
