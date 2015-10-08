@@ -8,13 +8,14 @@ export default class ScanIndicator extends React.Component {
     return (
       <div className="ScanIndicator component">
         <div className="image-wrapper">
-          <div className="barcode-laser">
+          <div className="barcode-laser hide">
             <span className="barcode-laser-light"></span>
             <span className="barcode-laser-light"></span>
             <span className="barcode-laser-light"></span>
             <span className="barcode-laser-light"></span>
             <span className="barcode-laser-light"></span>
           </div> 
+          <div className="barcode-laser-bar"></div>
           <div className="button-ref button-ref-left"></div> 
           <div className="button-ref button-ref-right"></div> 
         </div>
