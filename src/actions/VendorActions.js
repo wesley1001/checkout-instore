@@ -3,7 +3,7 @@ import flux from '../flux';
 import Fetcher from 'utils/Fetcher';
 import AuthenticationHelper from 'utils/AuthenticationHelper';
 
-class VtexActions {
+class VendorActions {
   checkLogin() {
     Fetcher.checkVtexIdAuth().then((userData) => {
       const storename = this.actions.GetStoreName();
@@ -69,4 +69,4 @@ class VtexActions {
   }
 }
 
-export default flux.createActions(VtexActions);
+export default flux.createActions(VendorActions);

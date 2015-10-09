@@ -5,7 +5,7 @@ import CartStore from 'stores/CartStore';
 import VendorStore from 'stores/VendorStore';
 
 import CartActions from 'actions/CartActions';
-import VtexActions from 'actions/VtexActions';
+import VendorActions from 'actions/VendorActions';
 
 import UserAuthentication from 'components/UserAuthentication';
 import Logo from 'components/GeneralLogo';
@@ -40,7 +40,7 @@ export default class HomePage extends React.Component {
 
     const storeData = VendorStore.getState().get('store');
     if(storeData) {
-      VtexActions.getStoreInfo.defer(storeData.store);
+      VendorActions.getStoreInfo.defer(storeData.store);
     }
   }
 

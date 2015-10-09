@@ -2,12 +2,12 @@ import flux from '../flux';
 import Immutable from 'immutable';
 import immutable from 'alt/utils/ImmutableUtil';
 
-import VtexActions from 'actions/VtexActions';
+import VendorActions from 'actions/VendorActions';
 
 @immutable
 class VendorStore {
   constructor() {
-    this.bindActions(VtexActions);
+    this.bindActions(VendorActions);
 
     this.state = Immutable.Map({
       vtexIdLogged: false,

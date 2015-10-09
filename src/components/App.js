@@ -1,7 +1,7 @@
 import React from 'react';
 
 import VendorStore from 'stores/VendorStore';
-import VtexActions from 'actions/VtexActions';
+import VendorActions from 'actions/VendorActions';
 
 import 'styles/main.less';
 
@@ -25,7 +25,7 @@ export default class App extends React.Component {
     VendorStore.listen(this.onVendorChange);
 
     if(!this.state.vendor.get('vtexIdLogged')) {
-      VtexActions.checkLogin();
+      VendorActions.checkLogin();
     }
   }
 
