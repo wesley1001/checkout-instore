@@ -4,7 +4,8 @@ import Fetcher from 'utils/Fetcher';
 import AuthenticationHelper from 'utils/AuthenticationHelper';
 
 class VendorActions {
-  checkLogin() {
+  CheckLogin() {
+    this.dispatch();
     Fetcher.checkVtexIdAuth().then((userData) => {
       const storename = this.actions.GetStoreName();
       Fetcher.getProfileSystemData(storename, userData.user).then((response) => {
@@ -16,11 +17,11 @@ class VendorActions {
         this.actions.VtexIdAuthSuccess(data);
       }, (err) => {
         console.log('error on get user profile data', err);
-        AuthenticationHelper.login(this.actions.checkLogin);
+        AuthenticationHelper.login(this.actions.CheckLogin);
       });
     }, (err) => {
       console.log('error on check user auth', err);
-      AuthenticationHelper.login(this.actions.checkLogin);
+      AuthenticationHelper.login(this.actions.CheckLogin);
     });
   }
 

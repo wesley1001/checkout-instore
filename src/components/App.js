@@ -25,7 +25,7 @@ export default class App extends React.Component {
     VendorStore.listen(this.onVendorChange);
 
     if(!this.state.vendor.get('vtexIdLogged')) {
-      VendorActions.checkLogin();
+      VendorActions.CheckLogin();
     }
   }
 
