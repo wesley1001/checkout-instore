@@ -3,7 +3,7 @@ import React from 'react';
 export default class PaymentForm extends React.Component {
   componentDidUpdate() {
     if(this.props.cart.get('gatewayUrl')) {
-      React.findDOMNode(this.refs.setPayment).submit();
+      this.refs.setPayment.submit();
     }
   }
 
