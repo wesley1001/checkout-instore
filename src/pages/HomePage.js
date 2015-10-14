@@ -40,7 +40,7 @@ export default class HomePage extends React.Component {
 
     const storeData = VendorStore.getState().get('store');
     if(storeData) {
-      VendorActions.getStoreInfo.defer(storeData.store);
+      VendorActions.GetStoreInfo.defer(storeData.store);
     }
   }
 
