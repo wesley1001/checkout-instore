@@ -40,31 +40,26 @@ class Fetcher {
     return axios.put(`${this.checkoutUrl}/${orderFormId}/isCheckedIn`, {isCheckedIn: true});
   }
 
-  getProduct(code, sc) {
-    let endpoint = `/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`;
-    if(sc) {
-      endpoint += `&sc=${sc}`;
-    }
-    
-    return axios.get(endpoint);
+  getProduct(code) {
+    return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`);
   }
 
-  addToCart(orderForm, items) {
+  addToCart(orderForm, items, sc = 1) {
     const checkoutRequest = {
       orderItems: items,
       expectedOrderFormSections: this.orderFormSections
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/items`, checkoutRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items?sc=${sc}`, checkoutRequest);
   }
 
-  updateItems(orderForm, items) {
+  updateItems(orderForm, items, sc = 1) {
     const checkoutRequest = {
       orderItems: items,
       expectedOrderFormSections: this.orderFormSections
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update`, checkoutRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update?sc=${sc}`, checkoutRequest);
   }
 
   setPayment(orderForm, payment) {

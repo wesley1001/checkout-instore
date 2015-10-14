@@ -58,9 +58,9 @@ export default class BarcodeReader extends React.Component {
       if(cartItem) {
         item.quantity = cartItem.quantity + 1;
         item.index = _.findIndex(orderForm.items, (item) => item.id.toString() === sku.toString())
-        CartActions.updateCart.defer({orderFormId: orderForm.orderFormId, item: [item]});
+        CartActions.updateCart.defer({orderFormId: orderForm.orderFormId, item: [item], sc: this.props.sc});
       } else {
-        CartActions.addToCart.defer({orderFormId: orderForm.orderFormId, item: [item]});
+        CartActions.addToCart.defer({orderFormId: orderForm.orderFormId, item: [item], sc: this.props.sc});
       }
 
       CheckoutActions.clearSkuBuffer.defer();
@@ -75,7 +75,7 @@ export default class BarcodeReader extends React.Component {
     });
 
     if (this.state.barcode.length === 13) {
-      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
+      CheckoutActions.findProduct(this.state.barcode);
     }
   }
 
@@ -86,7 +86,7 @@ export default class BarcodeReader extends React.Component {
     }
 
     if (this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
+      CheckoutActions.findProduct(this.state.barcode);
       this.setState({ barcode: '' });
     }
   }
@@ -118,7 +118,7 @@ export default class BarcodeReader extends React.Component {
     }
 
     if (this.state.isReading && this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
+      CheckoutActions.findProduct(this.state.barcode);
     }
   }
 
