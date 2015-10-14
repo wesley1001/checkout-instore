@@ -155,11 +155,33 @@ class Fetcher {
   }
 
   getStoreByHost() {
-    let promise = new Promise((resolve, reject) => {
-      resolve({MainAccountName: window.location.hostname.split('.vtex')[0]});
-    });
+    let cached = {};
+    return (() => {
+      const hostname = window.location.hostname;
+      if(cached[hostname] != undefined) {
+        let prom = new Promise((resolve, reject) => {
+          resolve(cached[hostname]);
+        });
 
-    return promise;
+        return prom;
+      }
+
+      const url = `http://licensemanager.vtex.com.br/api/license-manager/pvt/accounts/hosts/${hostname}`;
+
+      let configs = {
+        'headers': {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'V-VTEX-API-AppToken': AuthenticationHelper.getVtexAuthToken(),
+          'X-VTEX-API-AppKey': 'vtexappkey-appvtex'
+        },
+        withCredentials: true
+      };
+
+      return axios.get(url, configs).then((response) => {
+        cached[hostname] = response.data;
+      });
+    })();
   }
 }
 
