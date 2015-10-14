@@ -38,9 +38,19 @@ class VendorStore {
     this.setState(this.state.set('loading', false));
   }
 
+  onGetStoreInfo() {
+    this.setState(this.state.set('loading', true));
+    this.setState(this.state.set('store', this.state.merge({tradePolicy: undefined})));
+  }
+
   onGetStoreInfoSuccess(data) {
-    let store = Object.assign({}, this.state.get('store'), data);
-    this.setState(this.state.set('store', store));
+    this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('store', this.state.merge(data)));
+  }
+
+  onGetStoreInfoFail(err) {
+    this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('store', this.state.merge({tradePolicy: undefined})));
   }
 }
 
