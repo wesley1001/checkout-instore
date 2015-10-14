@@ -40,8 +40,13 @@ class Fetcher {
     return axios.put(`${this.checkoutUrl}/${orderFormId}/isCheckedIn`, {isCheckedIn: true});
   }
 
-  getProduct(code) {
-    return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`);
+  getProduct(code, sc) {
+    let endpoint = `/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`;
+    if(sc) {
+      endpoint += `&sc=${sc}`;
+    }
+    
+    return axios.get(endpoint);
   }
 
   addToCart(orderForm, items) {

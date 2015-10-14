@@ -75,7 +75,7 @@ export default class BarcodeReader extends React.Component {
     });
 
     if (this.state.barcode.length === 13) {
-      CheckoutActions.findProduct(this.state.barcode);
+      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
     }
   }
 
@@ -86,7 +86,7 @@ export default class BarcodeReader extends React.Component {
     }
 
     if (this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct(this.state.barcode);
+      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
       this.setState({ barcode: '' });
     }
   }
@@ -118,7 +118,7 @@ export default class BarcodeReader extends React.Component {
     }
 
     if (this.state.isReading && this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct(this.state.barcode);
+      CheckoutActions.findProduct({ code: this.state.barcode, sc: this.props.sc });
     }
   }
 
