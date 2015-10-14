@@ -1,9 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
 import { findDOMNode } from 'react-dom';
 import GeneralFooter from 'components/GeneralFooter';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('GeneralFooter', () => {
   let component,

@@ -1,9 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
 import { findDOMNode } from 'react-dom';
 import ProductScan from 'components/ProductScan';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('ProductScan', () => {
   let component,

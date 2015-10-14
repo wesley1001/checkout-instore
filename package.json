@@ -55,6 +55,7 @@
     "mocha": "^2.3.3",
     "node-libs-browser": "^0.5.2",
     "phantomjs": "^1.9.18",
+    "react-addons-test-utils": "^0.14.0",
     "react-proxy-loader": "^0.3.4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.0",

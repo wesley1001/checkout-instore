@@ -1,9 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
 import { findDOMNode } from 'react-dom';
 import GeneralLoader from 'components/GeneralLoader';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('GeneralLoader', () => {
   let component,
