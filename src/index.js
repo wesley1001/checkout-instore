@@ -1,5 +1,6 @@
 import React from 'react';
-import {Router} from 'react-router';
+import { render } from 'react-dom';
+import { Router } from 'react-router';
 // import createBrowserHistory from 'history/lib/createBrowserHistory';
 import routes from './routes';
 
@@ -7,5 +8,5 @@ import routes from './routes';
 
 const container = document.getElementById('app-container');
 
-React.render(<Router>{routes}</Router>, container);
+render(<Router>{routes}</Router>, container);
 // React.render(<Router history={history}>{routes}</Router>, container);
