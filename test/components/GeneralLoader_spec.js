@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import React from 'react/addons';
+import { findDOMNode } from 'react-dom';
 import GeneralLoader from 'components/GeneralLoader';
 
 let TestUtils = React.addons.TestUtils;
@@ -11,7 +12,7 @@ describe('GeneralLoader', () => {
   describe('given empty loading status', () => {
     beforeEach(() => {
       component = TestUtils.renderIntoDocument(<GeneralLoader />);
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
@@ -32,7 +33,7 @@ describe('GeneralLoader', () => {
       component = TestUtils.renderIntoDocument(
         <GeneralLoader loading={false} />
       );
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
@@ -53,7 +54,7 @@ describe('GeneralLoader', () => {
       component = TestUtils.renderIntoDocument(
         <GeneralLoader loading={true} />
       );
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {

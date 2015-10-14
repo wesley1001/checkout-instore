@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import React from 'react/addons';
+import { findDOMNode } from 'react-dom';
 import GeneralFooter from 'components/GeneralFooter';
 
 let TestUtils = React.addons.TestUtils;
@@ -10,7 +11,7 @@ describe('GeneralFooter', () => {
 
   beforeEach(() => {
     component = TestUtils.renderIntoDocument(<GeneralFooter />);
-    element = React.findDOMNode(component);
+    element = findDOMNode(component);
   });
 
   it('should render the element', () => {

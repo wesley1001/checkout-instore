@@ -37,11 +37,11 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentDidUpdate() {
-    React.findDOMNode(this.refs.barcodeInput).focus();
+    this.refs.barcodeInput.focus();
   }
 
   handleBlur() {
-    React.findDOMNode(this.refs.barcodeInput).focus();
+    this.refs.barcodeInput.focus();
   }
 
   onCheckoutChange(state) {

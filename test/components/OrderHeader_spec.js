@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import React from 'react/addons';
+import { findDOMNode } from 'react-dom';
 import OrderHeader from 'components/OrderHeader';
 
 let TestUtils = React.addons.TestUtils;
@@ -10,7 +11,7 @@ describe('OrderHeader', () => {
 
   beforeEach(() => {
     component = TestUtils.renderIntoDocument(<OrderHeader />);
-    element = React.findDOMNode(component);
+    element = findDOMNode(component);
   });
 
   it('should render the element', () => {
