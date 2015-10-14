@@ -1,3 +1,5 @@
+import AuthenticationHelper from 'utils/AuthenticationHelper';
+
 import axios from 'axios';
 
 class Fetcher {
@@ -86,17 +88,18 @@ class Fetcher {
     return axios.post(`${this.checkoutUrl}/${orderForm}/transaction`, transactionRequest);
   }
 
-  checkVtexIdAuth(cookie) {
+  checkVtexIdAuth() {
     let promise = new Promise((resolve, reject) => {
-      if(!cookie) {
-        reject('cookies not found');
+      const token = AuthenticationHelper.getVtexAuthToken();
+      if(!token) {
+        reject('token not found');
       }
       else {
-        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(cookie)}`;
+        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(token)}`;
 
         axios.get(url).then((response) => {
           if(response.data !== null) {
-            resolve('authorized');
+            resolve(response.data);
           }
           else {
             reject('not authorized');
@@ -105,6 +108,55 @@ class Fetcher {
           reject('not authorized');
         });
       }
+    });
+
+    return promise;
+  }
+
+  getProfileSystemData(accountName, email) {
+    const entity = 'VN', query = `user=${email}`, fields = ['store'];
+
+    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
+
+    let configs = {
+      'headers': {
+        'Accept': 'application/vnd.vtex.ds.v10+json',
+        'Content-Type': 'application/vnd.vtex.ds.v10+json',
+        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
+        'REST-Range': 'resources=0-99'
+      }
+    };
+
+    return axios.get(url, configs).then((response) => {
+      let data = response.data;
+      if(data && data.length) {
+        return data[0];
+      }
+      return {store: undefined};
+    }, (err) => {
+      console.log('error', err);
+    });
+  }
+
+  getStoreData(accountName, id) {
+    const fields = ['name', 'tradePolicy'];
+    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
+
+    let configs = {
+      'headers': {
+        'Accept': 'application/vnd.vtex.ds.v10+json',
+        'Content-Type': 'application/vnd.vtex.ds.v10+json',
+        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
+        'REST-Range': 'resources=0-99'
+      }
+    };
+
+    return axios.get(url, configs).then((response) => response.data);
+  }
+
+  getStoreByHost() {
+    let promise = new Promise((resolve, reject) => {
+      resolve({MainAccountName: window.location.hostname.split('.vtex')[0]});
     });
 
     return promise;

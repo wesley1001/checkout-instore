@@ -1,6 +1,7 @@
 import React from 'react';
 
 import VendorStore from 'stores/VendorStore';
+import VendorActions from 'actions/VendorActions';
 
 import 'styles/main.less';
 
@@ -20,6 +21,14 @@ export default class App extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
+  componentDidMount() {
+    VendorStore.listen(this.onVendorChange);
+
+    if(!this.state.vendor.get('vtexIdLogged')) {
+      VendorActions.CheckLogin();
+    }
+  }
+
   onVendorChange(state) {
     this.setState({vendor: state});
   }
@@ -27,7 +36,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        {this.props.children}
+        {this.state.vendor.get('vtexIdLogged') ? this.props.children : ''}
       </div>
     );
   }

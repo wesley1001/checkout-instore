@@ -12,9 +12,6 @@ import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import vtexIdAuthenticated from 'utils/VtexIdAuthenticated';
-
-@vtexIdAuthenticated()
 export default class CartPage extends React.Component {
   constructor(props) {
     super(props);
