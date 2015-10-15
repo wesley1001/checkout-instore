@@ -58,9 +58,17 @@ export default class BarcodeReader extends React.Component {
       if(cartItem) {
         item.quantity = cartItem.quantity + 1;
         item.index = _.findIndex(orderForm.items, (item) => item.id.toString() === sku.toString())
-        CartActions.updateCart.defer({orderFormId: orderForm.orderFormId, item: [item], sc: this.props.sc});
+        CartActions.updateCart.defer({
+          orderFormId: orderForm.orderFormId,
+          item: [item],
+          tradePolicy: this.props.tradePolicy
+        });
       } else {
-        CartActions.addToCart.defer({orderFormId: orderForm.orderFormId, item: [item], sc: this.props.sc});
+        CartActions.addToCart.defer({
+          orderFormId: orderForm.orderFormId,
+          item: [item],
+          tradePolicy: this.props.tradePolicy
+        });
       }
 
       CheckoutActions.clearSkuBuffer.defer();

@@ -59,7 +59,7 @@ export default class CartPage extends React.Component {
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
-        <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} sc={checkout.get('sc')}>
+        <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={checkout.get('tradePolicy')}>
           <ProductShowcase
             products={orderForm.items}
             isAddingProduct={cart.get('addLoading')}
