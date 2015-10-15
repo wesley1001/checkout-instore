@@ -113,10 +113,11 @@ class Fetcher {
     return promise;
   }
 
-  getProfileSystemData(accountName, email) {
+  getProfileSystemData(email) {
     const entity = 'VN', query = `user=${email}`, fields = ['store'];
+    const hostname = window.location.hostname;
 
-    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
+    const url = `http://api.vtexcrm.com.br/${hostname}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
 
     let configs = {
       'headers': {
@@ -138,9 +139,10 @@ class Fetcher {
     });
   }
 
-  getStoreData(accountName, id) {
+  getStoreData(id) {
     const fields = ['name', 'tradePolicy'];
-    const url = `http://api.vtexcrm.com.br/${accountName}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
+    const hostname = window.location.hostname;
+    const url = `http://api.vtexcrm.com.br/${hostname}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
 
     let configs = {
       'headers': {
@@ -152,36 +154,6 @@ class Fetcher {
     };
 
     return axios.get(url, configs).then((response) => response.data);
-  }
-
-  getStoreByHost() {
-    let cached = {};
-    return (() => {
-      const hostname = window.location.hostname;
-      if(cached[hostname] != undefined) {
-        let prom = new Promise((resolve, reject) => {
-          resolve(cached[hostname]);
-        });
-
-        return prom;
-      }
-
-      const url = `http://licensemanager.vtex.com.br/api/license-manager/pvt/accounts/hosts/${hostname}`;
-
-      let configs = {
-        'headers': {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'V-VTEX-API-AppToken': AuthenticationHelper.getVtexAuthToken(),
-          'X-VTEX-API-AppKey': 'vtexappkey-appvtex'
-        },
-        withCredentials: true
-      };
-
-      return axios.get(url, configs).then((response) => {
-        cached[hostname] = response.data;
-      });
-    })();
   }
 }
 

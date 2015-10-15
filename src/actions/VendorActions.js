@@ -7,21 +7,16 @@ class VendorActions {
   CheckLogin() {
     this.dispatch();
     Fetcher.checkVtexIdAuth().then((userData) => {
-      Fetcher.getStoreByHost().then((storeData) =>{
-        const storename = storeData.MainAccountName;
-        Fetcher.getProfileSystemData(storename, userData.user).then((response) => {
-          const data = {
-            user: userData,
-            store: response
-          };
+      Fetcher.getProfileSystemData(userData.user).then((response) => {
+        const data = {
+          user: userData,
+          store: response
+        };
 
-          this.actions.VtexIdAuthSuccess(data);
-        }, (err) => {
-          AuthenticationHelper.login(this.actions.CheckLogin);
-        });
+        this.actions.VtexIdAuthSuccess(data);
+      }, (err) => {
+        AuthenticationHelper.login(this.actions.CheckLogin);
       });
-    }, (err) => {
-      AuthenticationHelper.login(this.actions.CheckLogin);
     });
   }
 
@@ -41,17 +36,10 @@ class VendorActions {
       this.actions.GetStoreInfoFail({message: reason});
     }
 
-    Fetcher.getStoreByHost().then((storeData) =>{
-      const storename = storeData.MainAccountName;
-
-      Fetcher.getStoreData(storename, storeId).then((response) => {
-        this.actions.GetStoreInfoSuccess(response);
-      }).catch((err) => {
-        const reason = 'Fail on get trade policy. We\'ll use default trade policy';
-        this.actions.GetStoreInfoFail({message: reason});
-      });
+    Fetcher.getStoreData(storeId).then((response) => {
+      this.actions.GetStoreInfoSuccess(response);
     }).catch((err) => {
-      const reason = 'Fail on get store MainAccountName.';
+      const reason = 'Fail on get trade policy. We\'ll use default trade policy';
       this.actions.GetStoreInfoFail({message: reason});
     });
   }
