@@ -76,7 +76,7 @@ export default class ShopPage extends React.Component {
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
-        <BarcodeReader orderForm={cart.get('orderForm')} searchingProduct={checkout.get('readingBarcode')}>
+        <BarcodeReader orderForm={cart.get('orderForm')} searchingProduct={checkout.get('readingBarcode')} tradePolicy={checkout.get('tradePolicy')}>
           <OrderHeader />
           <ScanIndicator />
           <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
