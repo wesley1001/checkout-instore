@@ -1,12 +1,12 @@
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var httpProxy = require('http-proxy');
-var proxy = new httpProxy.createProxyServer();
-var config = require('./webpack.config');
+import path from 'path';
+import express from 'express';
+import webpack from 'webpack';
+import httpProxy from 'http-proxy';
+import config from './webpack.config';
 
-var app = express();
-var compiler = webpack(config);
+const app = express();
+const compiler = webpack(config);
+const proxy = new httpProxy.createProxyServer();
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -15,38 +15,38 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   if(!req.path.includes('catalog_system')) {
     req.headers['X-VTEX-Janus-Router-CurrentApp-EnvironmentType'] = 'beta';
   }
   next();
 });
 
-app.get('/checkout/instore', function(req, res) {
+app.get('/checkout/instore', (req, res) => {
   res.sendFile(path.join(__dirname, './src/index.html'));
 });
 
 if (config.proxy) {
-  var paths = Object.keys(config.proxy);
+  let paths = Object.keys(config.proxy);
   paths.forEach(function (somePath) {
     console.log(somePath);
-    var proxyOptions;
+    let proxyOptions;
     if (typeof config.proxy[somePath] === 'string') {
       proxyOptions = {target: config.proxy[somePath], ws: true};
     } else {
       proxyOptions = config.proxy[somePath];
     }
-    app.all(somePath, function (req, res) {
+    app.all(somePath, (req, res) => {
       proxy.web(req, res, proxyOptions);
 
-      proxy.on('error', function (error, req, res) {
+      proxy.on('error', (error, req, res) => {
         res.end();
       });
     });
   });
 }
 
-app.listen(3000, 'localhost', function(err) {
+app.listen(3000, 'localhost', (err) => {
   if (err) {
     console.log(err);
     return;

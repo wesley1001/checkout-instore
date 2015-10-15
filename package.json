@@ -4,7 +4,7 @@
   "deploy": "deploy/",
   "description": "Client side application consuming the VTEX Checkout API",
   "scripts": {
-    "start": "node server.js",
+    "start": "babel-node devServer.js",
     "test": "set NODE_ENV=production && karma start",
     "build": "webpack --progress --colors",
     "test-all": "NODE_ENV=production && karma start"
