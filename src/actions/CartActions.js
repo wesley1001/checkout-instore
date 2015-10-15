@@ -36,7 +36,7 @@ class CartActions {
   executeAddToCart(data) {
     this.dispatch();
 
-    Fetcher.addToCart(data.orderFormId, data.item).then((response) => {
+    Fetcher.addToCart(data.orderFormId, data.item, data.tradePolicy).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
@@ -64,7 +64,7 @@ class CartActions {
   executeUpdateCart(data) {
     this.dispatch();
 
-    Fetcher.updateItems(data.orderFormId, data.item).then((response) => {
+    Fetcher.updateItems(data.orderFormId, data.item, data.tradePolicy).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.updateFailed.defer('Erro ao atualizar produto no carrinho');

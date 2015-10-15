@@ -46,22 +46,22 @@ class Fetcher {
     return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`);
   }
 
-  addToCart(orderForm, items) {
+  addToCart(orderForm, items, tradePolicy = 1) {
     const checkoutRequest = {
       orderItems: items,
       expectedOrderFormSections: this.orderFormSections
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/items`, checkoutRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items?sc=${tradePolicy}`, checkoutRequest);
   }
 
-  updateItems(orderForm, items) {
+  updateItems(orderForm, items, tradePolicy = 1) {
     const checkoutRequest = {
       orderItems: items,
       expectedOrderFormSections: this.orderFormSections
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update`, checkoutRequest);
+    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update?sc=${tradePolicy}`, checkoutRequest);
   }
 
   setPayment(orderForm, payment) {
