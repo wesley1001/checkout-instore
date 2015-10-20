@@ -77,7 +77,7 @@ export default class CartPage extends React.Component {
 
         <PaymentForm cart={this.state.cart} />
         <div className="productScan component">
-          <button className="btn btn-default btn-lg btn-block btn-bottom">Digite o código do produto</button>
+          <button className="btn btn-default btn-lg btn-block btn-bottom">Digitar código do produto</button>
         </div>
       </div>
     );

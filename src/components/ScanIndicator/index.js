@@ -34,7 +34,7 @@ export default class ScanIndicator extends React.Component {
       <div className="hidden" id="loga">
         <input
           className="form-control"
-          placeholder="Digite o codigo de barras"
+          placeholder="Código de barras"
           value={this.state.ean}
           handleChange={this.handleChange}
           autoComplete="off"
@@ -48,7 +48,7 @@ export default class ScanIndicator extends React.Component {
           <img className="image" src={pinpad}/>
         </div>
       <div className="productScan">
-        <button className="btn btn-default btn-lg btn-block btn-bottom" onClick={this.showsBarcodeType}>Digite o código do produto</button>
+        <button className="btn btn-default btn-lg btn-block btn-bottom" onClick={this.showsBarcodeType}>Digitar código do produto</button>
         </div>
       </div>
     );
