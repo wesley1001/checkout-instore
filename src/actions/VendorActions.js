@@ -14,9 +14,9 @@ class VendorActions {
         };
 
         this.actions.VtexIdAuthSuccess(data);
-      }, (err) => {
-        AuthenticationHelper.login(this.actions.CheckLogin);
       });
+    }, (err) => {
+      AuthenticationHelper.login(this.actions.CheckLogin);
     });
   }
 
