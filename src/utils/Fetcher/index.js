@@ -123,7 +123,7 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
+        // 'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };
@@ -148,7 +148,7 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
+        // 'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };
