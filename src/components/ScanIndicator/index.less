@@ -2,10 +2,7 @@
 @import '../../styles/mixins.less';
 
 .ScanIndicator {
-  // background: @LightGrey;
   color: @DarkGrey;
-  // margin-top: 15px;
-  // padding: 15px;
   position: fixed;
   text-decoration: none;
   height: 100%;
@@ -17,51 +14,6 @@
     margin-top: 20px;
   }
 
-  .button-ref-left {
-    transform-origin: center left;
-    .border-radius(0 5px 5px 0);
-    .animation-name(buttonLeftBounce);
-  }
-  
-  .button-ref-right {
-    right: 0;
-    transform-origin: center right;
-    .border-radius(5px 0 0 5px);
-    .animation-name(buttonRightBounce);
-  }
-  
-  .button-ref {
-    position: fixed;
-    .animation-duration(6s);
-    .animation-timing-function;
-    .animation-iteration-count;
-  }
-
-  .button-ref {
-    background: @DarkGrey;
-    height: 70px;
-    width: 15px;
-  }
-
-  .barcode-laser {
-    position: fixed;
-    top: -8px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .barcode-laser-light {
-    display: inline-block;
-    height: 16px;
-    width: 8px;
-    margin: 0 3px;
-    .border-radius;
-    .animation-name(laserLightPulse);
-    .animation-duration(6s);
-    .animation-timing-function(ease-in);
-    .animation-iteration-count;
-  }
-
   .barcode-laser-bar {
     position: fixed;
     top: -6px;
@@ -69,11 +21,110 @@
     height: 14px;
     width: 60px;
     margin-left: -30px;
+    z-index: 3;
     .border-radius(0 0 15px 15px);
     .animation-name(laserLightPulse);
     .animation-duration(6s);
     .animation-timing-function(ease-in);
     .animation-iteration-count;
+  }
+
+  .barcode-button {
+    background: @DarkGrey;
+    height: 70px;
+    width: 15px;
+    position: fixed;
+    .animation-duration(6s);
+    .animation-timing-function;
+    .animation-iteration-count;
+  }
+
+  .barcode-button-left {
+    transform-origin: center left;
+    .border-radius(0 5px 5px 0);
+    .animation-name(buttonLeftBounce);
+  }
+
+  .barcode-button-right {
+    right: 0;
+    transform-origin: center right;
+    .border-radius(5px 0 0 5px);
+    .animation-name(buttonRightBounce);
+  }
+
+
+  .barcode-line {
+    top: 55px;
+    position: absolute;
+    width: 100%;
+    .on {
+      border-bottom: 3px dotted #dc4a4a;
+      left: 0;
+      width: 100%;
+      position: absolute;
+    }
+    .off {
+      background: #fff;
+      height: 15px;
+      margin: 0 auto;
+      opacity: .95;
+      .animation-name(dash);
+      .animation-duration(6s);
+      .animation-timing-function(ease-in);
+      .animation-iteration-count;
+    }
+
+    .starter,
+    .starter-bg {
+      margin: 0 auto;
+      position: absolute;
+      left: 50%;
+    }
+
+    .starter-bg {
+      background: #fff;
+      margin-left: -8px;
+      height: 16px;
+      width: 16px;
+      top: -6px;
+      z-index: 2;
+    }
+
+    .starter {
+      background: #dc4a4a;
+      margin-left: -7px;
+      height: 14px;
+      width: 14px;
+      top: -5px;
+      z-index: 3;
+      .border-radius(10px);
+      .animation-name(starter);
+      .animation-duration(6s);
+      .animation-timing-function(ease-in);
+      .animation-iteration-count;
+    }
+  }
+  .barcode-line-up {
+    position: absolute;
+    left: 50%;
+    margin-left: -2px;
+    top: 0;
+    z-index: 2;
+    .on {
+      border-right: 3px dotted #dc4a4a;
+      height: 50px;
+      position: absolute;
+      width: 0;
+    }
+    .off {
+      background: #fff;
+      opacity: .95;
+      width: 3px;
+      .animation-name(dash-up);
+      .animation-duration(6s);
+      .animation-timing-function(ease-in);
+      .animation-iteration-count;
+    }
   }
 }
 
@@ -89,6 +140,72 @@
   }
 }
 
+
+@keyframes starter {
+  0% {
+    opacity: .1;
+  } 
+  15% {
+    opacity: .1;
+  }
+  20% {
+    opacity: .1;
+  }
+  22% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  77% {
+    opacity: .1;
+  }
+  100% {
+    opacity: .1;
+  }
+}
+
+@keyframes dash {
+  0% {
+    width: 100%;
+  } 
+  15% {
+    width: 100%;
+  }
+  20% {
+    width: 0;
+  }
+  75% {
+    width: 0;
+  }
+  80% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes dash-up {
+  0% {
+    height: 50px;
+  } 
+  20% {
+    height: 50px;
+  }
+  23% {
+    height: 0;
+  }
+  71% {
+    height: 0;
+  }
+  74% {
+    height: 50px;
+  }
+  100% {
+    height: 50px;
+  }
+}
 
 @keyframes buttonLeftBounce {
   0% {
@@ -149,16 +266,16 @@
     background: #f1c0c0;
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
-  17% {
+  23% {
     background: #f1c0c0;
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
-  18% {
-    background: red;
+  24% {
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
   25% {
-    background: red;
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
   32% {
@@ -166,7 +283,7 @@
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
   37% {
-    background: red;
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
   42% {
@@ -174,7 +291,7 @@
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
   47% {
-    background: red;
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
   52% {
@@ -182,7 +299,7 @@
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
   57% {
-    background: red;
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
   62% {
@@ -190,18 +307,18 @@
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
   67% {
-    background: red;
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
-  72% {
+  70% {
     background: #f1c0c0;
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
-  77% {
-    background: red;
+  72% {
+    background: #dc4a4a;
     .drop-shadow(0, 1px, 6px, 1px, 255, 0, 0, 1);
   }
-  77.5% {
+  72.5% {
     background: #f1c0c0;
     .drop-shadow(0, 1px, 6px, 1px, 254, 90, 90, .6);
   }
