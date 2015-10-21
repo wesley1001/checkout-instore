@@ -60,15 +60,28 @@ class VendorActions {
     this.dispatch(error);
   }
 
-  SetVendorData(data) {
+  SetVendorData(id) {
     this.dispatch();
+    if (!id) {
+      this.actions.SetVendorDataFail({message:`Você deve digitar ao menos 1 caractere de identificação`});
+      return;
+    }
 
-    if(data.id && data.id.length > 1) {
-      this.actions.SetVendorDataSuccess(data);
-    }
-    else {
-      this.actions.SetVendorDataFail({message:'Erro ao identificar o vendedor'});
-    }
+    Fetcher.getStoreByHost().then((storeData) => {
+      const storename = storeData.MainAccountName;
+      Fetcher.getProfileSystemData(storename, id).then((response) => {
+        response.id = id;
+        const data = {
+          user: response
+        };
+
+        this.actions.SetVendorDataSuccess(data);
+      }, (err) => {
+        this.actions.SetVendorDataFail({message:'Vendedor não identificado'});
+      });
+    }, (err) => {
+      this.actions.GetStoreByHostFail({message: 'Error on identify store by host'});
+    });
   }
 }
 

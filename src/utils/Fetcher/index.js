@@ -88,33 +88,8 @@ class Fetcher {
     return axios.post(`${this.checkoutUrl}/${orderForm}/transaction`, transactionRequest);
   }
 
-  checkVtexIdAuth() {
-    let promise = new Promise((resolve, reject) => {
-      const token = AuthenticationHelper.getVtexAuthToken();
-      if(!token) {
-        reject('token not found');
-      }
-      else {
-        const url = `https://vtexid.vtex.com.br/api/vtexid/pub/authenticated/user?authToken=${encodeURIComponent(token)}`;
-
-        axios.get(url).then((response) => {
-          if(response.data !== null) {
-            resolve(response.data);
-          }
-          else {
-            reject('not authorized');
-          }
-        },() => {
-          reject('not authorized');
-        });
-      }
-    });
-
-    return promise;
-  }
-
-  getProfileSystemData(email) {
-    const entity = 'VN', query = `user=${email}`, fields = ['store'];
+  getProfileSystemData(id) {
+    const entity = 'VN', query = `user=${id}`, fields = ['store', 'name', 'user'];
     const hostname = window.location.hostname;
 
     const url = `http://api.vtexcrm.com.br/${hostname}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
@@ -123,20 +98,23 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        // 'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };
-
-    return axios.get(url, configs).then((response) => {
-      let data = response.data;
-      if(data && data.length) {
-        return data[0];
-      }
-      return {store: undefined};
-    }, (err) => {
-      console.log('error', err);
+    const promise = new Promise((resolve, reject) => {
+      return axios.get(url, configs).then((response) => {
+        let data = response.data;
+        if(data && data.length) {
+          resolve(data[0]);
+          return;
+        }
+        reject({message:`Vendor not found`});
+      }, (err) => {
+        reject({message:`Error on identify vendor`});
+      });
     });
+
+    return promise;
   }
 
   getStoreData(id) {
@@ -148,7 +126,6 @@ class Fetcher {
       'headers': {
         'Accept': 'application/vnd.vtex.ds.v10+json',
         'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        // 'VtexIdclientAutCookie': AuthenticationHelper.getVtexAuthToken(),
         'REST-Range': 'resources=0-99'
       }
     };

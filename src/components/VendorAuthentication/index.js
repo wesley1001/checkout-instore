@@ -23,7 +23,7 @@ export default class VendorAuthentication extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    VendorActions.SetVendorData({id: this.state.id});
+    VendorActions.SetVendorData(this.state.id);
   }
 
   render() {
