@@ -4,31 +4,6 @@ import Fetcher from 'utils/Fetcher';
 import AuthenticationHelper from 'utils/AuthenticationHelper';
 
 class VendorActions {
-  CheckLogin() {
-    this.dispatch();
-    Fetcher.checkVtexIdAuth().then((userData) => {
-      Fetcher.getProfileSystemData(userData.user).then((response) => {
-        const data = {
-          user: userData,
-          store: response
-        };
-
-        this.actions.VtexIdAuthSuccess(data);
-      });
-    }, (err) => {
-      AuthenticationHelper.login(this.actions.CheckLogin);
-    });
-  }
-
-  VtexIdAuthSuccess(data){
-    data.logged = true;
-    this.dispatch(data);
-  }
-
-  VtexIdAuthFail(error){
-    this.dispatch(error);
-  }
-
   GetStoreInfo(storeId) {
     this.dispatch();
     if(!storeId) {
@@ -69,7 +44,7 @@ class VendorActions {
 
     Fetcher.getStoreByHost().then((storeData) => {
       const storename = storeData.MainAccountName;
-      Fetcher.getProfileSystemData(storename, id).then((response) => {
+      Fetcher.getProfileSystemData(id).then((response) => {
         response.id = id;
         const data = {
           user: response

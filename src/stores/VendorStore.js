@@ -14,7 +14,7 @@ class VendorStore {
       user: undefined,
       store: undefined,
       loading: false,
-      error: undefined
+      error: ''
     });
   }
 
@@ -26,6 +26,7 @@ class VendorStore {
   onGetStoreInfoSuccess(data) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('store', this.state.merge(data)));
+    this.setState(this.state.set('error', ''));
   }
 
   onGetStoreInfoFail(error) {
@@ -40,15 +41,16 @@ class VendorStore {
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
     this.setState(this.state.set('store', undefined));
-    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('error', ''));
   }
 
   onSetVendorDataSuccess(data) {
     this.setState(this.state.set('loading', false));
 
-    this.setState(this.state.set('logged', data.logged));
-    this.setState(this.state.set('user', data.user));
+    this.setState(this.state.set('logged', true));
+    this.setState(this.state.set('user', data));
     this.setState(this.state.set('store', data.store));
+    this.setState(this.state.set('error', ''));
   }
 
   onSetVendorDataFail(error) {
