@@ -51,6 +51,25 @@ class VendorActions {
   GetStoreInfoFail(error){
     this.dispatch(error);
   }
+
+  SetVendorDataSuccess(data){
+    this.dispatch(data);
+  }
+
+  SetVendorDataFail(error){
+    this.dispatch(error);
+  }
+
+  SetVendorData(data) {
+    this.dispatch();
+
+    if(data.id && data.id.length > 1) {
+      this.actions.SetVendorDataSuccess(data);
+    }
+    else {
+      this.actions.SetVendorDataFail({message:'Erro ao identificar o vendedor'});
+    }
+  }
 }
 
 export default flux.createActions(VendorActions);
