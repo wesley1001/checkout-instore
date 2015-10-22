@@ -1,6 +1,7 @@
 import flux from '../flux';
 
 import Fetcher from 'utils/Fetcher';
+import requestCache from 'utils/Cache';
 
 class CheckoutActions {
   setClientData(data) {
@@ -43,11 +44,17 @@ class CheckoutActions {
   findProduct(code) {
     this.dispatch();
 
-    Fetcher.getProduct(code).then((response) => {
-      this.actions.readSuccess.defer(response.data.Id);
-    }).catch(() => {
-      this.actions.readFailed.defer('Produto não encontrado');
-    });
+    const sku = requestCache.get(code);
+    if(!sku) {
+      Fetcher.getProduct(code).then((response) => {
+        requestCache.put(code, response.data.Id);
+        this.actions.readSuccess.defer(response.data.Id);
+      }).catch((err) => {
+        this.actions.readFailed.defer('Produto não encontrado');
+      });
+    } else {
+      this.actions.readSuccess.defer(sku);
+    }
   }
 
   readSuccess(skuId) {
