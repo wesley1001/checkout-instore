@@ -62,7 +62,7 @@ class VendorStore {
     this.setState(this.state.set('error', error.message));
   }
 
-  GetStoreByHostFail(error) {
+  onGetStoreByHostFail(error) {
     this.setState(this.state.set('loading', false));
 
     this.setState(this.state.set('logged', false));

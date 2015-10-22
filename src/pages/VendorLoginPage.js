@@ -58,7 +58,6 @@ export default class VendorLogin extends React.Component {
         </div>
 
         <ErrorNotifier message={vendor.get('error')} />
-        <Footer />
       </div>
     );
   }
