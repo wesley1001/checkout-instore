@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
 import ErrorNotifier from 'components/ErrorNotifier';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('ErrorNotifier', () => {
   let component,
@@ -11,7 +11,7 @@ describe('ErrorNotifier', () => {
   describe('given empty message', () => {
     beforeEach(() => {
       component = TestUtils.renderIntoDocument(<ErrorNotifier />);
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
@@ -36,7 +36,7 @@ describe('ErrorNotifier', () => {
       component = TestUtils.renderIntoDocument(
         <ErrorNotifier message={'error'} />
       );
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {

@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
 import GeneralLogo from 'components/GeneralLogo';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('GeneralLogo', () => {
   let component,
@@ -10,7 +10,7 @@ describe('GeneralLogo', () => {
 
   beforeEach(() => {
     component = TestUtils.renderIntoDocument(<GeneralLogo />);
-    element = React.findDOMNode(component);
+    element = findDOMNode(component);
   });
 
   it('should render the element', () => {

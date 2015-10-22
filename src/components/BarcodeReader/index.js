@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 import CheckoutActions from 'actions/CheckoutActions';
@@ -25,7 +26,7 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentDidMount() {
-    React.findDOMNode(this.refs.barcodeInput).focus();
+    this.refs.barcodeInput.focus();
     CheckoutStore.listen(this.onCheckoutChange);
 
     window.handleBarcodeRead = this.handleBarcodeInput;
@@ -36,11 +37,11 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentDidUpdate() {
-    React.findDOMNode(this.refs.barcodeInput).focus();
+    this.refs.barcodeInput.focus();
   }
 
   handleBlur() {
-    React.findDOMNode(this.refs.barcodeInput).focus();
+    this.refs.barcodeInput.focus();
   }
 
   onCheckoutChange(state) {

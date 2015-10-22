@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import React from 'react/addons';
+import TestUtils from 'react-addons-test-utils';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
 import UserInfo from 'components/UserInfo';
-
-let TestUtils = React.addons.TestUtils;
 
 describe('UserInfo', () => {
   let component,
@@ -12,7 +12,7 @@ describe('UserInfo', () => {
   describe('given an undefined email', () => {
     beforeEach(() => {
       component = TestUtils.renderIntoDocument(<UserInfo />);
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
@@ -35,7 +35,7 @@ describe('UserInfo', () => {
   describe('given an empty email', () => {
     beforeEach(() => {
       component = TestUtils.renderIntoDocument(<UserInfo email={''}/>);
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
@@ -61,7 +61,7 @@ describe('UserInfo', () => {
       component = TestUtils.renderIntoDocument(
         <UserInfo email={email} />
       );
-      element = React.findDOMNode(component);
+      element = findDOMNode(component);
     });
 
     it('should render the element', () => {
