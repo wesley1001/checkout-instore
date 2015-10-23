@@ -17,6 +17,17 @@ export default class Authentication extends React.Component {
     this.handleAnonymous = this.handleAnonymous.bind(this);
   }
 
+  componentDidMount(){
+    WebViewBridgeReady(function (WebViewBridge) {
+      WebViewBridge.onMessage = function(message) {
+        console.log('got a message from react-native', message);
+      };
+
+      //sending a message to react-native
+      WebViewBridge.send('Hello this is me calling from web page');
+    });
+  }
+
   handleChange(e) {
     this.setState({email: e.target.value});
   }
