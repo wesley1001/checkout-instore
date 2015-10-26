@@ -26,6 +26,15 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentDidMount() {
+    var context = this;
+
+    window.WebViewBridge.onMessage = function(message) {
+      message = JSON.parse(message);
+      if(message && message.type && message.type == 'event' && message.event == 'barcodeReaded'){
+        context.handleBarcodeInput(message.data.barcode);
+      }
+    };
+
     this.refs.barcodeInput.focus();
     CheckoutStore.listen(this.onCheckoutChange);
 
@@ -33,6 +42,7 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentWillUnmount() {
+    window.WebViewBridge.onMessage = function(){};
     CheckoutStore.unlisten(this.onCheckoutChange);
   }
 
