@@ -1,6 +1,7 @@
 import flux from '../flux';
 
 import Fetcher from 'utils/Fetcher';
+import requestCache from 'utils/Cache';
 
 class CartActions {
   getOrderForm() {
@@ -76,6 +77,8 @@ class CartActions {
   }
 
   clearCart(orderForm) {
+    requestCache.clear();
+
     let items = orderForm.items || [];
     items = items.map(item => {
       item.quantity = 0;
