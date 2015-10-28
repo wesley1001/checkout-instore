@@ -10,32 +10,12 @@ class VendorStore {
     this.bindActions(VendorActions);
 
     this.state = Immutable.Map({
-      vtexIdLogged: false,
+      logged: false,
       user: undefined,
       store: undefined,
-      loading: false
+      loading: false,
+      error: ''
     });
-  }
-
-  onCheckLogin() {
-    this.setState(this.state.set('vtexIdLogged', false));
-    this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
-    this.setState(this.state.set('loading', true));
-  }
-
-  onVtexIdAuthSuccess(data) {
-    this.setState(this.state.set('vtexIdLogged', data.logged));
-    this.setState(this.state.set('user', data.user));
-    this.setState(this.state.set('store', data.store));
-    this.setState(this.state.set('loading', false));
-  }
-
-  onVtexIdAuthFailed(error) {
-    this.setState(this.state.set('vtexIdLogged', false));
-    this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
-    this.setState(this.state.set('loading', false));
   }
 
   onGetStoreInfo() {
@@ -46,11 +26,49 @@ class VendorStore {
   onGetStoreInfoSuccess(data) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('store', this.state.merge(data)));
+    this.setState(this.state.set('error', ''));
   }
 
-  onGetStoreInfoFail(err) {
+  onGetStoreInfoFail(error) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('store', this.state.merge({tradePolicy: undefined})));
+    this.setState(this.state.set('error', error.message));
+  }
+
+  onSetVendorData() {
+    this.setState(this.state.set('loading', true));
+
+    this.setState(this.state.set('logged', false));
+    this.setState(this.state.set('user', undefined));
+    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('error', ''));
+  }
+
+  onSetVendorDataSuccess(data) {
+    this.setState(this.state.set('loading', false));
+
+    this.setState(this.state.set('logged', true));
+    this.setState(this.state.set('user', data));
+    this.setState(this.state.set('store', data.store));
+    this.setState(this.state.set('error', ''));
+  }
+
+  onSetVendorDataFail(error) {
+    this.setState(this.state.set('loading', false));
+
+    this.setState(this.state.set('logged', false));
+    this.setState(this.state.set('user', undefined));
+    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('error', error.message));
+  }
+
+  onGetStoreByHostFail(error) {
+    this.setState(this.state.set('loading', false));
+
+    this.setState(this.state.set('logged', false));
+    this.setState(this.state.set('user', undefined));
+    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('error', error.message));
   }
 }
 

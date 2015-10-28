@@ -21,12 +21,14 @@ export default class App extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
+  componentWillMount(){
+    if(!this.state.vendor.get('logged')) {
+      this.props.history.pushState(null, '/vendor/login');
+    }
+  }
+
   componentDidMount() {
     VendorStore.listen(this.onVendorChange);
-
-    if(!this.state.vendor.get('vtexIdLogged')) {
-      VendorActions.CheckLogin();
-    }
   }
 
   onVendorChange(state) {
@@ -36,7 +38,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.vendor.get('vtexIdLogged') ? this.props.children : ''}
+        { this.props.children }
       </div>
     );
   }
