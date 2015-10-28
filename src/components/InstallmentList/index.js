@@ -3,6 +3,8 @@ import React from 'react';
 import InstallmentOption from 'components/InstallmentOption';
 import CartActions from 'actions/CartActions';
 
+import './index.less';
+
 export default class InstallmentList extends React.Component {
   static defaultProps = {
     orderFormId: '',
@@ -65,7 +67,7 @@ export default class InstallmentList extends React.Component {
     let installmentOptionsList = this.composePaymentOptions();
 
     return (
-      <div className="InstallmentList component">
+      <div className="InstallmentList component container">
         <p id="card-installments" className="installments btn-group-vertical">
           {installmentOptionsList}
         </p>
