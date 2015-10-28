@@ -108,9 +108,9 @@ class Fetcher {
           resolve(data[0]);
           return;
         }
-        reject({message:`Vendor not found`});
+        reject({message:`Vendedor não identificado`});
       }, (err) => {
-        reject({message:`Error on identify vendor`});
+        reject({message:`Oops, houve um erro ao identificar o vendedor`});
       });
     });
 

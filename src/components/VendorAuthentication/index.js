@@ -28,7 +28,7 @@ export default class VendorAuthentication extends React.Component {
 
   render() {
     return (
-      <div className="VendorAuthentication component">
+      <div className="vendor-authentication component">
         <h2 className="title main-title">
           <span className="main-title-name">Identificação do vendedor</span>
           <span className="main-title-border"></span>

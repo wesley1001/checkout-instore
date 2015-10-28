@@ -52,7 +52,7 @@ class VendorActions {
 
         this.actions.SetVendorDataSuccess(data);
       }, (err) => {
-        this.actions.SetVendorDataFail({message:'Vendedor não identificado'});
+        this.actions.SetVendorDataFail({message: err.message});
       });
     }, (err) => {
       this.actions.GetStoreByHostFail({message: 'Error on identify store by host'});

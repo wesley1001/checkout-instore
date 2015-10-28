@@ -22,11 +22,6 @@ export default class VendorLogin extends React.Component {
 
   componentDidMount() {
     VendorStore.listen(this.onVendorChange);
-
-    const storeData = VendorStore.getState().get('store');
-    if(storeData) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
   }
 
   componentWillUnmount() {

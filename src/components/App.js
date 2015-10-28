@@ -21,12 +21,14 @@ export default class App extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
-  componentDidMount() {
-    VendorStore.listen(this.onVendorChange);
-
+  componentWillMount(){
     if(!this.state.vendor.get('logged')) {
       this.props.history.pushState(null, '/vendor/login');
     }
+  }
+
+  componentDidMount() {
+    VendorStore.listen(this.onVendorChange);
   }
 
   onVendorChange(state) {
