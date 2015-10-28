@@ -11,6 +11,7 @@ import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
 import ErrorNotifier from 'components/ErrorNotifier';
+import TypeBarcodeReader from 'components/TypeBarcodeReader';
 
 export default class CartPage extends React.Component {
   constructor(props) {
@@ -55,6 +56,10 @@ export default class CartPage extends React.Component {
           <Logo />
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
+
+        <div className="container">
+          <TypeBarcodeReader/>
+        </div>
 
         <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={checkout.get('tradePolicy')}>
           <ProductShowcase
