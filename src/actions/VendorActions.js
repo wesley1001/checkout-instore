@@ -28,6 +28,12 @@ class VendorActions {
   }
 
   SetVendorDataSuccess(data){
+    window.WebViewBridge.send(JSON.stringify({
+      type: 'event',
+      event: 'userLoggedIn',
+      data: data
+    }));
+
     this.dispatch(data);
   }
 
