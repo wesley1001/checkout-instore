@@ -9,7 +9,7 @@ export default class ScanIndicator extends React.Component {
     this.state = {ean: ''};
 
     this.handleChange = this.handleChange.bind(this);
-    this.checkEmail = this.checkEmail.bind(this);
+    this.addTypedBarcode = this.addTypedBarcode.bind(this);
   }
 
   showsBarcodeType() {
@@ -23,7 +23,7 @@ export default class ScanIndicator extends React.Component {
     this.setState({ean: e.target.value});
   }
 
-  checkEmail(e) {
+  addTypedBarcode(e) {
     e.preventDefault();
     window.handleBarcodeRead(this.state.ean);
   }
@@ -42,7 +42,7 @@ export default class ScanIndicator extends React.Component {
                 autoComplete="off"
               />
               <span className="input-group-btn">
-                <button type="submit" className="btn btn-primary" onClick={this.checkEmail}>Adicionar</button>
+                <button type="submit" className="btn btn-primary" onClick={this.addTypedBarcode}>Adicionar</button>
               </span>
             </div>
           </div>
