@@ -1,11 +1,28 @@
+@import "../../styles/variables.less";
+
 .ErrorNotifier {
-  .wrapper {
+  .background {
     position: absolute;
-    right: 10px;
-    bottom: 5px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: @DarkGrey;
+    z-index: 2;
   }
+
+  .wrapper {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
   .message {
     font-family: "Helvetica Neue", sans-serif;
-    color: red;
-  } 
+    color: white;
+    font-size: 20px;
+  }
 }
