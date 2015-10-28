@@ -28,11 +28,16 @@ class VendorActions {
   }
 
   SetVendorDataSuccess(data){
-    window.WebViewBridge.send(JSON.stringify({
-      type: 'event',
-      event: 'userLoggedIn',
-      data: data
-    }));
+    if(window.WebViewBridge){
+      window.WebViewBridge.send(JSON.stringify({
+        type: 'event',
+        event: 'userLoggedIn',
+        data: data
+      }));
+    }
+    else{
+      console.warn('WebViewBridge is not defined!');
+    }
 
     this.dispatch(data);
   }
