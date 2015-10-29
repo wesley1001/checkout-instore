@@ -92,7 +92,7 @@ class Fetcher {
     const entity = 'VN', query = `user=${id}`, fields = ['store', 'name', 'user'];
     const hostname = window.location.hostname;
 
-    const url = `http://api.vtexcrm.com.br/${hostname}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
+    const url = `//api.vtexcrm.com.br/${hostname}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
 
     let configs = {
       'headers': {
@@ -120,7 +120,7 @@ class Fetcher {
   getStoreData(id) {
     const fields = ['name', 'tradePolicy'];
     const hostname = window.location.hostname;
-    const url = `http://api.vtexcrm.com.br/${hostname}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
+    const url = `//api.vtexcrm.com.br/${hostname}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
 
     let configs = {
       'headers': {
@@ -129,6 +129,8 @@ class Fetcher {
         'REST-Range': 'resources=0-99'
       }
     };
+
+    console.log(this.procotol)
 
     return axios.get(url, configs).then((response) => response.data);
   }
