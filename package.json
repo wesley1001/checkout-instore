@@ -1,6 +1,6 @@
 {
   "name": "checkout-instore",
-  "version": "0.5.0-beta",
+  "version": "0.5.1-beta",
   "deploy": "deploy/",
   "description": "Client side application consuming the VTEX Checkout API",
   "scripts": {
