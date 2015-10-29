@@ -19,16 +19,25 @@ export default class HomePage extends React.Component {
 
     this.state = {
       checkout: CheckoutStore.getState(),
-      cart: CartStore.getState()
+      cart: CartStore.getState(),
+      vendor: VendorStore.getState()
     };
 
+    this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
+  }
+
+  componentWillMount() {
+    if(!this.state.vendor.get('logged')) {
+      this.props.history.pushState(null, '/vendor/login');
+    }
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
+    VendorStore.listen(this.onVendorChange);
 
     const orderForm = this.state.cart.get('orderForm');
 
@@ -47,6 +56,11 @@ export default class HomePage extends React.Component {
   componentWillUnmount() {
     CheckoutStore.unlisten(this.onCheckoutChange);
     CartStore.unlisten(this.onCartChange);
+    VendorStore.unlisten(this.onVendorChange);
+  }
+
+  onVendorChange(state) {
+    this.setState({vendor: state});
   }
 
   onCheckoutChange(state) {
