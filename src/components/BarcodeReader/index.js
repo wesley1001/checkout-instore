@@ -87,8 +87,9 @@ export default class BarcodeReader extends React.Component {
       } else {
         CartActions.addToCart.defer({
           orderFormId: orderForm.orderFormId,
-          item: [item],
-          tradePolicy: this.props.tradePolicy
+          item: item,
+          tradePolicy: this.props.tradePolicy,
+          vendor: this.props.vendor
         });
       }
 
