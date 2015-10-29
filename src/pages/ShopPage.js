@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CheckoutStore from 'stores/CheckoutStore';
+import VendorStore from 'stores/VendorStore';
 import CartStore from 'stores/CartStore';
 import CartActions from 'actions/CartActions';
 
@@ -18,11 +19,13 @@ export default class ShopPage extends React.Component {
 
     this.state = {
       checkout: CheckoutStore.getState(),
-      cart: CartStore.getState()
+      cart: CartStore.getState(),
+      vendor: VendorStore.getState()
     };
 
     this.onCartChange = this.onCartChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
+    this.onVendorChange = this.onVendorChange.bind(this);
   }
 
   componentDidMount() {
@@ -45,11 +48,13 @@ export default class ShopPage extends React.Component {
 
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
+    VendorStore.listen(this.onVendorChange);
   }
 
   componentWillUnmount() {
     CheckoutStore.unlisten(this.onCheckoutChange);
     CartStore.unlisten(this.onCartChange);
+    VendorStore.unlisten(this.onVendorChange);
   }
 
   onCartChange(state) {
@@ -64,8 +69,12 @@ export default class ShopPage extends React.Component {
     this.setState({checkout: state});
   }
 
+  onVendorChange(state) {
+    this.setState({vendor: state});
+  }
+
   render() {
-    const {cart, checkout} = this.state;
+    const {cart, checkout, vendor} = this.state;
 
     return (
       <div className="content">
@@ -76,7 +85,11 @@ export default class ShopPage extends React.Component {
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
-        <BarcodeReader orderForm={cart.get('orderForm')} searchingProduct={checkout.get('readingBarcode')} tradePolicy={checkout.get('tradePolicy')}>
+        <BarcodeReader
+          orderForm={cart.get('orderForm')}
+          searchingProduct={checkout.get('readingBarcode')}
+          tradePolicy={checkout.get('tradePolicy')}
+          vendor={vendor.get('user')}>
           <OrderHeader />
           <ScanIndicator />
           <ErrorNotifier message={cart.get('error') || checkout.get('error')} />

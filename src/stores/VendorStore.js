@@ -48,8 +48,9 @@ class VendorStore {
     this.setState(this.state.set('loading', false));
 
     this.setState(this.state.set('logged', true));
-    this.setState(this.state.set('user', data));
-    this.setState(this.state.set('store', data.store));
+    this.setState(this.state.set('user', data.user.id));
+    this.setState(this.state.set('userName', data.user.name));
+    this.setState(this.state.set('store', data.user.store));
     this.setState(this.state.set('error', ''));
   }
 
