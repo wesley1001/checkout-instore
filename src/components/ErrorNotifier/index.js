@@ -9,8 +9,6 @@ export default class ErrorNotifier extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {ean: ''};
-
     this.hideMessage = this.hideMessage.bind(this);
   }
 
@@ -24,7 +22,7 @@ export default class ErrorNotifier extends React.Component {
         <div className="wrapper">
           <img src={bug} width="120"/><br/><br/>
           <span className="message">{this.props.message}</span><br/><br/>
-          <button className="btn btn-default" onClick={this.hideMessage}>Tentar novamente</button>
+          <button className="btn btn-default" onClick={this.hideMessage}>Fechar</button>
         </div>
       </div>
     );
