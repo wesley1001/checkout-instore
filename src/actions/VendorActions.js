@@ -62,6 +62,7 @@ class VendorActions {
         };
 
         this.actions.SetVendorDataSuccess(data);
+        window.localStorage.setItem('vendorData', JSON.stringify(data));
       }, (err) => {
         this.actions.SetVendorDataFail({message: err.message});
       });

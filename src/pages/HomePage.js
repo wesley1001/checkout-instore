@@ -30,7 +30,13 @@ export default class HomePage extends React.Component {
 
   componentWillMount() {
     if(!this.state.vendor.get('logged')) {
-      this.props.history.pushState(null, '/vendor/login');
+      let vendorData = window.localStorage.getItem('vendorData');
+      if(vendorData) {
+        vendorData = JSON.parse(vendorData);
+        VendorActions.SetVendorDataSuccess(vendorData);
+      } else  {
+        this.props.history.pushState(null, '/vendor/login');
+      }
     }
   }
 
