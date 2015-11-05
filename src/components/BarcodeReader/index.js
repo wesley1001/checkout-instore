@@ -6,8 +6,6 @@ import CheckoutActions from 'actions/CheckoutActions';
 import CartActions from 'actions/CartActions';
 import CheckoutStore from 'stores/CheckoutStore';
 
-import './index.less';
-
 export default class BarcodeReader extends React.Component {
   constructor(props) {
     super(props);
@@ -18,50 +16,36 @@ export default class BarcodeReader extends React.Component {
     };
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
-    this.handleBarcodeKeydown = this.handleBarcodeKeydown.bind(this);
     this.handleBarcodeInput = this.handleBarcodeInput.bind(this);
-    this.handleBarcodeChange = this.handleBarcodeChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentDidMount() {
-    var context = this;
+    const context = this;
 
-    if(window.WebViewBridge){
+    if(window.WebViewBridge) {
       window.WebViewBridge.onMessage = function(message) {
         message = JSON.parse(message);
-        if(message && message.type && message.type == 'event' && message.event == 'barcodeReaded'){
+        if(message && message.type === 'event' && message.event === 'barcodeReaded') {
           context.handleBarcodeInput(message.data.barcode);
         }
       };
-    }
-    else{
+    } else {
       console.warn('WebViewBridge is not defined!');
     }
 
-    this.refs.barcodeInput.focus();
     CheckoutStore.listen(this.onCheckoutChange);
 
     window.handleBarcodeRead = this.handleBarcodeInput;
   }
 
   componentWillUnmount() {
-    if(window.WebViewBridge){
+    if(window.WebViewBridge) {
       window.WebViewBridge.onMessage = function(){};
-    }
-    else{
+    } else {
       console.warn('WebViewBridge is not defined!');
     }
+
     CheckoutStore.unlisten(this.onCheckoutChange);
-  }
-
-  componentDidUpdate() {
-    this.refs.barcodeInput.focus();
-  }
-
-  handleBlur() {
-    this.refs.barcodeInput.focus();
   }
 
   onCheckoutChange(state) {
@@ -109,63 +93,10 @@ export default class BarcodeReader extends React.Component {
     }
   }
 
-  handleKeyDown(e) {
-    if (e.which === 9) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    if (this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct(this.state.barcode);
-      this.setState({ barcode: '' });
-    }
-  }
-
-  handleBarcodeChange(e) {
-    this.setState({
-      barcode: e.target.value
-    });
-  }
-
-  handleBarcodeKeydown(e) {
-    if (e.which === 9 || e.which === 13) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    const value = String.fromCharCode(e.keyCode);
-
-    if (/\d/.test(value)) {
-      this.setState({
-        barcode: this.state.barcode + value,
-        isReading: true
-      });
-    } else {
-      this.setState({
-        barcode: '',
-        isReading: false
-      });
-    }
-
-    if (this.state.isReading && this.state.barcode.length === 13 && !this.props.searchingProduct) {
-      CheckoutActions.findProduct(this.state.barcode);
-    }
-  }
-
   render() {
     return (
       <div className="BarcodeReader component">
         {this.props.children}
-        <input type="text"
-          className="form-control barcode-input"
-          value={this.state.barcode}
-          onChange={this.handleBarcodeChange}
-          onKeyDown={this.handleKeyDown}
-          ref="barcodeInput"
-          onBlur={this.handleBlur}
-          autoComplete="off"
-          autoFocus
-        />
       </div>
     );
   }
