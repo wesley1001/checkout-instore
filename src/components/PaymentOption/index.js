@@ -1,8 +1,12 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import classNames from 'classnames';
 
+import CartStore from 'stores/CartStore';
 import CheckoutActions from 'actions/CheckoutActions';
+import CheckoutStore from 'stores/CheckoutStore';
 import CartActions from 'actions/CartActions';
+import InstallmentList from 'components/InstallmentList';
 import PaymentLabel from 'components/PaymentLabel';
 import PaymentDetail from 'components/PaymentDetail';
 
@@ -14,7 +18,9 @@ export default class PaymentOption extends React.Component {
   }
 
   static defaultProps = {
-    payment: {}
+    orderFormId: '',
+    payment: {},
+    products: []
   }
 
   constructor(props) {
@@ -22,6 +28,32 @@ export default class PaymentOption extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.composeIconsInfo = this.composeIconsInfo.bind(this);
+
+    this.state = {
+      cart: CartStore.getState(),
+      checkout: CheckoutStore.getState()
+    };
+
+    this.onCartChange = this.onCartChange.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
+  }
+
+  componentDidMount() {
+    CartStore.listen(this.onCartChange);
+    CheckoutStore.listen(this.onCheckoutChange);
+  }
+
+  componentWillUnmount() {
+    CartStore.unlisten(this.onCartChange);
+    CheckoutStore.unlisten(this.onCheckoutChange);
+  }
+
+  onCartChange(state) {
+    this.setState({cart: state});
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
   }
 
   handleClick(e) {
@@ -65,20 +97,42 @@ export default class PaymentOption extends React.Component {
   }
 
   render() {
-    const {price, installmentOptions} = this.props;
+    const {orderFormId, payment, price, products, installmentOptions} = this.props;
+    const {cart, checkout} = this.state;
+    const orderForm = cart.get('orderForm');
     let {iconClass, iconLabel, type} = this.composeIconsInfo();
 
+    let selectedInstallmentList = null;
+
+    if (payment.id == checkout.get('selectedPaymentId')) {
+      selectedInstallmentList = (
+        <div>
+          <InstallmentList
+            price={price}
+            selectedPaymentId={checkout.get('selectedPaymentId')}
+            selectedInstallment={checkout.get('selectedInstallment')}
+            orderFormId={orderFormId}
+            installmentOptions={orderForm.paymentData.installmentOptions}
+          />
+        </div>
+      );
+    }
+
     return (
-      <Link to="/payment" className="PaymentOption component btn btn-default" onClick={this.handleClick}>
-        <PaymentLabel type={type} iconClass={iconClass} iconLabel={iconLabel}/>
-        <i className="arrow text-muted fa fa-caret-right"></i>
+      <div className="PaymentOption component btn btn-default">
+        <div onClick={this.handleClick}>
+          <PaymentLabel type={type} iconClass={iconClass} iconLabel={iconLabel}/>
+          <i className="arrow text-muted fa fa-caret-down"></i>
 
-        <PaymentDetail
-          value={installmentOptions.installments.length}
-          price={price}
-        />
+          <PaymentDetail
+            value={installmentOptions.installments.length}
+            price={price}
+          />
+        </div>
 
-      </Link>
+        {selectedInstallmentList}
+
+      </div>
     );
   }
 }
