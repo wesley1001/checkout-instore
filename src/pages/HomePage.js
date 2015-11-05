@@ -13,6 +13,8 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
+import 'styles/homepage.less';
+
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -88,7 +90,7 @@ export default class HomePage extends React.Component {
   render() {
     const {cart, checkout} = this.state;
     return (
-      <div>
+      <div className="HomePage component">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
         <header className="container">
           <Logo />
