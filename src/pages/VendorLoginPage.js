@@ -9,6 +9,8 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
+import 'styles/homepage.less';
+
 export default class VendorLogin extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +46,7 @@ export default class VendorLogin extends React.Component {
     const {vendor} = this.state;
     return (
       <div>
-        <header className="container">
+        <header className="VendorLoginPage container">
           <Logo />
         </header>
 
