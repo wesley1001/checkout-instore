@@ -67,7 +67,7 @@ export default class InstallmentList extends React.Component {
     let installmentOptionsList = this.composePaymentOptions();
 
     return (
-      <div className="InstallmentList component container">
+      <div className="InstallmentList component">
         <p id="card-installments" className="installments btn-group-vertical">
           {installmentOptionsList}
         </p>

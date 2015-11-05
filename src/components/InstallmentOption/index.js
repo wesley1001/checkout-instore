@@ -19,7 +19,10 @@ export default class InstallmentOption extends React.Component {
     this.checkSelectedInstallment = this.checkSelectedInstallment.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     CheckoutActions.selectInstallment(this.props.installments);
   }
 
