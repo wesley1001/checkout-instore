@@ -106,7 +106,7 @@ export default class PaymentOption extends React.Component {
 
     if (payment.id == checkout.get('selectedPaymentId')) {
       selectedInstallmentList = (
-        <div>
+        <div className="installment_list-wrapper">
           <InstallmentList
             price={price}
             selectedPaymentId={checkout.get('selectedPaymentId')}
