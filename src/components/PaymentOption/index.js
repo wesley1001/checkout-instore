@@ -101,9 +101,10 @@ export default class PaymentOption extends React.Component {
     const orderForm = cart.get('orderForm');
     let {iconClass, iconLabel, type} = this.composeIconsInfo();
 
-    let selectedInstallmentList = null;
+    let selectedInstallmentList, arrowIcon = null;
+    let currentPayment = payment.id == checkout.get('selectedPaymentId')
 
-    if (payment.id == checkout.get('selectedPaymentId')) {
+    if (currentPayment) {
       selectedInstallmentList = (
         <div className="installment_list-wrapper">
           <InstallmentList
@@ -115,13 +116,15 @@ export default class PaymentOption extends React.Component {
           />
         </div>
       );
+    } else {      
+      arrowIcon = (<i className="arrow text-muted fa fa-caret-down"></i>);
     }
 
     return (
       <div className="PaymentOption component btn btn-default">
         <div onClick={this.handleClick}>
           <PaymentLabel type={type} iconClass={iconClass} iconLabel={iconLabel}/>
-          <i className="arrow text-muted fa fa-caret-down"></i>
+          {arrowIcon}
 
           <PaymentDetail
             value={installmentOptions.installments.length}
