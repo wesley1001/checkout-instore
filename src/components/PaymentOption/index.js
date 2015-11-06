@@ -116,7 +116,7 @@ export default class PaymentOption extends React.Component {
           />
         </div>
       );
-    } else {      
+    } else if (installmentOptions.installments.length > 1) {
       arrowIcon = (<i className="arrow text-muted fa fa-caret-down"></i>);
     }
 
