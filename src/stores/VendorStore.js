@@ -71,6 +71,14 @@ class VendorStore {
     this.setState(this.state.set('store', undefined));
     this.setState(this.state.set('error', error.message));
   }
+
+  onClearVendorData()  {
+    this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('logged', false));
+    this.setState(this.state.set('user', undefined));
+    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('error', ''));
+  }
 }
 
 export default flux.createStore(VendorStore, 'VendorStore');

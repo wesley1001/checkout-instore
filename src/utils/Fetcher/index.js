@@ -130,8 +130,6 @@ class Fetcher {
       }
     };
 
-    console.log(this.procotol)
-
     return axios.get(url, configs).then((response) => response.data);
   }
 
