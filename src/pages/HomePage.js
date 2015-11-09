@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'react-cookie';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
@@ -36,6 +37,7 @@ export default class HomePage extends React.Component {
       if(vendorData) {
         vendorData = JSON.parse(vendorData);
         VendorActions.SetVendorDataSuccess(vendorData);
+        cookie.remove('checkout.vtex.com');
       } else  {
         this.props.history.pushState(null, '/vendor/login');
       }
@@ -51,8 +53,6 @@ export default class HomePage extends React.Component {
 
     if(!orderForm) {
       CartActions.getOrderForm.defer();
-    } else {
-      CartActions.clearCart.defer(orderForm);
     }
 
     const storeData = VendorStore.getState().get('store');

@@ -72,14 +72,14 @@
   "dependencies": {
     "alt": "^0.17.1",
     "axios": "^0.7.0",
-    "history": "^1.12.5",
     "felix": "^0.1.0",
+    "history": "^1.12.5",
     "immutable": "^3.7.4",
-    "js-cookie": "^2.0.3",
     "lodash": "^3.10.1",
     "offline-js": "^0.7.11",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.1",
+    "react-cookie": "^0.4.2",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3"
   },
