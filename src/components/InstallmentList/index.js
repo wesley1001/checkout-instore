@@ -64,14 +64,12 @@ export default class InstallmentList extends React.Component {
   }
 
   render() {
+    const {selectedInstallment} = this.props;
     let installmentOptionsList = this.composePaymentOptions();
+    let confirmButton;
 
-    return (
-      <div className="InstallmentList component container">
-        <p id="card-installments" className="installments btn-group-vertical">
-          {installmentOptionsList}
-        </p>
-
+    if (selectedInstallment) {
+      confirmButton = (
         <p className="confirm">
           <button ref="pinpadCall"
             className="btn btn-success btn-lg btn-block"
@@ -79,6 +77,18 @@ export default class InstallmentList extends React.Component {
             Confirmar pagamento
           </button>
         </p>
+      )
+    } else {
+      confirmButton = null;
+    }
+
+    return (
+      <div className="InstallmentList component">
+        <p id="card-installments" className="installments">
+          {installmentOptionsList}
+        </p>
+
+        {confirmButton}
       </div>
     );
   }

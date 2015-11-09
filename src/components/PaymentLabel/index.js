@@ -28,14 +28,14 @@ export default class PaymentLabel extends React.Component {
   composeClass() {
     if(this.props.type === 'credit') {
       return {
-        itemIcon: 'icon icon-credit',
+        itemIcon: 'icon icon-credit payment_label-icon',
         itemName: 'name item-credit'
       };
     }
 
     if(this.props.type === 'debit') {
       return {
-        itemIcon: 'icon icon-debit',
+        itemIcon: 'icon icon-debit payment_label-icon',
         itemName: 'name item-debit'
       };
     }

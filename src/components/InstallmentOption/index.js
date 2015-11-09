@@ -19,7 +19,10 @@ export default class InstallmentOption extends React.Component {
     this.checkSelectedInstallment = this.checkSelectedInstallment.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     CheckoutActions.selectInstallment(this.props.installments);
   }
 
@@ -27,23 +30,26 @@ export default class InstallmentOption extends React.Component {
     const {installments, selectedInstallment} = this.props;
 
     if(selectedInstallment !== installments) {
-      return '';
+      return 'InstallmentOption component btn btn-default';
     }
 
-    return (
-      <i className="fa fa-check icon"></i>
-    );
+    return 'InstallmentOption component btn btn-default active';
   }
 
   render() {
     const {installments, discount, price} = this.props;
-    let selectInstallment = this.checkSelectedInstallment();
+    let selectedInstallment = this.checkSelectedInstallment();
 
     return (
-      <button className="InstallmentOption component btn btn-default btn-block" value={installments} onClick={this.handleClick}>
-        {installments === 1 ? 'A vista: ' : installments + 'x de '}
-        R$ {ProductHelper.formatPrice(((1 - discount) * price) / installments)}
-        { selectInstallment }
+      <button className={selectedInstallment} value={installments} onClick={this.handleClick}>
+        <big><strong>{installments === 1 ? 'À vista' : installments + 'x'}</strong></big>
+
+        
+        <small>
+          {installments === 1 ? '' : ' de'}
+          <br/>        
+          R$ {ProductHelper.formatPrice(((1 - discount) * price) / installments)}
+        </small>
       </button>
     );
   }
