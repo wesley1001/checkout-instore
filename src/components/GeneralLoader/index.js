@@ -1,12 +1,13 @@
 import React from 'react';
 
 import './index.less';
+import loader from 'assets/images/loader.svg';
 
 export default class Loader extends React.Component {
   render() {
     const spinner = (
       <div className="wrapper">
-        <i className="spinner fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <img className="spinner" src={loader} width="120"/>
       </div>
     );
 
