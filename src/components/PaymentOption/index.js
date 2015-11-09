@@ -121,7 +121,7 @@ export default class PaymentOption extends React.Component {
     }
 
     return (
-      <div className="PaymentOption component btn btn-default">
+      <div className="PaymentOption component">
         <div onClick={this.handleClick}>
           <PaymentLabel type={type} iconClass={iconClass} iconLabel={iconLabel}/>
           {arrowIcon}
