@@ -11,7 +11,7 @@ import ErrorNotifier from 'components/ErrorNotifier';
 
 import 'styles/homepage.less';
 
-export default class VendorLogin extends React.Component {
+export default class VendorLoginPage extends React.Component {
   constructor(props) {
     super(props);
 

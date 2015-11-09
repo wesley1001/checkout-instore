@@ -70,6 +70,10 @@ class VendorActions {
       this.actions.GetStoreByHostFail({message: 'Error on identify store by host'});
     });
   }
+
+  clearVendorData() {
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(VendorActions);
