@@ -9,7 +9,7 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import 'styles/homepage.less';
+import 'pages/VendorLoginPage/VendorLoginPage.less';
 
 export default class VendorLogin extends React.Component {
   constructor(props) {
