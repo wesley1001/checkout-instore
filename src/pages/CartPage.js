@@ -44,6 +44,14 @@ export default class CartPage extends React.Component {
     this.setState({checkout: state});
   }
 
+  componentDidUpdate() {
+    const { cart } = this.state;
+
+    if(!cart.get('orderForm').items || cart.get('orderForm').items.length === 0) {
+      this.props.history.pushState(null, '/shop');
+    }
+  }
+
   render() {
     const {cart, checkout} = this.state;
     const orderForm = cart.get('orderForm');
@@ -81,8 +89,6 @@ export default class CartPage extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
-        <div className="productScan component">
-        </div>
       </div>
     );
   }

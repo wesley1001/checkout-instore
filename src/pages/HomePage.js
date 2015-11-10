@@ -26,6 +26,8 @@ export default class HomePage extends React.Component {
       vendor: VendorStore.getState()
     };
 
+    cookie.remove('checkout.vtex.com');
+
     this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
@@ -34,10 +36,10 @@ export default class HomePage extends React.Component {
   componentWillMount() {
     if(!this.state.vendor.get('logged')) {
       let vendorData = window.localStorage.getItem('vendorData');
+
       if(vendorData) {
         vendorData = JSON.parse(vendorData);
         VendorActions.SetVendorDataSuccess(vendorData);
-        cookie.remove('checkout.vtex.com');
       } else  {
         this.props.history.pushState(null, '/vendor/login');
       }
@@ -55,7 +57,7 @@ export default class HomePage extends React.Component {
       CartActions.getOrderForm.defer();
     }
 
-    const storeData = VendorStore.getState().get('store');
+    const storeData = this.state.vendor.get('store');
     if(storeData) {
       VendorActions.GetStoreInfo.defer(storeData.store);
     }

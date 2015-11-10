@@ -42,7 +42,7 @@ export default class ScanIndicator extends React.Component {
                 value={this.state.ean}
                 onChange={this.handleChange}
                 autoComplete="off"
-                type="number"
+                type="tel"
               />
               <span className="input-group-btn">
                 <button type="submit" className="btn btn-primary">Adicionar</button>
