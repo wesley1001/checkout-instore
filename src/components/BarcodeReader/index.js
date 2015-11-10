@@ -20,31 +20,11 @@ export default class BarcodeReader extends React.Component {
   }
 
   componentDidMount() {
-    const context = this;
-
-    if(window.WebViewBridge) {
-      window.WebViewBridge.onMessage = function(message) {
-        message = JSON.parse(message);
-        if(message && message.type === 'event' && message.event === 'barcodeReaded') {
-          context.handleBarcodeInput(message.data.barcode);
-        }
-      };
-    } else {
-      console.warn('WebViewBridge is not defined!');
-    }
-
     CheckoutStore.listen(this.onCheckoutChange);
-
     window.handleBarcodeRead = this.handleBarcodeInput;
   }
 
   componentWillUnmount() {
-    if(window.WebViewBridge) {
-      window.WebViewBridge.onMessage = function(){};
-    } else {
-      console.warn('WebViewBridge is not defined!');
-    }
-
     CheckoutStore.unlisten(this.onCheckoutChange);
   }
 

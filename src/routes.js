@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import CartPage from './pages/CartPage';
 import VendorLoginPage from './pages/VendorLoginPage';
-import VendorLogoutPage from './pages/VendorLogoutPage';
 
 export default (
   <Route path='/' component={App}>
@@ -15,6 +14,5 @@ export default (
     <Route path='shop' component={ShopPage} />
     <Route path='cart' component={CartPage} />
     <Route path='vendor/login' component={VendorLoginPage} />
-    <Route path='vendor/logout' component={VendorLogoutPage} />
   </Route>
 );
