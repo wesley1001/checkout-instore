@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React from 'react';
+import { Link } from 'react-router';
 
+import CheckoutActions from 'actions/CheckoutActions';
 
 export default class ScanIndicator extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class ScanIndicator extends React.Component {
       ean: ''
     };
 
+    this.showsBarcodeType = this.showsBarcodeType.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -18,6 +20,8 @@ export default class ScanIndicator extends React.Component {
     document.getElementById('TypeBarcodeReaderForm').className='text-left';
     document.getElementById('TypeBarcodeReaderShowForm').className='hidden';
     document.getElementById('ScanIndicatorForm').className='text';
+
+    this.refs.barcodeInputType.focus();
   }
 
   handleChange(e) {
@@ -26,7 +30,8 @@ export default class ScanIndicator extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    window.handleBarcodeRead(this.state.ean);
+
+    CheckoutActions.findProduct(this.state.ean);
     this.setState({ean: ''});
   }
 
@@ -43,6 +48,7 @@ export default class ScanIndicator extends React.Component {
                 onChange={this.handleChange}
                 autoComplete="off"
                 type="tel"
+                ref="barcodeInputType"
               />
               <span className="input-group-btn">
                 <button type="submit" className="btn btn-primary">Adicionar</button>
