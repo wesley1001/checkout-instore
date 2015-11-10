@@ -36,7 +36,7 @@ export default class VendorAuthentication extends React.Component {
 
         <div className="container">
           <form className="text-center" onSubmit={this.handleSubmit}>
-            <div className="input-group">
+            <div className="input-group btn-block">
               <input id="vendor-id"
                 className="form-control"
                 type="text"
@@ -45,8 +45,8 @@ export default class VendorAuthentication extends React.Component {
                 onChange={this.handleChange}
                 autoComplete="off"
               />
-              <span className="input-group-btn">
-                <button type="submit" className="btn btn-primary">Entrar</button>
+              <span className="">
+                <button type="submit" className="btn btn-primary btn-block enter">Entrar</button>
               </span>
             </div>
           </form>
