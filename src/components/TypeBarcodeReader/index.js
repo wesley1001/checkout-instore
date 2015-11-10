@@ -11,7 +11,7 @@ export default class ScanIndicator extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.addTypedBarcode = this.addTypedBarcode.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   showsBarcodeType() {
@@ -24,15 +24,16 @@ export default class ScanIndicator extends React.Component {
     this.setState({ean: e.target.value});
   }
 
-  addTypedBarcode(e) {
+  handleSubmit(e) {
     e.preventDefault();
     window.handleBarcodeRead(this.state.ean);
+    this.setState({ean: ''});
   }
 
   render() {
     return (
       <div className="TypeBarcodeReader component">
-        <form className="hidden text-left" id="TypeBarcodeReaderForm">
+        <form className="hidden text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <div className="input-group">
               <input
@@ -44,7 +45,7 @@ export default class ScanIndicator extends React.Component {
                 type="number"
               />
               <span className="input-group-btn">
-                <button type="submit" className="btn btn-primary" onClick={this.addTypedBarcode}>Adicionar</button>
+                <button type="submit" className="btn btn-primary">Adicionar</button>
               </span>
             </div>
           </div>
