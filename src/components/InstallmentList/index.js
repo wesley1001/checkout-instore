@@ -17,8 +17,17 @@ export default class InstallmentList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      cpf: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleConfirmPayment = this.handleConfirmPayment.bind(this);
     this.composePaymentOptions = this.composePaymentOptions.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({cpf: e.target.value});
   }
 
   handleConfirmPayment(e) {
@@ -70,13 +79,26 @@ export default class InstallmentList extends React.Component {
 
     if (selectedInstallment) {
       confirmButton = (
-        <p className="confirm">
-          <button ref="pinpadCall"
-            className="btn btn-success btn-lg btn-block"
-            onClick={this.handleConfirmPayment}>
-            Confirmar pagamento
-          </button>
-        </p>
+        <form>
+          <p className="form-group">
+            <label htmlFor="cpf">CPF na nota</label>
+            <input
+              id="cpf"
+              className="form-control"
+              type="tel"
+              placeholder="999.999.999-99"
+              value={this.state.cpf}
+              onChange={this.handleChange}
+              />
+          </p>
+          <p className="confirm">
+            <button ref="pinpadCall"
+              className="btn btn-success btn-lg btn-block"
+              onClick={this.handleConfirmPayment}>
+              { this.state.cpf.length > 0 ? 'Confirmar pagamento' : 'Confirmar sem CPF' }
+            </button>
+          </p>
+        </form>
       )
     } else {
       confirmButton = null;
