@@ -25,7 +25,7 @@ export default class App extends React.Component {
               break;
             case 'userLoggedOut':
               VendorActions.clearVendorData();
-              this.props.history.pushState('/vendor/login');
+              this.props.history.pushState(null, '/vendor/login');
               break;
           }
         }
