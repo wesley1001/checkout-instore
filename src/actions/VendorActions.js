@@ -72,6 +72,7 @@ class VendorActions {
   }
 
   clearVendorData() {
+    window.localStorage.removeItem('vendorData');
     this.dispatch();
   }
 }
