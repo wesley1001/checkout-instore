@@ -6,7 +6,9 @@ export default class ScanIndicator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {ean: ''};
+    this.state = {
+      ean: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.addTypedBarcode = this.addTypedBarcode.bind(this);
@@ -19,7 +21,6 @@ export default class ScanIndicator extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value);
     this.setState({ean: e.target.value});
   }
 
@@ -38,8 +39,9 @@ export default class ScanIndicator extends React.Component {
                 className="form-control"
                 placeholder="Código de barras"
                 value={this.state.ean}
-                handleChange={this.handleChange}
+                onChange={this.handleChange}
                 autoComplete="off"
+                type="number"
               />
               <span className="input-group-btn">
                 <button type="submit" className="btn btn-primary" onClick={this.addTypedBarcode}>Adicionar</button>
