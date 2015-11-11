@@ -19,7 +19,8 @@ export default class PaymentOption extends React.Component {
   static defaultProps = {
     orderFormId: '',
     payment: {},
-    products: []
+    products: [],
+    installmentOptions: { installments: [] }
   }
 
   constructor(props) {
@@ -116,7 +117,7 @@ export default class PaymentOption extends React.Component {
           />
         </div>
       );
-    } else if (installmentOptions.installments.length > 1) {
+    } else if (installmentOptions && installmentOptions.installments && installmentOptions.installments.length > 1) {
       arrowIcon = (<i className="arrow text-muted fa fa-caret-down"></i>);
     }
 
