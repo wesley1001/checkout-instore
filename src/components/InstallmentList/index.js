@@ -22,12 +22,34 @@ export default class InstallmentList extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleConfirmPayment = this.handleConfirmPayment.bind(this);
     this.composePaymentOptions = this.composePaymentOptions.bind(this);
   }
 
   handleChange(e) {
-    this.setState({cpf: e.target.value});
+    if(e.target.value.length === 15 ) return;
+
+    if(this.state.cpf.length < e.target.value.length && (e.target.value.length === 3 || e.target.value.length === 7)) {
+      this.setState({cpf: e.target.value + '.'});
+    } else if(this.state.cpf.length < e.target.value.length && e.target.value.length === 11) {
+      this.setState({cpf: e.target.value + '-'});
+    } else {
+      this.setState({cpf: e.target.value});
+    }
+  }
+
+  handleBlur() {
+    if(this.state.cpf.length === 14) {
+      console.log('aeeeeemanolo')
+    }
+  }
+
+  handleKeyDown(e) {
+    if(e.keyCode !== 8 && e.keyCode < 48 || e.keyCode > 57) {
+      e.preventDefault();
+    }
   }
 
   handleConfirmPayment(e) {
@@ -89,7 +111,9 @@ export default class InstallmentList extends React.Component {
               placeholder="999.999.999-99"
               value={this.state.cpf}
               onChange={this.handleChange}
-              />
+              onBlur={this.handleBlur}
+              onKeyDown={this.handleKeyDown}
+            />
           </p>
           <p className="confirm">
             <button ref="pinpadCall"
