@@ -47,7 +47,7 @@ export default class VendorLogin extends React.Component {
     return (
       <div className="VendorLoginPage component">
         <header className="container">
-          <Logo />
+          <Logo/>
         </header>
 
         <div className="email full-pannel full-pannel-show">
