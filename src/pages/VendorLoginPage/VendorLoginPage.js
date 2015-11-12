@@ -49,7 +49,6 @@ export default class VendorLogin extends React.Component {
         <header className="container">
           <Logo/>
         </header>
-
         <div className="email full-pannel full-pannel-show">
           <VendorAuthentication history={this.props.history}/>
         </div>
