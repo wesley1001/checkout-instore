@@ -2,6 +2,8 @@ import React from 'react';
 
 import InstallmentOption from 'components/InstallmentOption';
 import CartActions from 'actions/CartActions';
+import CheckoutActions from 'actions/CheckoutActions';
+import ProductHelper from 'utils/ProductHelper';
 
 import './index.less';
 
@@ -22,7 +24,6 @@ export default class InstallmentList extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleConfirmPayment = this.handleConfirmPayment.bind(this);
     this.composePaymentOptions = this.composePaymentOptions.bind(this);
@@ -40,12 +41,6 @@ export default class InstallmentList extends React.Component {
     }
   }
 
-  handleBlur() {
-    if(this.state.cpf.length === 14) {
-      console.log('aeeeeemanolo')
-    }
-  }
-
   handleKeyDown(e) {
     if(e.keyCode !== 8 && e.keyCode < 48 || e.keyCode > 57) {
       e.preventDefault();
@@ -56,14 +51,16 @@ export default class InstallmentList extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
+    CheckoutActions.setClientData.defer({cpf: this.state.cpf, email: this.props.email, orderForm: this.props.orderFormId});
+
     if(this.props.selectedInstallment !== 0) {
       const {selectedPaymentId, selectedInstallment, orderFormId, price} = this.props;
 
-      CartActions.setPayment({
+      CartActions.setPayment.defer({
         orderFormId: orderFormId,
         payment: {
           paymentSystem: selectedPaymentId,
-          installments: selectedInstallment,
+          installments: selectedInstallment || 1,
           referenceValue: price * 100
         }
       });
@@ -74,7 +71,7 @@ export default class InstallmentList extends React.Component {
     const {selectedPaymentId, selectedInstallment, installmentOptions, price} = this.props;
     let options = [];
     let installmentArray = [];
-    let selectedPayment = installmentOptions.filter(item => item.paymentSystem === selectedPaymentId.toString())[0];
+    let selectedPayment = ProductHelper.getSelectedPayment(installmentOptions, selectedPaymentId);
 
     if(selectedPayment) {
       installmentArray = selectedPayment.installments;
@@ -91,11 +88,13 @@ export default class InstallmentList extends React.Component {
       );
     });
 
+    if(selectedPayment.installments.length === 1) return '';
+
     return options;
   }
 
   render() {
-    const {selectedInstallment} = this.props;
+    const { selectedInstallment, installmentOptions, selectedPaymentId } = this.props;
     let installmentOptionsList = this.composePaymentOptions();
     let confirmButton;
 
@@ -111,7 +110,6 @@ export default class InstallmentList extends React.Component {
               placeholder="999.999.999-99"
               value={this.state.cpf}
               onChange={this.handleChange}
-              onBlur={this.handleBlur}
               onKeyDown={this.handleKeyDown}
             />
           </p>
@@ -131,7 +129,7 @@ export default class InstallmentList extends React.Component {
     return (
       <div className="InstallmentList component">
         <p id="card-installments" className="installments">
-          {installmentOptionsList}
+          { installmentOptionsList }
         </p>
 
         {confirmButton}

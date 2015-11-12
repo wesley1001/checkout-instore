@@ -12,12 +12,12 @@ class Fetcher {
     return axios.get(this.checkoutUrl);
   }
 
-  setClientProfile(orderForm, email) {
+  setClientProfile(orderForm, email, cpf = '') {
     const clientProfileRequest = {
       expectedOrderFormSections: this.orderFormSections,
       email,
       firstEmail: email,
-      document: '070.730.867-42',
+      document: cpf,
       documentType: 'cpf',
       firstName: 'VTEX',
       isCorporate: false,

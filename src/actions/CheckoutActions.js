@@ -22,7 +22,7 @@ class CheckoutActions {
 
     data.email = data.email || Date.now().toString() + '@vtex-instore.com';
 
-    Fetcher.setClientProfile(data.orderForm, data.email).then(() => {
+    Fetcher.setClientProfile(data.orderForm, data.email, data.cpf).then(() => {
       this.actions.setClientDataSuccess.defer();
     }).catch(() => {
       this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');

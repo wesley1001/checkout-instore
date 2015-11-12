@@ -10,6 +10,10 @@ class ProductHelper {
   formatPrice(price) {
     return (price.toFixed(2)).replace('.', ',');
   }
+
+  getSelectedPayment(installmentOptions, selectedPaymentId) {
+    return installmentOptions.filter(item => item.paymentSystem === selectedPaymentId.toString())[0];
+  }
 }
 
 export default new ProductHelper();
