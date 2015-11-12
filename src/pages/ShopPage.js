@@ -44,7 +44,10 @@ export default class ShopPage extends React.Component {
         reference: null,
         geoCoordinates: []
     };
-    CartActions.setShipping.defer({orderFormId: this.state.cart.get('orderForm').orderFormId, address: shippingRequest});
+
+    const orderForm = this.state.cart.get('orderForm');
+
+    CartActions.setShipping.defer({orderFormId: orderForm ? orderForm.orderFormId : undefined, address: shippingRequest});
 
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
