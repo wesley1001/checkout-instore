@@ -33,12 +33,15 @@ export default class VendorAuthentication extends React.Component {
       <div className="VendorAuthentication component">
         <h2 className="title main-title">
           <span className="main-title-name name">Vendedor</span>
-          <span className="main-title-border"></span>
+          <span className="main-title-border border"></span>
         </h2>
+        <div className="img-box">
+          <img src={user} className="img"/>
+        </div>
 
         <div className="container">
-          <form className="text-center" onSubmit={this.handleSubmit}>
-            <div className="input-group btn-block">
+          <form className="form-horizontal" onSubmit={this.handleSubmit}>
+            <div className="form-group btn-block container">
               <input id="vendor-id"
                 className="form-control"
                 type="text"
