@@ -51,11 +51,11 @@ export default class VendorAuthentication extends React.Component {
                 autoComplete="off"
               />
               <span className="">
-                <button type="submit" className="btn btn-primary btn-block enter">Entrar</button>
+                <button type="submit" className="btn btn-success btn-block enter">Entrar</button>
               </span>
             </div>
           </form>
-          <span className="help-block">Identifique-se para efetuar vendas em seu nome.</span>
+          <span className="help-block container">Essa identificação foi feita para efetuar as vendas em seu nome.</span>
         </div>
       </div>
     );
