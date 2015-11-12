@@ -20,11 +20,13 @@ export default class InstallmentList extends React.Component {
     super(props);
 
     this.state = {
-      cpf: ''
+      cpf: '',
+      isCpfValid: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleConfirmPayment = this.handleConfirmPayment.bind(this);
     this.composePaymentOptions = this.composePaymentOptions.bind(this);
   }
@@ -44,6 +46,19 @@ export default class InstallmentList extends React.Component {
   handleKeyDown(e) {
     if(e.keyCode !== 8 && e.keyCode < 48 || e.keyCode > 57) {
       e.preventDefault();
+    }
+  }
+
+  handleKeyUp(e) {
+    let cpf = e.target.value;
+
+    if(cpf.length === 14) {
+      cpf = cpf.replace('.','').replace('.','').replace('-','');
+      this.setState({ isCpfValid: ProductHelper.validateCPF(cpf) });
+    } else if(cpf.length === 0) {
+      this.setState({ isCpfValid: true });
+    } else {
+      this.setState({ isCpfValid: false });
     }
   }
 
@@ -111,12 +126,15 @@ export default class InstallmentList extends React.Component {
               value={this.state.cpf}
               onChange={this.handleChange}
               onKeyDown={this.handleKeyDown}
+              onKeyUp={this.handleKeyUp}
             />
+            { !this.state.isCpfValid && this.state.cpf.length === 14 && <small>CPF Inválido</small> }
           </p>
           <p className="confirm">
             <button ref="pinpadCall"
               className="btn btn-success btn-lg btn-block"
-              onClick={this.handleConfirmPayment}>
+              onClick={this.handleConfirmPayment}
+              disabled={!this.state.isCpfValid}>
               { this.state.cpf.length > 0 ? 'Confirmar pagamento' : 'Confirmar sem CPF' }
             </button>
           </p>
