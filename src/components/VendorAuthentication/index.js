@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 
 import VendorActions from 'actions/VendorActions';
 import './index.less';
+import user from 'assets/images/user.svg';
+
 
 export default class VendorAuthentication extends React.Component {
   constructor(props) {
