@@ -6,16 +6,18 @@ import AuthenticationHelper from 'utils/AuthenticationHelper';
 class VendorActions {
   GetStoreInfo(storeId) {
     this.dispatch();
+    const errorReason = 'Oops, houve um erro ao buscar a política comercial da sua loja. Usaremos a política comercial padrão.';
+
     if(!storeId) {
-      const reason = 'storeId is undefined. We\'ll use default trade policy';
-      this.actions.GetStoreInfoFail({message: reason});
+      console.error('storeId is undefined. We\'ll use default trade policy');
+      this.actions.GetStoreInfoFail({message: errorReason});
     }
 
     Fetcher.getStoreData(storeId).then((response) => {
       this.actions.GetStoreInfoSuccess(response);
     }).catch((err) => {
-      const reason = 'Fail on get trade policy. We\'ll use default trade policy';
-      this.actions.GetStoreInfoFail({message: reason});
+      console.error('Fail on get trade policy. We\'ll use default trade policy');
+      this.actions.GetStoreInfoFail({message: errorReason});
     });
   }
 
@@ -67,7 +69,7 @@ class VendorActions {
         this.actions.SetVendorDataFail({message: err.message});
       });
     }, (err) => {
-      this.actions.GetStoreByHostFail({message: 'Error on identify store by host'});
+      this.actions.GetStoreByHostFail({message: 'Oops, houve um erro ao identificar a loja pelo host!'});
     });
   }
 
