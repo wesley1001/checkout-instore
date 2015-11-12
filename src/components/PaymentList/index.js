@@ -19,7 +19,7 @@ export default class PaymentList extends React.Component {
   }
 
   render() {
-    const {payments, price, installments,orderFormId} = this.props;
+    const {payments, price, installments, orderFormId, email} = this.props;
 
     let paymentsInstore = payments.filter((payment) => payment.id === 45 || payment.id === 44);
     let payOptions = paymentsInstore.map((option) => {
@@ -30,6 +30,7 @@ export default class PaymentList extends React.Component {
           price={price}
           installmentOptions={_.find(installments, {'paymentSystem': option.stringId})}
           orderFormId={orderFormId}
+          email={email}
         />
       );
     });

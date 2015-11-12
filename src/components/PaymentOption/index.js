@@ -60,20 +60,11 @@ export default class PaymentOption extends React.Component {
     const {orderFormId, price, payment} = this.props;
 
     if(payment.groupName === 'debitDirectSalePaymentGroup') {
-      e.preventDefault();
-      e.stopPropagation();
-
-      CartActions.setPayment({
-        orderFormId: orderFormId,
-        payment: {
-          paymentSystem: payment.id,
-          installments: 1,
-          referenceValue: price * 100
-        }
-      });
-    } else {
-      CheckoutActions.selectPayment(payment.id);
+      CheckoutActions.selectInstallment(1);
     }
+
+    CheckoutActions.selectPayment.defer(payment.id);
+
   }
 
   composeIconsInfo() {

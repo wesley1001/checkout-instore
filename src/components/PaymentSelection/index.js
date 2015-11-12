@@ -17,7 +17,7 @@ export default class PaymentSelection extends React.Component {
   }
 
   render() {
-    const {products, paymentData, orderFormId} = this.props;
+    const {products, paymentData, orderFormId, email} = this.props;
     let totalPrice = ProductHelper.calculateTotalPrice(products);
 
     return (
@@ -32,6 +32,7 @@ export default class PaymentSelection extends React.Component {
             price={totalPrice}
             installments={paymentData.installmentOptions}
             orderFormId={orderFormId}
+            email={email}
           />
         </section>
       </div>
