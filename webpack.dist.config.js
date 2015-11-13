@@ -6,6 +6,7 @@
 
 var webpack = require('webpack');
 var path = require('path');
+var AppCachePlugin = require('appcache-webpack-plugin');
 
 module.exports = {
 
@@ -28,7 +29,10 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin()
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new AppCachePlugin({
+      output: 'instore.appcache'
+    })
   ],
 
   resolve: {

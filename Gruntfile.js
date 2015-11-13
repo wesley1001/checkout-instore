@@ -40,14 +40,6 @@ module.exports = function(grunt) {
           }
         ]
       },
-      appcache: {
-        files: [
-          {
-            src: ['instore.appcache'],
-            dest: 'build/<%= relativePath %>/instore.appcache'
-          }
-        ]
-      },
       pkg: {
         files: [
           {
@@ -106,7 +98,7 @@ module.exports = function(grunt) {
   };
 
   tasks = {
-    build: ['clean', 'copy:index', 'copy:appcache', 'webpack', 'copy:pkg'],
+    build: ['clean', 'copy:index', 'webpack', 'copy:pkg'],
     dist: ['build', 'copy:deploy'],
     test: [],
     vtex_deploy: ['shell:cp'],
