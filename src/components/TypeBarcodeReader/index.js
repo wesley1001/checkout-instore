@@ -2,17 +2,18 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import CheckoutActions from 'actions/CheckoutActions';
+import CheckoutStore from 'stores/CheckoutStore';
 
-export default class ScanIndicator extends React.Component {
+export default class TypeBarcodeReader extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       ean: '',
-      isHidden: true
+      isHidden: true,
+      checkout: CheckoutStore.getState()
     };
 
-    this.showsBarcodeType = this.showsBarcodeType.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -22,6 +23,8 @@ export default class ScanIndicator extends React.Component {
     setTimeout(()=>
       this.refs.barcodeInputType.focus()
     ,200);
+
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
   handleChange(e) {
@@ -38,41 +41,60 @@ export default class ScanIndicator extends React.Component {
     });
   }
 
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+  }
+
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
+  }
+
+  componentDidUpdate() {
+    let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
+    if (showTypeBarReaderForm && this.refs.barcodeInputType) {
+      this.refs.barcodeInputType.focus();
+    }
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
+  }
+
   render() {
-    if(this.state.isHidden === true){
-      return (
-        <div className="productScan">
-          <button
-            className="btn btn-default btn-lg btn-block btn-bottom"
-            onClick={this.showsBarcodeType}>
-            Digitar código do produto
-          </button>
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className="TypeBarcodeReader component">
-          <form className="text-left" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  placeholder="Código de barras"
-                  value={this.state.ean}
-                  onChange={this.handleChange}
-                  autoComplete="off"
-                  type="tel"
-                  ref="barcodeInputType"
-                />
-                <span className="input-group-btn">
-                  <button type="submit" className="btn btn-primary">Adicionar</button>
-                </span>
-              </div>
+    let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
+
+    let form;
+
+    if (showTypeBarReaderForm && this.state.isHidden === true) {
+      form = (
+        <form className="text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <div className="input-group">
+              <input
+                className="form-control"
+                placeholder="Código de barras"
+                value={this.state.ean}
+                onChange={this.handleChange}
+                autoComplete="off"
+                type="tel"
+                ref="barcodeInputType"
+              />
+              <span className="input-group-btn">
+                <button type="submit" className="btn btn-primary">Adicionar</button>
+              </span>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       );
+    } else {
+      form = null;
     }
+
+    return (
+      <div className="TypeBarcodeReader component container">
+        {showTypeBarReaderForm}
+        {form}
+      </div>
+    );
   }
 }

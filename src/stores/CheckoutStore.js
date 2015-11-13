@@ -66,6 +66,10 @@ class CheckoutStore {
   onDeselectInstallment() {
     this.setState(this.state.set('selectedInstallment', 0));
   }
+
+  onShowTypeBarReaderForm(visible) {
+    this.setState(this.state.set('showTypeBarReaderForm', visible));
+  }
 }
 
 export default flux.createStore(CheckoutStore, 'CheckoutStore');
