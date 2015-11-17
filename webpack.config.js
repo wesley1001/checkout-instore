@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var AppCachePlugin = require('appcache-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -68,7 +69,10 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new AppCachePlugin({
+      output: 'instore.appcache'
+    })
   ],
 
   quiet: true,

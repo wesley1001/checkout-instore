@@ -19,6 +19,7 @@
     "url": "https://github.com/vtex/checkout-instore/issues"
   },
   "devDependencies": {
+    "appcache-webpack-plugin": "^1.2.0",
     "babel": "^5.4.3",
     "babel-core": "^5.8.23",
     "babel-eslint": "^4.1.0",
