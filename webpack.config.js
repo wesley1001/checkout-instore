@@ -71,6 +71,12 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new AppCachePlugin({
+      cache: [
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css",
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css",
+        "https://io.vtex.com.br/front-libs/jquery/2.1.3/jquery.min.js",
+        "https://vtexid.vtex.com.br/api/vtexid/pub/authentication/vtexid.min.js"
+      ],
       output: 'instore.appcache'
     })
   ],

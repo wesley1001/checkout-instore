@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 
   replaceMap = {};
   replaceMap['{{version}}'] = '' + pkg.version;
-  replaceMap['/checkout-instore/'] = '//io.vtex.com.br/' + pkg.name + '/' + pkg.version + '/';
+  replaceMap['/checkout-instore/'] = 'https://io.vtex.com.br/' + pkg.name + '/' + pkg.version + '/';
   replaceMap['\<\!\-\-remove\-\-\>(.|\n)*\<\!\-\-endremove\-\-\>'] = '';
 
   defaultConfig = GruntVTEX.generateConfig(grunt, pkg, {
