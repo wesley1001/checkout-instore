@@ -61,7 +61,7 @@ module.exports = function(grunt) {
           processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}'],
           process: function(src, srcpath) {
             var file, i, k, len, ref, ref1, replaceFiles, v;
-            replaceFiles = (ref = grunt.config('deployReplaceFiles')) != null ? ref : grunt.config('deployReplaceFiles', glob.sync('build/**/{index.html,app.js}'));
+            replaceFiles = (ref = grunt.config('deployReplaceFiles')) != null ? ref : grunt.config('deployReplaceFiles', glob.sync('build/**/{index.html,app.js,instore.appcache}'));
             for (i = 0, len = replaceFiles.length; i < len; i++) {
               file = replaceFiles[i];
               if (!(file.indexOf(srcpath) >= 0)) {
