@@ -77,7 +77,7 @@ module.exports = {
         "https://io.vtex.com.br/front-libs/jquery/2.1.3/jquery.min.js",
         "https://vtexid.vtex.com.br/api/vtexid/pub/authentication/vtexid.min.js"
       ],
-      output: 'instore.appcache'
+      output: 'appcache.mf'
     })
   ],
 
