@@ -55,7 +55,10 @@ export default class VendorAuthentication extends React.Component {
               </span>
             </div>
           </form>
-          <span className="help-block container">Essa identificação foi feita para efetuar as vendas em seu nome.</span>
+          <div className="help-block container">
+            <p><Link to="/cart" className="ask" onClick={this.handleClick}>Não possui identificação?</Link></p>
+          </div>
+          <span className="help-block container">Peça sua identificação ao seu gerente, ela é usada para você acompanhar as suas vendas.</span>
         </div>
       </div>
     );
