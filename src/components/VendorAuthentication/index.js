@@ -64,7 +64,7 @@ export default class VendorAuthentication extends React.Component {
           <div className="help-block container">
             {this.state.toggleTask ?
               <span className="ask" onClick={this.handleClick}>Não possui identificação?</span>:
-              <span className="ask">Peça a identificação ao gerente, ela é usada para acompanhar as suas vendas.</span>
+              <span className="answer">Peça a identificação ao gerente, ela é usada para acompanhar as suas vendas.</span>
             }
           </div>
         </div>
