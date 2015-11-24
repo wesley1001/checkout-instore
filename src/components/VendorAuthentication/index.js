@@ -11,11 +11,13 @@ export default class VendorAuthentication extends React.Component {
     super(props);
 
     this.state = {
-      id:''
+      id:'',
+      toggleTask: true
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(e) {
@@ -28,6 +30,10 @@ export default class VendorAuthentication extends React.Component {
     VendorActions.SetVendorData(this.state.id);
   }
 
+  handleClick() {
+    this.setState({toggleTask: false});
+    console.log('lalala');
+  }
   render() {
     return (
       <div className="VendorAuthentication component">
@@ -56,9 +62,11 @@ export default class VendorAuthentication extends React.Component {
             </div>
           </form>
           <div className="help-block container">
-            <p><Link to="/cart" className="ask" onClick={this.handleClick}>Não possui identificação?</Link></p>
+            {this.state.toggleTask ?
+              <span className="ask" onClick={this.handleClick}>Não possui identificação?</span>:
+              <span className="ask">Peça a identificação ao gerente, ela é usada para acompanhar as suas vendas.</span>
+            }
           </div>
-          <span className="help-block container">Peça sua identificação ao seu gerente, ela é usada para você acompanhar as suas vendas.</span>
         </div>
       </div>
     );
