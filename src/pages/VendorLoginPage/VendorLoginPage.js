@@ -4,7 +4,6 @@ import VendorStore from 'stores/VendorStore';
 import VendorActions from 'actions/VendorActions';
 
 import VendorAuthentication from 'components/VendorAuthentication';
-import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';

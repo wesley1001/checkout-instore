@@ -8,7 +8,6 @@ import CartActions from 'actions/CartActions';
 import BarcodeReader from 'components/BarcodeReader';
 import ScanIndicator from 'components/ScanIndicator';
 import OrderHeader from 'components/OrderHeader';
-import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
 import ErrorNotifier from 'components/ErrorNotifier';
@@ -84,7 +83,6 @@ export default class ShopPage extends React.Component {
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
 
         <header className="container">
-          <Logo />
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
