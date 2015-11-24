@@ -8,7 +8,8 @@ export default class ScanIndicator extends React.Component {
     super(props);
 
     this.state = {
-      ean: ''
+      ean: '',
+      isHidden: true
     };
 
     this.showsBarcodeType = this.showsBarcodeType.bind(this);
@@ -17,11 +18,10 @@ export default class ScanIndicator extends React.Component {
   }
 
   showsBarcodeType() {
-    document.getElementById('TypeBarcodeReaderForm').className='text-left';
-    document.getElementById('TypeBarcodeReaderShowForm').className='hidden';
-    document.getElementById('ScanIndicatorForm').className='text';
-
-    this.refs.barcodeInputType.focus();
+    this.setState({isHidden: false});
+    setTimeout(()=>
+      this.refs.barcodeInputType.focus()
+    ,200);
   }
 
   handleChange(e) {
@@ -32,34 +32,47 @@ export default class ScanIndicator extends React.Component {
     e.preventDefault();
 
     CheckoutActions.findProduct(this.state.ean);
-    this.setState({ean: ''});
+    this.setState({
+      ean: '',
+      isHidden: true
+    });
   }
 
   render() {
-    return (
-      <div className="TypeBarcodeReader component">
-        <form className="hidden text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <div className="input-group">
-              <input
-                className="form-control"
-                placeholder="Código de barras"
-                value={this.state.ean}
-                onChange={this.handleChange}
-                autoComplete="off"
-                type="tel"
-                ref="barcodeInputType"
-              />
-              <span className="input-group-btn">
-                <button type="submit" className="btn btn-primary">Adicionar</button>
-              </span>
-            </div>
-          </div>
-        </form>
-        <div id="TypeBarcodeReaderShowForm" className="productScan">
-          <button className="btn btn-default btn-lg btn-block btn-bottom" onClick={this.showsBarcodeType}>Digitar código do produto</button>
+    if(this.state.isHidden === true){
+      return (
+        <div className="productScan">
+          <button
+            className="btn btn-default btn-lg btn-block btn-bottom"
+            onClick={this.showsBarcodeType}>
+            Digitar código do produto
+          </button>
         </div>
-      </div>
-    );
+      );
+    }
+    else {
+      return (
+        <div className="TypeBarcodeReader component">
+          <form className="text-left" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  placeholder="Código de barras"
+                  value={this.state.ean}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                  type="tel"
+                  ref="barcodeInputType"
+                />
+                <span className="input-group-btn">
+                  <button type="submit" className="btn btn-primary">Adicionar</button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      );
+    }
   }
 }
