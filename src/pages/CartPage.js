@@ -6,7 +6,6 @@ import CartStore from 'stores/CartStore';
 import BarcodeReader from 'components/BarcodeReader';
 import ProductShowcase from 'components/ProductShowcase';
 import PaymentSelection from 'components/PaymentSelection';
-import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
@@ -61,7 +60,6 @@ export default class CartPage extends React.Component {
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
 
         <header className="container">
-          <Logo />
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 

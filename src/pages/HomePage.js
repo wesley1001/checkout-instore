@@ -9,7 +9,6 @@ import CartActions from 'actions/CartActions';
 import VendorActions from 'actions/VendorActions';
 
 import UserAuthentication from 'components/UserAuthentication';
-import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
@@ -95,7 +94,6 @@ export default class HomePage extends React.Component {
       <div className="HomePage component">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
         <header className="container">
-          <Logo />
         </header>
 
         <div className="email full-pannel full-pannel-show">
