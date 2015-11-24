@@ -9,9 +9,9 @@ import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import 'styles/homepage.less';
+import 'pages/VendorLoginPage/VendorLoginPage.less';
 
-export default class VendorLoginPage extends React.Component {
+export default class VendorLogin extends React.Component {
   constructor(props) {
     super(props);
 
@@ -45,11 +45,7 @@ export default class VendorLoginPage extends React.Component {
   render() {
     const {vendor} = this.state;
     return (
-      <div>
-        <header className="VendorLoginPage container">
-          <Logo />
-        </header>
-
+      <div className="VendorLoginPage component">
         <div className="email full-pannel full-pannel-show">
           <VendorAuthentication history={this.props.history}/>
         </div>
