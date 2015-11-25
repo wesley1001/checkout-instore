@@ -18,12 +18,6 @@ export default class TypeBarcodeReader extends React.Component {
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
-  showsBarcodeType() {
-    setTimeout(()=>
-      this.refs.barcodeInputType.focus()
-    ,200);
-  }
-
   handleChange(e) {
     this.setState({ean: e.target.value});
   }
