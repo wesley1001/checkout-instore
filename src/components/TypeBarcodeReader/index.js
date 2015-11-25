@@ -10,21 +10,18 @@ export default class TypeBarcodeReader extends React.Component {
 
     this.state = {
       ean: '',
-      isHidden: true,
       checkout: CheckoutStore.getState()
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
   showsBarcodeType() {
-    this.setState({isHidden: false});
     setTimeout(()=>
       this.refs.barcodeInputType.focus()
     ,200);
-
-    this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
   handleChange(e) {
@@ -37,8 +34,12 @@ export default class TypeBarcodeReader extends React.Component {
     CheckoutActions.findProduct(this.state.ean);
     this.setState({
       ean: '',
-      isHidden: true
+      checkout: CheckoutStore.getState()
     });
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
   }
 
   componentDidMount() {
@@ -56,16 +57,12 @@ export default class TypeBarcodeReader extends React.Component {
     }
   }
 
-  onCheckoutChange(state) {
-    this.setState({checkout: state});
-  }
-
   render() {
     let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
 
     let form;
 
-    if (showTypeBarReaderForm && this.state.isHidden === true) {
+    if (showTypeBarReaderForm) {
       form = (
         <form className="text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
