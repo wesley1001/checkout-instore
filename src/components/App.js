@@ -27,6 +27,9 @@ export default class App extends React.Component {
               VendorActions.clearVendorData();
               this.props.history.pushState(null, '/vendor/login');
               break;
+            case 'goHome':
+              this.props.history.pushState(null, '/');
+              break;
           }
         }
       };
