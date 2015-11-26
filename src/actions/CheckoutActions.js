@@ -78,7 +78,6 @@ class CheckoutActions {
   }
 
   showTypeBarReaderForm() {
-    console.log('ACTIONS DISPATCH');
     this.dispatch();
   }
 }

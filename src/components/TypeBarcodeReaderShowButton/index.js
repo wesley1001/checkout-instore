@@ -6,7 +6,6 @@ import CheckoutActions from 'actions/CheckoutActions';
 export default class TypeBarcodeReaderShowButton extends React.Component {
 
   showsBarcodeType() {
-    console.log('COMPONENT CLICK');
     CheckoutActions.showTypeBarReaderForm();
   }
 

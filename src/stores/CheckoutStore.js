@@ -70,7 +70,6 @@ class CheckoutStore {
 
   onShowTypeBarReaderForm() {
     this.setState(this.state.set('typingBarcode', true));
-    console.log('STORE STATE: ', this.state.get('typingBarcode'));
   }
 }
 
