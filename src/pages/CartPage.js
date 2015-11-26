@@ -86,7 +86,7 @@ export default class CartPage extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
-        <TypeBarcodeReaderShowButton/>
+        {this.state.checkout.get('typingBarcode') ? '' : <TypeBarcodeReaderShowButton/>}
       </div>
     );
   }

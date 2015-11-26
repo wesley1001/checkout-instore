@@ -16,7 +16,6 @@ class CheckoutStore {
       sku: '',
       seller: 1,
       incrementingProduct: '',
-
       error: '',
       readingBarcode: false,
       typingBarcode: false,
@@ -70,6 +69,10 @@ class CheckoutStore {
 
   onShowTypeBarReaderForm() {
     this.setState(this.state.set('typingBarcode', true));
+  }
+
+  onHideTypeBarReaderForm() {
+    this.setState(this.state.set('typingBarcode', false));
   }
 }
 

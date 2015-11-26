@@ -80,6 +80,10 @@ class CheckoutActions {
   showTypeBarReaderForm() {
     this.dispatch();
   }
+
+  hideTypeBarReaderForm() {
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(CheckoutActions);

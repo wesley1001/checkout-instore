@@ -33,27 +33,20 @@ export default class ScanIndicator extends React.Component {
     let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
     let alternativeText;
 
-    if (showTypeBarReaderForm) {
-      alternativeText = (<div className="text" id="ScanIndicatorForm"><br/>ou<br/><br/></div>);
-    } else {
+    {this.state.checkout.get('typingBarcode') ?
+      alternativeText = (<div className="text" id="ScanIndicatorForm"><br/>ou<br/><br/></div>) :
       alternativeText = null;
     }
 
     return (
       <div className="ScanIndicator component">
-        {this.state.checkout.get('typingBarcode') ?
-          <TypeBarcodeReader/> :
-          ''
-        }
+        {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader/> : ''}
         {alternativeText}
         <div className="text">Adicione os produtos<br/>utilizando o leitor</div>
         <div className="image-wrapper">
           <img className="image" src={pinpad}/>
         </div>
-        {this.state.checkout.get('typingBarcode') ?
-          '' :
-          <TypeBarcodeReaderShowButton/>
-        }
+        {this.state.checkout.get('typingBarcode') ? '' : <TypeBarcodeReaderShowButton/>}
       </div>
     );
   }

@@ -22,7 +22,24 @@ export default class ProductList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      checkout: CheckoutStore.getState()
+    };
+
     this.handleClick = this.handleClick.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
+  }
+
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+  }
+
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
   }
 
   handleClick(e) {
@@ -61,7 +78,7 @@ export default class ProductList extends React.Component {
 
       return (
         <section className="ProductList component">
-          <TypeBarcodeReader/>
+          {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader/> : ''}
           {items}
         </section>
       );

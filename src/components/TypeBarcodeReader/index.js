@@ -2,17 +2,20 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import CheckoutActions from 'actions/CheckoutActions';
+import CheckoutStore from 'stores/CheckoutStore';
 
 export default class TypeBarcodeReader extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ean: ''
+      ean: '',
+      checkout: CheckoutStore.getState()
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
   handleChange(e) {
@@ -21,11 +24,35 @@ export default class TypeBarcodeReader extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
     CheckoutActions.findProduct(this.state.ean);
-    this.setState({
-      ean: ''
-    });
+  }
+
+  onCheckoutChange(state) {
+    let newState = {
+      checkout: state
+    };
+
+    if(state.get('error') === '' && state.get('loading') === false){
+      newState.ean = '';
+      CheckoutActions.hideTypeBarReaderForm.defer();
+    }
+
+    this.setState(newState);
+  }
+
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+  }
+
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
+  }
+
+  componentDidUpdate() {
+    let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
+    if (showTypeBarReaderForm && this.refs.barcodeInputType) {
+      this.refs.barcodeInputType.focus();
+    }
   }
 
   render() {
