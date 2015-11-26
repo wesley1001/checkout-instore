@@ -76,6 +76,14 @@ class CheckoutActions {
   deselectInstallment() {
     this.dispatch();
   }
+
+  showTypeBarReaderForm() {
+    this.dispatch();
+  }
+
+  hideTypeBarReaderForm() {
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(CheckoutActions);
