@@ -1,4 +1,5 @@
 @import "//fonts.googleapis.com/css?family=Lato:100,300,400";
+@import "~vtex-css-utils/less/_css-utils";
 
 /*==========  blokkfont.com for wireframing effect  ==========*/
 @font-face {
@@ -10,7 +11,10 @@
 
 * { box-sizing: border-box; }
 main { display: block; }
-body { font-size: 13px; }
+body {
+  font-size: 13px;
+  font-family: @font-body;
+}
 h2 {
   font-size: 18px;
   margin-top: 30px;
@@ -63,6 +67,7 @@ h5 { line-height: 1.4; }
   position: fixed;
   bottom: 0;
   left: 0;
+  border-radius: 0;
 }
 
 .transparent { opacity: 0; }
