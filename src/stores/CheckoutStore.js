@@ -19,6 +19,7 @@ class CheckoutStore {
 
       error: '',
       readingBarcode: false,
+      typingBarcode: false,
       loading: false
     });
   }
@@ -67,8 +68,9 @@ class CheckoutStore {
     this.setState(this.state.set('selectedInstallment', 0));
   }
 
-  onShowTypeBarReaderForm(visible) {
-    this.setState(this.state.set('showTypeBarReaderForm', visible));
+  onShowTypeBarReaderForm() {
+    this.setState(this.state.set('typingBarcode', true));
+    console.log('STORE STATE: ', this.state.get('typingBarcode'));
   }
 }
 
