@@ -52,10 +52,12 @@ export default class HomePage extends React.Component {
           <hr/>
 
           <div className="receipts">
-            <p>Comprovantes enviados para <br/><strong>
             {this.state.checkout.get('customerEmail') === '' ?
-            'Email do cliente não inserido' : this.state.checkout.get('customerEmail')}
-            </strong></p>
+              '' :
+              <p>Comprovantes enviados para <br/><strong>
+              {this.state.checkout.get('customerEmail')}
+              </strong></p>
+            }
             <p>
               <button className="btn btn-default">Imprimir comprovantes</button>
             </p>
