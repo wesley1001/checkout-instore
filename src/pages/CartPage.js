@@ -60,7 +60,7 @@ export default class CartPage extends React.Component {
       <div className="content">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
 
-        <header className="container">
+        <header>
           <Logo />
           <UserInfo email={checkout.get('customerEmail')} />
         </header>

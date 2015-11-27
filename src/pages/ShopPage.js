@@ -82,7 +82,7 @@ export default class ShopPage extends React.Component {
       <div className="content">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
 
-        <header className="container">
+        <header>
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
