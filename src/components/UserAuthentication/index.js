@@ -72,7 +72,7 @@ export default class Authentication extends React.Component {
               <Link className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
             </div>
           </form>
-          <div className="help-block text">Ao se identificar com o email, o cliente terá a vantagem de ter o recibo por email.
+          <div className="help-block text">Ao se identificar, o cliente terá a vantagem de receber o comprovante por email.
           </div>
         </div>
       </div>
