@@ -4,7 +4,6 @@ import {Link} from 'react-router';
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
 import './index.less';
-import client from 'assets/images/client.svg';
 
 export default class Authentication extends React.Component {
   constructor(props) {
@@ -17,7 +16,6 @@ export default class Authentication extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAnonymous = this.handleAnonymous.bind(this);
   }
 
   handleChange(e) {
@@ -37,45 +35,23 @@ export default class Authentication extends React.Component {
     }
   }
 
-  handleAnonymous() {
-    CheckoutActions.setClientData({email: '', orderForm: this.props.orderForm.orderFormId});
-  }
-
   render() {
     return (
-      <div className="UserAuthentication component">
-        <div className="img-box">
-          <img src={client} className="img"/>
+      <form className="text-center" onSubmit={this.handleSubmit}>
+        <div className="input-group">
+          <input id="email"
+            className="form-control"
+            type="email"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={this.handleChange}
+            autoComplete="off"
+          />
+          <span className="input-group-btn">
+            <button type="submit" className="btn btn-primary">OK</button>
+          </span>
         </div>
-        <h2 className="title main-title">
-          <span className="main-title-name title">Cliente</span>
-          <span className="main-title-border"></span>
-        </h2>
-
-        <div className="container">
-          <form className="text-center" onSubmit={this.handleSubmit}>
-            <div className="input-group">
-              <input id="email"
-                className="form-control"
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-              <span className="input-group-btn">
-                <button type="submit" className="btn btn-primary">OK</button>
-              </span>
-            </div>
-
-            <div className="anonymous">
-              <Link className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
-            </div>
-          </form>
-          <div className="help-block text">Ao se identificar, o cliente terá a vantagem de receber o comprovante por email.
-          </div>
-        </div>
-      </div>
+      </form>
     );
   }
 }
