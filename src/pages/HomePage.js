@@ -9,9 +9,12 @@ import CartActions from 'actions/CartActions';
 import VendorActions from 'actions/VendorActions';
 
 import UserAuthentication from 'components/UserAuthentication';
+import UserAnonymous from 'components/UserAnonymous';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
+
+import client from 'assets/images/client.svg';
 
 import 'styles/homepage.less';
 
@@ -96,8 +99,23 @@ export default class HomePage extends React.Component {
         <header className="container"></header>
 
         <div className="email full-pannel full-pannel-show">
-          <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
+          <div className="UserAuthenticationWrapper">
+            <div className="img-box">
+              <img src={client} className="img"/>
+            </div>
+            <h2 className="title main-title">
+              <span className="main-title-name title">Cliente</span>
+              <span className="main-title-border"></span>
+            </h2>
+
+            <div className="container">
+              <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
+              <div className="help-block text">Ao se identificar, o cliente terá a vantagem de receber o comprovante por email.</div>
+            </div>
+          </div>
         </div>
+
+        <UserAnonymous orderForm={cart.get('orderForm')} history={this.props.history}/>
 
         <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
         <Footer />
