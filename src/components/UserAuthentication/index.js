@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
 import './index.less';
+import client from 'assets/images/client.svg';
 
 export default class Authentication extends React.Component {
   constructor(props) {
@@ -43,8 +44,11 @@ export default class Authentication extends React.Component {
   render() {
     return (
       <div className="UserAuthentication component">
+        <div className="img-box">
+          <img src={client} className="img"/>
+        </div>
         <h2 className="title main-title">
-          <span className="main-title-name">Identificação</span>
+          <span className="main-title-name title">Cliente</span>
           <span className="main-title-border"></span>
         </h2>
 
@@ -68,7 +72,8 @@ export default class Authentication extends React.Component {
               <Link className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar anônimo</Link>
             </div>
           </form>
-
+          <div className="help-block text">Ao se identificar, o cliente terá a vantagem de receber o comprovante por email.
+          </div>
         </div>
       </div>
     );
