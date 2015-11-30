@@ -79,7 +79,7 @@ module.exports = {
       fallback: [
         " "
       ],
-      output: 'appcache.mf'
+      output: 'manifest.appcache'
     })
   ],
 
