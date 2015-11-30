@@ -33,15 +33,21 @@ export default class UserInfo extends React.Component {
 
     if (this.state.showIdForm) {
       disclaimerMessage = (
-        <div id="disclaimer-user-auth">
-          <UserAuthentication/>
+        <div id="disclaimer-user-auth" className="component UserInfo">
+          <h2 className="title main-title">
+            <span className="main-title-name title">Cliente</span>
+            <span className="main-title-border"></span>
+          </h2>
+          <div className="container auth">
+            <UserAuthentication/>
+          </div>
         </div>
       );
       disclaimerUserAuth = null;
     } else {
       disclaimerMessage = null;
       disclaimerUserAuth = (
-        <p id="disclaimer-message" className="disclaimer container">
+        <p id="disclaimer-message" className="disclaimer container component UserInfo">
           <span>Cliente não identificado.</span>
           <button className="signin btn-link" onClick={this.handleClick}>Identificar agora?</button>
         </p>
