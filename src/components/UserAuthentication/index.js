@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
-import './index.less';
 
 export default class Authentication extends React.Component {
   constructor(props) {
@@ -37,21 +36,23 @@ export default class Authentication extends React.Component {
 
   render() {
     return (
-      <form className="text-center" onSubmit={this.handleSubmit}>
-        <div className="input-group">
-          <input id="email"
-            className="form-control"
-            type="email"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleChange}
-            autoComplete="off"
-          />
-          <span className="input-group-btn">
-            <button type="submit" className="btn btn-primary">OK</button>
-          </span>
-        </div>
-      </form>
+      <div className="container">
+        <form className="form-horizontal text-center" onSubmit={this.handleSubmit}>
+          <div className="btn-block">
+            <input id="email"
+              className="form-control"
+              type="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              autoComplete="off"
+            />
+            <span>
+              <button type="submit" className="btn btn-primary btn-block identification">Identificar cliente</button>
+            </span>
+          </div>
+        </form>
+      </div>
     );
   }
 }

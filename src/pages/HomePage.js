@@ -104,13 +104,13 @@ export default class HomePage extends React.Component {
               <img src={client} className="img"/>
             </div>
             <h2 className="title main-title">
-              <span className="main-title-name title">Cliente</span>
+              <span className="main-title-name">Cliente</span>
               <span className="main-title-border"></span>
             </h2>
 
             <div className="container">
               <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
-              <div className="help-block text">Ao se identificar, o cliente terá a vantagem de receber o comprovante por email.</div>
+              <div className="help-block text">Ao identificar o cliente, ele terá a vantagem de receber o comprovante por email.</div>
             </div>
           </div>
         </div>
