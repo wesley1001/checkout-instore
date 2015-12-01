@@ -42,6 +42,11 @@ export default class TypeBarcodeReader extends React.Component {
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
+
+    let showTypeBarReaderForm = this.state.checkout.get('typingBarcode');
+    if (showTypeBarReaderForm && this.refs.barcodeInputType) {
+      this.refs.barcodeInputType.focus();
+    }
   }
 
   componentWillUnmount() {
