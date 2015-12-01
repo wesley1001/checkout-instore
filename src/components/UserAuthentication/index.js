@@ -34,6 +34,12 @@ export default class Authentication extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.getFocus) {
+      this.refs.email.focus();
+    }
+  }
+
   render() {
     return (
       <div className="container">
@@ -46,6 +52,7 @@ export default class Authentication extends React.Component {
               value={this.state.email}
               onChange={this.handleChange}
               autoComplete="off"
+              ref="email"
             />
             <span>
               <button type="submit" className="btn btn-primary btn-block identification">Identificar cliente</button>

@@ -42,6 +42,11 @@ export default class TypeBarcodeReader extends React.Component {
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
+
+    let showTypeBarReaderForm = this.state.checkout.get('typingBarcode');
+    if (showTypeBarReaderForm && this.refs.barcodeInputType) {
+      this.refs.barcodeInputType.focus();
+    }
   }
 
   componentWillUnmount() {
@@ -49,7 +54,7 @@ export default class TypeBarcodeReader extends React.Component {
   }
 
   componentDidUpdate() {
-    let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
+    let showTypeBarReaderForm = this.state.checkout.get('typingBarcode');
     if (showTypeBarReaderForm && this.refs.barcodeInputType) {
       this.refs.barcodeInputType.focus();
     }
@@ -57,7 +62,7 @@ export default class TypeBarcodeReader extends React.Component {
 
   render() {
     return (
-      <div className="TypeBarcodeReader component container">
+      <div className="TypeBarcodeReader component">
         <form className="text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <div className="input-group">

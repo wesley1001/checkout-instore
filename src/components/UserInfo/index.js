@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import CartStore from 'stores/CartStore';
 import UserAuthentication from 'components/UserAuthentication';
 
 import './index.less';
@@ -14,6 +15,7 @@ export default class UserInfo extends React.Component {
     super(props);
 
     this.state = {
+      cart: CartStore.getState(),
       showIdForm: false
     };
 
@@ -29,6 +31,7 @@ export default class UserInfo extends React.Component {
 
   composeWelcomeMessage() {
     const {email} = this.props;
+    const {cart} = this.state;
     let disclaimerUserAuth, disclaimerMessage;
 
     if (this.state.showIdForm) {
@@ -39,7 +42,7 @@ export default class UserInfo extends React.Component {
             <span className="main-title-border"></span>
           </h2>
           <div className="container auth">
-            <UserAuthentication/>
+            <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history} getFocus="true"/>
           </div>
         </div>
       );
