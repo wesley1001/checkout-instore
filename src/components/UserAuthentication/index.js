@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
-import './index.less';
 
 export default class Authentication extends React.Component {
   constructor(props) {
