@@ -39,7 +39,7 @@ export default class UserInfo extends React.Component {
             <span className="main-title-border"></span>
           </h2>
           <div className="container auth">
-            <UserAuthentication/>
+            <UserAuthentication getFocus="true"/>
           </div>
         </div>
       );
