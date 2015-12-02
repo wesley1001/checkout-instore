@@ -19,7 +19,9 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
-      loading: false
+      loading: false,
+      orderGroup: undefined,
+      orderPlacedError: false
     });
   }
 
@@ -73,6 +75,26 @@ class CheckoutStore {
 
   onHideTypeBarReaderForm() {
     this.setState(this.state.set('typingBarcode', false));
+  }
+
+  onGetOrderGroupData() {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', true));
+  }
+  onGetOrderGroupDataSuccess(data) {
+    this.setState(this.state.set('orderGroup', data));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', false));
+  }
+
+  onGetOrderGroupDataFail(err) {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', true));
+    this.setState(this.state.set('error', err));
+    this.setState(this.state.set('loading', false));
   }
 }
 

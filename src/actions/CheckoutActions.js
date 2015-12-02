@@ -84,6 +84,23 @@ class CheckoutActions {
   hideTypeBarReaderForm() {
     this.dispatch();
   }
+
+  getOrderGroupData(orderGroup) {
+    this.dispatch();
+    Fetcher.getOrderGroup(orderGroup).then((response) => {
+      this.actions.getOrderGroupDataSuccess(response);
+    }, (err) => {
+      this.actions.getOrderGroupDataFail(err);
+    });
+  }
+
+  getOrderGroupDataSuccess(data) {
+    this.dispatch(data);
+  }
+
+  getOrderGroupDataFail(err) {
+    this.dispatch(err);
+  }
 }
 
 export default flux.createActions(CheckoutActions);
