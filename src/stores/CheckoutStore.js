@@ -19,8 +19,11 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
-      typingEmail: false,
       loading: false
+
+      loading: false,
+      orderGroup: undefined,
+      orderPlacedError: false
     });
   }
 
@@ -76,14 +79,27 @@ class CheckoutStore {
     this.setState(this.state.set('typingBarcode', false));
   }
 
-  onShowTypeEmailForm() {
-    console.log('STORE BEFORE: ',this.state.get('typingEmail'));
-    this.setState(this.state.set('typingEmail', true));
-    console.log('STORE AFTER: ',this.state.get('typingEmail'));
+
+  onGetOrderGroupData() {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', true));
+  }
+  onGetOrderGroupDataSuccess(data) {
+    this.setState(this.state.set('orderGroup', data));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', false));
   }
 
-  onHideTypeEmailForm() {
-    this.setState(this.state.set('typingEmail', false));
+
+
+  onGetOrderGroupDataFail(err) {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', true));
+    this.setState(this.state.set('error', err));
+    this.setState(this.state.set('loading', false));
   }
 }
 
