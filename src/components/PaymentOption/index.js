@@ -60,9 +60,7 @@ export default class PaymentOption extends React.Component {
     const {orderFormId, price, payment} = this.props;
     const installmentOptions = this.state.cart.get('orderForm').paymentData.installmentOptions;
 
-    if(payment.groupName === 'debitDirectSalePaymentGroup'
-      || (payment.groupName === 'creditDirectSalePaymentGroup'
-      && installmentOptions.filter(payopt => payopt.paymentSystem === '45')[0].installments)) {
+    if(payment.groupName === 'debitDirectSalePaymentGroup') {
       CheckoutActions.selectInstallment(1);
     }
 
