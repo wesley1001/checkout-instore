@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 
 import CartStore from 'stores/CartStore';
+import CheckoutActions from 'actions/CheckoutActions';
+import CheckoutStore from 'stores/CheckoutStore';
 import UserAuthentication from 'components/UserAuthentication';
 
 import './index.less';
@@ -16,16 +18,29 @@ export default class UserInfo extends React.Component {
 
     this.state = {
       cart: CartStore.getState(),
-      showIdForm: false
+      checkout: CheckoutStore.getState()
     };
 
     this.composeWelcomeMessage = this.composeWelcomeMessage.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+  }
 
-  handleClick(e) {
-    this.setState({ 'showIdForm': true });
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
+  }
+
+  handleClick() {
+    console.log('COMPONENT: ',this.state.checkout.get('typingEmail'));
+    CheckoutActions.showTypeEmailForm();
   }
 
 
@@ -34,7 +49,7 @@ export default class UserInfo extends React.Component {
     const {cart} = this.state;
     let disclaimerUserAuth, disclaimerMessage;
 
-    if (this.state.showIdForm) {
+    if (this.state.checkout.get('typingEmail')) {
       disclaimerMessage = (
         <div id="disclaimer-user-auth" className="component UserInfo">
           <h2 className="title main-title">

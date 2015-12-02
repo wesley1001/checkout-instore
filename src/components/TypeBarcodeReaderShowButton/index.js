@@ -7,6 +7,7 @@ export default class TypeBarcodeReaderShowButton extends React.Component {
 
   showsBarcodeType() {
     CheckoutActions.showTypeBarReaderForm();
+    CheckoutActions.hideTypeEmailForm();
   }
 
   render() {
