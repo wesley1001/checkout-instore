@@ -19,6 +19,7 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
+      typingEmail: false,
       loading: false
     });
   }
@@ -73,6 +74,16 @@ class CheckoutStore {
 
   onHideTypeBarReaderForm() {
     this.setState(this.state.set('typingBarcode', false));
+  }
+
+  onShowTypeEmailForm() {
+    console.log('STORE BEFORE: ',this.state.get('typingEmail'));
+    this.setState(this.state.set('typingEmail', true));
+    console.log('STORE AFTER: ',this.state.get('typingEmail'));
+  }
+
+  onHideTypeEmailForm() {
+    this.setState(this.state.set('typingEmail', false));
   }
 }
 
