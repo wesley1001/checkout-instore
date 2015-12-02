@@ -84,6 +84,15 @@ class CheckoutActions {
   hideTypeBarReaderForm() {
     this.dispatch();
   }
+
+  showTypeEmailForm() {
+    console.log('ACTIONS');
+    this.dispatch();
+  }
+
+  hideTypeEmailForm() {
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(CheckoutActions);
