@@ -140,6 +140,19 @@ class Fetcher {
 
     return promise;
   }
+
+  getOrderGroup(orderGroupId) {
+    const url = `/api/checkout/pub/orders/order-group/${orderGroupId}`;
+
+    let configs = {
+      'headers': {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+
+    return axios.get(url, configs).then((response) => response.data);
+  }
 }
 
 export default new Fetcher();

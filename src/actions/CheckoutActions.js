@@ -85,13 +85,24 @@ class CheckoutActions {
     this.dispatch();
   }
 
-  showTypeEmailForm() {
-    console.log('ACTIONS');
+
+  getOrderGroupData(orderGroup) {
     this.dispatch();
+    Fetcher.getOrderGroup(orderGroup).then((response) => {
+      this.actions.getOrderGroupDataSuccess(response);
+    }, (err) => {
+      this.actions.getOrderGroupDataFail(err);
+    });
   }
 
-  hideTypeEmailForm() {
-    this.dispatch();
+
+
+  getOrderGroupDataSuccess(data) {
+    this.dispatch(data);
+  }
+
+  getOrderGroupDataFail(err) {
+    this.dispatch(err);
   }
 }
 

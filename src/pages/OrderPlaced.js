@@ -2,45 +2,59 @@ import React from 'react';
 import cookie from 'react-cookie';
 
 import CheckoutStore from 'stores/CheckoutStore';
-import CartStore from 'stores/CartStore';
-import VendorStore from 'stores/VendorStore';
 
-import CartActions from 'actions/CartActions';
-import VendorActions from 'actions/VendorActions';
+import CheckoutActions from 'actions/CheckoutActions';
 
-import UserAuthentication from 'components/UserAuthentication';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import ErrorNotifier from 'components/ErrorNotifier';
 
-import ProductShowcase from 'components/ProductShowcase';
-
 import 'styles/orderplaced.less';
 import check from 'assets/images/icon-check.svg';
 
-export default class HomePage extends React.Component {
+export default class OrderPlaced extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      checkout: CheckoutStore.getState(),
-      cart: CartStore.getState(),
-      vendor: VendorStore.getState()
+      checkout: CheckoutStore.getState()
     };
+
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
+  }
+
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+
+    const orderGroupId = this.props.params.orderGroup;
+    if(orderGroupId) {
+      CheckoutActions.getOrderGroupData.defer(orderGroupId);
+    }
+    else {
+      CheckoutActions.getOrderGroupDataFail({err: 'orderGroup not found'}).defer();
+    }
+  }
+
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
   }
 
   render() {
-    const {cart, checkout} = this.state;
-    const orderForm = cart.get('orderForm');
+    const {checkout} = this.state;
 
     return (
       <div className="OrderPlaced component">
-        <Loader loading={cart.get('loading') || checkout.get('loading')} />
+        <Loader loading={checkout.get('loading')} />
         <header className="container"></header>
 
         <div className="text-center">
           <div className="title-highlight-wrapper">
             <img src={check} width="80"/>
+
             <h1 className="title-highlight">Venda confirmada!</h1>
           </div>
 
@@ -76,7 +90,7 @@ export default class HomePage extends React.Component {
 
         <button className="btn btn-default btn-lg btn-block btn-bottom">Realizar nova venda</button>
 
-        <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
+        <ErrorNotifier message={checkout.get('error')} />
         <Footer />
       </div>
     );
