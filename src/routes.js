@@ -14,7 +14,7 @@ export default (
     <IndexRoute component={HomePage} />
     <Route path='shop' component={ShopPage} />
     <Route path='cart' component={CartPage} />
-    <Route path='orderplaced/:orderGroup' component={OrderPlaced} />
+    <Route path='orderplaced' component={OrderPlaced} />
     <Route path='vendor/login' component={VendorLoginPage} />
   </Route>
 );

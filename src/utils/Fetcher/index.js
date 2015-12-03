@@ -147,9 +147,7 @@ class Fetcher {
     let configs = {
       'headers': {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-VTEX-API-AppToken': 'AQBeSQhNxnkHZJ4K9EemAU2v9rGZ7hzFxdj3EAQnZDeM83nTeTUW2YMvbQXnPxScnuv7m4EY5yZxRUSSTZtYHEydhac63sHaUrepw6TeqqvXMB3zt3Wmwpanm7FE9Bbd',
-        'X-VTEX-API-AppKey': 'vtexappkey-appvtex'
+        'Content-Type': 'application/json'
       }
     };
 
