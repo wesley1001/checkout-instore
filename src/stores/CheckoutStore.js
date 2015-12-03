@@ -19,9 +19,8 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
-      typingEmail: false,
-      loading: false
-    });
+      typingEmail: false,      orderGroup: undefined,
+      orderPlacedError: false    });
   }
 
   onExecuteSetClientData(email) {
@@ -85,6 +84,26 @@ class CheckoutStore {
   onHideTypeEmailForm() {
     this.setState(this.state.set('typingEmail', false));
   }
-}
 
+  onGetOrderGroupData() {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', true));
+  }
+  
+  onGetOrderGroupDataSuccess(data) {
+    this.setState(this.state.set('orderGroup', data));
+    this.setState(this.state.set('orderPlacedError', false));
+    this.setState(this.state.set('error', undefined));
+    this.setState(this.state.set('loading', false));
+  }
+
+  onGetOrderGroupDataFail(err) {
+    this.setState(this.state.set('orderGroup', undefined));
+    this.setState(this.state.set('orderPlacedError', true));
+    this.setState(this.state.set('error', err));
+    this.setState(this.state.set('loading', false));
+  }
+}
 export default flux.createStore(CheckoutStore, 'CheckoutStore');

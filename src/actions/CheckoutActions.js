@@ -93,6 +93,28 @@ class CheckoutActions {
   hideTypeEmailForm() {
     this.dispatch();
   }
+
+  getOrderGroupData(orderGroup) {
+    this.dispatch();
+    Fetcher.getOrderGroup(orderGroup).then((response) => {
+      if(response.length === 0) {
+        this.actions.getOrderGroupDataFail({err: 'order not found'});
+      }
+      else {
+        this.actions.getOrderGroupDataSuccess(response[0]);
+      }
+    }, (err) => {
+      this.actions.getOrderGroupDataFail(err);
+    });
+  }
+
+  getOrderGroupDataSuccess(data) {
+    this.dispatch(data);
+  }
+
+  getOrderGroupDataFail(err) {
+    this.dispatch(err);
+  }
 }
 
 export default flux.createActions(CheckoutActions);
