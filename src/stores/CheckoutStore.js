@@ -19,8 +19,6 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
-      loading: false
-
       loading: false,
       orderGroup: undefined,
       orderPlacedError: false
