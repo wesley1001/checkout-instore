@@ -17,6 +17,8 @@ export default class OrderPlacedDetail extends React.Component {
   render() {
     const { order, customerEmail } = this.props;
 
+    const clientProfile = order.clientProfileData;
+
     return (
       <div className="OrderPlacedDetail component">
         <div className="text-center">
@@ -24,6 +26,7 @@ export default class OrderPlacedDetail extends React.Component {
             <img src={check} width="80"/>
             <h1 className="title-highlight">Venda confirmada!</h1>
           </div>
+
           <OrderPlacedPaymentDetail paymentData={order.paymentData} />
 
           <div className="receipts">
@@ -41,10 +44,12 @@ export default class OrderPlacedDetail extends React.Component {
           <hr/>
 
           <div>
-            <p><strong>CPF</strong>: 045.334.923-01</p>
-            <p><strong>TID</strong>: 295C7B9C78834988992AE27EC678C261</p>
+            { clientProfile.document === '' ?
+              <p>Sem CPF na nota</p>
+               :
+              <p><strong>CPF</strong>: {clientProfile.document}</p>
+            }
           </div>
-
         </div>
       </div>
     );

@@ -31,7 +31,7 @@ export default class OrderPlaced extends React.Component {
       CheckoutActions.getOrderGroupData.defer(orderGroupId);
     }
     else {
-      CheckoutActions.getOrderGroupDataFail({err: 'orderGroup not found'}).defer();
+      CheckoutActions.getOrderGroupDataFail({err: 'orderGroup not found in url'}).defer();
     }
   }
 
@@ -40,7 +40,6 @@ export default class OrderPlaced extends React.Component {
   }
 
   onCheckoutChange(state) {
-    console.log('EUAHEUA' , state);
     this.setState({checkout: state});
   }
 
@@ -52,7 +51,8 @@ export default class OrderPlaced extends React.Component {
         <Loader loading={checkout.get('loading')} />
         <header className="container"></header>
 
-        <OrderPlacedDetail order={checkout.get('orderPlaced')}  customerEmail={checkout.get('customerEmail')}/>
+        {checkout.get('orderGroup') === undefined ? '' : <OrderPlacedDetail order={checkout.get('orderGroup')}  customerEmail={checkout.get('customerEmail')}/>}
+
         <div className="products"></div>
 
         <button className="btn btn-default btn-lg btn-block btn-bottom">Realizar nova venda</button>
