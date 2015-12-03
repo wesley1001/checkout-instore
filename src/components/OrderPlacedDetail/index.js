@@ -14,6 +14,18 @@ export default class OrderPlacedDetail extends React.Component {
     super(props);
   }
 
+  handleClickPrintReceipt(){
+    if(window.WebViewBridge){
+      window.WebViewBridge.send(JSON.stringify({
+        type: 'event',
+        event: 'printReceipts'
+      }));
+    }
+    else{
+      console.warn('WebViewBridge is not defined!');
+    }
+  }
+
   render() {
     const { order, customerEmail } = this.props;
 
@@ -37,7 +49,7 @@ export default class OrderPlacedDetail extends React.Component {
               </strong></p>
             }
             <p>
-              <button className="btn btn-default">Imprimir comprovantes</button>
+              <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovantes</button>
             </p>
           </div>
 
