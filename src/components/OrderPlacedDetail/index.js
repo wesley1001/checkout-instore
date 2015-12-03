@@ -18,7 +18,7 @@ export default class OrderPlacedDetail extends React.Component {
     if(window.WebViewBridge){
       window.WebViewBridge.send(JSON.stringify({
         type: 'event',
-        event: 'printReceipts'
+        event: 'printLastTransactionReceipt'
       }));
     }
     else{
