@@ -21,17 +21,19 @@ export default class OrderPlaced extends React.Component {
     };
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
+    this.handleClickNewOrder = this.handleClickNewOrder.bind(this);
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
 
-    const orderGroupId = this.props.params.orderGroup;
+    const orderGroupId = this.props.location.query.og;
     if(orderGroupId) {
       CheckoutActions.getOrderGroupData.defer(orderGroupId);
     }
     else {
       CheckoutActions.getOrderGroupDataFail({err: 'orderGroup not found in url'}).defer();
+      this.props.history.pushState(null, '/');
     }
   }
 
@@ -41,6 +43,10 @@ export default class OrderPlaced extends React.Component {
 
   onCheckoutChange(state) {
     this.setState({checkout: state});
+  }
+
+  handleClickNewOrder() {
+    this.props.history.pushState(null, '/');
   }
 
   render() {
@@ -55,7 +61,7 @@ export default class OrderPlaced extends React.Component {
 
         <div className="products"></div>
 
-        <button className="btn btn-default btn-lg btn-block btn-bottom">Realizar nova venda</button>
+        <button onClick={this.handleClickNewOrder} className="btn btn-default btn-lg btn-block btn-bottom">Realizar nova venda</button>
 
         <ErrorNotifier message={checkout.get('error')} />
         <Footer />
