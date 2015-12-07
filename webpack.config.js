@@ -72,7 +72,9 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new AppCachePlugin({
       cache: [
-        "/arquivos/home-banner__02--bg.jpg"
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css",
+        "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css",
+        "https://io.vtex.com.br/front-libs/jquery/2.1.3/jquery.min.js"
       ],
       fallback: [
         " "
