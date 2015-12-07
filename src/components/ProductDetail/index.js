@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 
 import CartActions from 'actions/CartActions';
+import VendorStore from 'stores/VendorStore';
+
 import ProductHelper from 'utils/ProductHelper';
 
 import './index.less';
@@ -21,11 +23,17 @@ export default class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      vendor: VendorStore.getState()
+    };
+
     this.handleRemove = this.handleRemove.bind(this);
   }
 
   handleRemove(e) {
     e.preventDefault();
+
+    const tradePolicy = this.state.vendor.get('store').tradePolicy;
 
     let product = this.props.product;
     product.quantity = 0;
@@ -33,7 +41,8 @@ export default class ProductDetail extends React.Component {
 
     CartActions.updateCart({
       orderFormId: this.props.orderFormId,
-      item: [product]
+      item: [product],
+      tradePolicy: tradePolicy
     });
   }
 

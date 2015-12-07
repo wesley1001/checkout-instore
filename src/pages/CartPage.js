@@ -2,6 +2,7 @@ import React from 'react';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
+import VendorStore from 'stores/VendorStore';
 
 import BarcodeReader from 'components/BarcodeReader';
 import ProductShowcase from 'components/ProductShowcase';
@@ -19,16 +20,19 @@ export default class CartPage extends React.Component {
 
     this.state = {
       checkout: CheckoutStore.getState(),
-      cart: CartStore.getState()
+      cart: CartStore.getState(),
+      vendor: VendorStore.getState()
     };
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
+    this.onVendorChange = this.onVendorChange.bind(this);
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
+    VendorStore.listen(this.onVendorChange);
   }
 
   componentWillUnmount() {
@@ -43,6 +47,9 @@ export default class CartPage extends React.Component {
   onCheckoutChange(state) {
     this.setState({checkout: state});
   }
+  onVendorChange(state) {
+    this.setState({vendor: state});
+  }
 
   componentDidUpdate() {
     const { cart } = this.state;
@@ -53,9 +60,10 @@ export default class CartPage extends React.Component {
   }
 
   render() {
-    const {cart, checkout} = this.state;
+    const {cart, checkout, vendor} = this.state;
     const orderForm = cart.get('orderForm');
-
+    const tradePolicy = vendor.get('store').tradePolicy;
+    
     return (
       <div className="content">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
@@ -65,7 +73,7 @@ export default class CartPage extends React.Component {
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
-        <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={checkout.get('tradePolicy')}>
+        <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={tradePolicy}>
           <ProductShowcase
             products={orderForm.items}
             isAddingProduct={cart.get('addLoading')}

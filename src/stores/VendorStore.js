@@ -12,7 +12,7 @@ class VendorStore {
     this.state = Immutable.Map({
       logged: false,
       user: undefined,
-      store: undefined,
+      store: {},
       loading: false,
       error: ''
     });
@@ -25,7 +25,7 @@ class VendorStore {
 
   onGetStoreInfoSuccess(data) {
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', _.merge(this.state.get('store',data))));
+    this.setState(this.state.set('store', _.merge(this.state.get('store'),data)));
     this.setState(this.state.set('error', ''));
   }
 

@@ -7,16 +7,17 @@ import './index.less';
 export default class Product extends React.Component {
   static propTypes = {
     data: PropTypes.object,
-    itemCount: PropTypes.number
+    itemCount: PropTypes.number,
+    tradePolicy: PropTypes.number
   }
 
   static defaultProps = {
     data: {name: '', price: 0, quantity: 0, imageUrl: ''},
-    itemCounte: 1
+    itemCount: 1
   }
 
   render () {
-    const {product, itemCount, orderFormId, history} = this.props;
+    const {product, itemCount, orderFormId, tradePolicy, history} = this.props;
 
     return (
       <div className="Product component">
@@ -25,6 +26,7 @@ export default class Product extends React.Component {
            product={product}
            orderFormId={orderFormId}
            history={history}
+           tradePolicy={tradePolicy}
          />
       </div>
     );
