@@ -20,27 +20,26 @@ class VendorStore {
 
   onGetStoreInfo() {
     this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('store', this.state.merge({tradePolicy: undefined})));
+    this.setState(this.state.set('store', _.merge(this.state.get('store'), {tradePolicy: undefined})));
   }
 
   onGetStoreInfoSuccess(data) {
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', this.state.merge(data)));
+    this.setState(this.state.set('store', _.merge(this.state.get('store',data))));
     this.setState(this.state.set('error', ''));
   }
 
   onGetStoreInfoFail(error) {
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', this.state.merge({tradePolicy: undefined})));
+    this.setState(this.state.set('store', _.merge(this.state.get('store'), {tradePolicy: undefined})));
     this.setState(this.state.set('error', error.message));
   }
 
   onSetVendorData() {
     this.setState(this.state.set('loading', true));
-
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('store', {}));
     this.setState(this.state.set('error', ''));
   }
 
@@ -48,18 +47,17 @@ class VendorStore {
     this.setState(this.state.set('loading', false));
 
     this.setState(this.state.set('logged', true));
-    this.setState(this.state.set('user', data.user.id));
-    this.setState(this.state.set('userName', data.user.name));
-    this.setState(this.state.set('store', data.user.store));
+    this.setState(this.state.set('user', data.user));
+
+    this.setState(this.state.set('store', _.merge(this.state.get('store'), {store:data.user.store})));
     this.setState(this.state.set('error', ''));
   }
 
   onSetVendorDataFail(error) {
     this.setState(this.state.set('loading', false));
-
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('store', {}));
     this.setState(this.state.set('error', error.message));
   }
 
@@ -68,7 +66,7 @@ class VendorStore {
 
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('store', {}));
     this.setState(this.state.set('error', error.message));
   }
 
@@ -76,7 +74,7 @@ class VendorStore {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', undefined));
+    this.setState(this.state.set('store', {}));
     this.setState(this.state.set('error', ''));
   }
 }
