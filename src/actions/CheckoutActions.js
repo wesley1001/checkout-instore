@@ -85,6 +85,13 @@ class CheckoutActions {
     this.dispatch();
   }
 
+  showTypeEmailForm() {
+    this.dispatch();
+  }
+
+  hideTypeEmailForm() {
+    this.dispatch();
+  }
 
   getOrderGroupData(orderGroup) {
     this.dispatch();

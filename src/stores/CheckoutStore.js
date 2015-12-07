@@ -19,6 +19,7 @@ class CheckoutStore {
       error: '',
       readingBarcode: false,
       typingBarcode: false,
+      typingEmail: false,
       loading: false,
       orderGroup: undefined,
       orderPlacedError: false
@@ -77,6 +78,13 @@ class CheckoutStore {
     this.setState(this.state.set('typingBarcode', false));
   }
 
+  onShowTypeEmailForm() {
+    this.setState(this.state.set('typingEmail', true));
+  }
+
+  onHideTypeEmailForm() {
+    this.setState(this.state.set('typingEmail', false));
+  }
 
   onGetOrderGroupData() {
     this.setState(this.state.set('orderGroup', undefined));

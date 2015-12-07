@@ -39,8 +39,8 @@ export default class UserInfo extends React.Component {
   }
 
   handleClick() {
-    console.log('COMPONENT: ',this.state.checkout.get('typingEmail'));
     CheckoutActions.showTypeEmailForm();
+    CheckoutActions.hideTypeBarReaderForm();
   }
 
 
