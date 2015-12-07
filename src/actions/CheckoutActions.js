@@ -85,13 +85,29 @@ class CheckoutActions {
     this.dispatch();
   }
 
-  showTypeEmailForm() {
-    console.log('ACTIONS');
+
+  getOrderGroupData(orderGroup) {
     this.dispatch();
+    Fetcher.getOrderGroup(orderGroup).then((response) => {
+      if(response.length === 0) {
+        this.actions.getOrderGroupDataFail({err: 'order not found'});
+      }
+      else {
+        this.actions.getOrderGroupDataSuccess(response[0]);
+      }
+    }, (err) => {
+      this.actions.getOrderGroupDataFail(err);
+    });
   }
 
-  hideTypeEmailForm() {
-    this.dispatch();
+
+
+  getOrderGroupDataSuccess(data) {
+    this.dispatch(data);
+  }
+
+  getOrderGroupDataFail(err) {
+    this.dispatch(err);
   }
 }
 
