@@ -3,6 +3,13 @@ class ProductHelper {
     if(products.length === 0) return 0;
 
     return products
+      .map(product => ((product.price !== product.sellingPrice ? product.sellingPrice : product.price) * product.quantity) / 100)
+      .reduce((acc, item) => acc + item);
+  }
+  calculateOriginalPrice(products) {
+    if(products.length === 0) return 0;
+
+    return products
       .map(product => (product.price * product.quantity) / 100)
       .reduce((acc, item) => acc + item);
   }

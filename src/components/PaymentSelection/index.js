@@ -19,6 +19,7 @@ export default class PaymentSelection extends React.Component {
   render() {
     const {products, paymentData, orderFormId, email} = this.props;
     let totalPrice = ProductHelper.calculateTotalPrice(products);
+    let originalPrice = ProductHelper.calculateOriginalPrice(products);
 
     return (
       <div className="PaymentSelection component">
@@ -30,6 +31,7 @@ export default class PaymentSelection extends React.Component {
           <PaymentList
             payments={paymentData.paymentSystems}
             price={totalPrice}
+            originalPrice={originalPrice}
             installments={paymentData.installmentOptions}
             orderFormId={orderFormId}
             email={email}

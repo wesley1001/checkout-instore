@@ -2,14 +2,14 @@ import React from 'react';
 
 import 'styles/main.less';
 
-import checkConnection from 'utils/CheckConnection';
+// import checkConnection from 'utils/CheckConnection';
 import setViewport from 'utils/SetViewport';
 
 import CheckoutActions from '../actions/CheckoutActions';
 import VendorActions from '../actions/VendorActions';
 
 @setViewport
-@checkConnection
+// @checkConnection
 export default class App extends React.Component {
 
   componentDidMount(){

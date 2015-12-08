@@ -89,7 +89,7 @@ export default class PaymentOption extends React.Component {
   }
 
   render() {
-    const {orderFormId, payment, price, products, installmentOptions} = this.props;
+    const {orderFormId, payment, price, originalPrice, products, installmentOptions} = this.props;
     const {cart, checkout} = this.state;
     const orderForm = cart.get('orderForm');
     let {iconClass, iconLabel, type} = this.composeIconsInfo();
@@ -102,6 +102,7 @@ export default class PaymentOption extends React.Component {
         <div className="installment_list-wrapper">
           <InstallmentList
             price={price}
+            originalPrice={originalPrice}
             selectedPaymentId={checkout.get('selectedPaymentId')}
             selectedInstallment={checkout.get('selectedInstallment')}
             orderFormId={orderFormId}
@@ -122,6 +123,7 @@ export default class PaymentOption extends React.Component {
           <PaymentDetail
             value={installmentOptions.installments.length}
             price={price}
+            originalPrice={originalPrice}
           />
         </div>
 
