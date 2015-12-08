@@ -42,7 +42,7 @@ export default class ScanIndicator extends React.Component {
       <div className="ScanIndicator component">
         {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader/> : ''}
         {alternativeText}
-        <div className="text">Adicione os produtos<br/>utilizando o leitor</div>
+        <div className="text">Utilize um dos botões laterais<br/>para adicionar um produto</div>
         <div className="image-wrapper">
           <img className="image" src={pinpad}/>
         </div>
