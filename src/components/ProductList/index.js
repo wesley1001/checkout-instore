@@ -66,7 +66,7 @@ export default class ProductList extends React.Component {
 
       let items = products.map((product, index) => {
         return (
-          <Product key={product.id}
+          <Product key={index}
             product={product}
             itemCount={products.length}
             index={index}
