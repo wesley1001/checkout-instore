@@ -40,6 +40,22 @@ export default class ProductDetail extends React.Component {
   render() {
     const {product} = this.props;
 
+    let priceElement = (data) => {
+      if(data.price !== data.sellingPrice) {
+        return (
+          <strong className="price">
+            R$ <span className="discount">{ProductHelper.formatPrice(data.price / 100)}</span>  {ProductHelper.formatPrice(data.sellingPrice / 100)}
+          </strong>
+        );
+      }
+      else {
+        return (
+          <strong className="price">
+            R$ {ProductHelper.formatPrice(data.price / 100)}
+          </strong>
+        );
+      }
+    }(product);
     return (
       <div className="ProductDetail component">
         <div className="img-wrapper">
@@ -48,9 +64,7 @@ export default class ProductDetail extends React.Component {
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
-          <strong className="price">
-            R$ {ProductHelper.formatPrice(product.price / 100)}
-          </strong>
+          {priceElement}
         </div>
         <div className="remove">
          <a href="javascript:void(0)"
