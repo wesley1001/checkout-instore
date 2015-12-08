@@ -103,8 +103,6 @@ export default class InstallmentList extends React.Component {
       );
     });
 
-    if(selectedPayment.installments.length === 1) return '';
-
     return options;
   }
 

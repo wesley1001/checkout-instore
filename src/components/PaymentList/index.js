@@ -31,8 +31,7 @@ export default class PaymentList extends React.Component {
           originalPrice={originalPrice}
           installmentOptions={_.find(installments, {'paymentSystem': option.stringId})}
           orderFormId={orderFormId}
-          email={email}
-        />
+          email={email} />
       );
     });
 
