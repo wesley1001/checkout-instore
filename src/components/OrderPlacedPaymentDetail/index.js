@@ -14,9 +14,19 @@ export default class OrderPlacedPaymentDetail extends React.Component {
     const pos = valueStr.length - 2;
     return valueStr.slice(0, pos) + ',' + valueStr.slice(pos);
   }
+  composeLabel(data){
+    if(data === 'Venda Direta Debito'){
+      return 'Débito';
+    }
+    if(data === 'Venda Direta Credito'){
+      return 'Crédito';
+    }
+  }
 
   render() {
     const { paymentData } = this.props;
+
+    console.log(paymentData);
 
     let payments = [];
     let totalValue = 0;
@@ -24,9 +34,11 @@ export default class OrderPlacedPaymentDetail extends React.Component {
     payments = paymentData.payments.map((payment, index) => {
       totalValue += payment.value;
       const splitVal = payment.value / payment.installments;
+      const paymentLabel = this.composeLabel(payment.paymentSystemName);
       return (
         <div className='payment-details' key={payment.id} index={index}>
-          <p>em <strong>{payment.installments}x</strong> de R${this.convertValue(splitVal)}<br/>{payment.paymentSystemName}</p>
+          <p><strong>{payment.installments === 1 ? 'À vista ' :`${payment.installments}x de`}</strong> R${this.convertValue(splitVal)}
+          <br/>{paymentLabel}</p>
           <p><strong>ID da transação</strong>: {payment.id}</p>
           <p><strong>TID</strong>: {payment.tid}</p>
         </div>
