@@ -50,13 +50,13 @@ export default class OrderPlacedDetail extends React.Component {
             }
             <div>
               { clientProfile.document === '' ?
-                <p>Sem CPF na nota.</p>
+                ''
                  :
                 <p><strong>CPF</strong>: {clientProfile.document}</p>
               }
             </div>
             <p>
-              <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovantes</button>
+              <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovante</button>
             </p>
           </div>
         </div>
