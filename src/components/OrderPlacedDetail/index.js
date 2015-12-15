@@ -43,24 +43,21 @@ export default class OrderPlacedDetail extends React.Component {
 
           <div className="receipts">
             { customerEmail === '' ?
-              '' :
+              <p>E-mail do cliente não foi fornecido.</p> :
               <p>Comprovantes enviados para <br/><strong>
               {customerEmail}
               </strong></p>
             }
+            <div>
+              { clientProfile.document === '' ?
+                <p>Sem CPF na nota.</p>
+                 :
+                <p><strong>CPF</strong>: {clientProfile.document}</p>
+              }
+            </div>
             <p>
               <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovantes</button>
             </p>
-          </div>
-
-          <hr/>
-
-          <div>
-            { clientProfile.document === '' ?
-              <p>Sem CPF na nota</p>
-               :
-              <p><strong>CPF</strong>: {clientProfile.document}</p>
-            }
           </div>
         </div>
       </div>
