@@ -39,8 +39,10 @@ export default class OrderPlacedPaymentDetail extends React.Component {
         <div className='payment-details' key={payment.id} index={index}>
           <p><strong>{payment.installments === 1 ? 'À vista ' :`${payment.installments}x de`}</strong> R${this.convertValue(splitVal)}
           <br/>{paymentLabel}</p>
-          <p><strong>ID da transação</strong>: {payment.id}</p>
-          <p><strong>TID</strong>: {payment.tid}</p>
+          <strong>ID da transação</strong>:<br/>
+          {payment.id.length <= 16 ? payment.id : <span>{payment.id.substring(0,16)}<br/>{payment.id.substring(17,payment.id.length)}</span>}
+          <br/><br/>
+          <p><strong>TID</strong>:<br/> {payment.tid}</p>
         </div>
       );
     });
