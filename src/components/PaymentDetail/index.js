@@ -38,7 +38,9 @@ export default class PaymentDetail extends React.Component {
     let totalPriceElement = () =>{
       if(price !== originalPrice) {
         return (
-          <small className="bold description">R$ <span className="discount-price">{ProductHelper.formatPrice(originalPrice)}</span>  {ProductHelper.formatPrice(price)}</small>
+          <div>
+            <span className="currency"> R$ </span> <small className="bold description"> <span className="discount-price">{ProductHelper.formatPrice(originalPrice)}</span> R$ {ProductHelper.formatPrice(price)}</small>
+          </div>  
         );
       }
       else {
