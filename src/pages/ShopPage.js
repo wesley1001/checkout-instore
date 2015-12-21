@@ -77,6 +77,8 @@ export default class ShopPage extends React.Component {
 
   render() {
     const {cart, checkout, vendor} = this.state;
+    const vendorId = vendor.get('user').id;
+    const tradePolicy = vendor.get('store').tradePolicy;
 
     return (
       <div className="content">
@@ -89,8 +91,8 @@ export default class ShopPage extends React.Component {
         <BarcodeReader
           orderForm={cart.get('orderForm')}
           searchingProduct={checkout.get('readingBarcode')}
-          tradePolicy={checkout.get('tradePolicy')}
-          vendor={vendor.get('user')}>
+          tradePolicy={tradePolicy}
+          vendor={vendorId}>
           <OrderHeader />
           <ScanIndicator />
           <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
