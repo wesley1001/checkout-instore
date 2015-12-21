@@ -53,7 +53,7 @@ export default class ProductDetail extends React.Component {
       if(data.price !== data.sellingPrice) {
         return (
           <strong className="price">
-            R$ <span className="discount">{ProductHelper.formatPrice(data.price / 100)}</span>  {ProductHelper.formatPrice(data.sellingPrice / 100)}
+            <span className="currency"> R$ </span> <span className="discount">{ProductHelper.formatPrice(data.price / 100)}</span> R$ {ProductHelper.formatPrice(data.sellingPrice / 100)}
           </strong>
         );
       }
