@@ -27,7 +27,7 @@ export default class OrderPlacedDetail extends React.Component {
   }
 
   render() {
-    const { order, customerEmail } = this.props;
+    const { order } = this.props;
 
     const clientProfile = order.clientProfileData;
 
@@ -42,25 +42,22 @@ export default class OrderPlacedDetail extends React.Component {
           <OrderPlacedPaymentDetail paymentData={order.paymentData} />
 
           <div className="receipts">
-            { customerEmail === '' ?
-              '' :
+            { clientProfile.email.endsWith('@vtex-instore.com') ?
+              <p>E-mail do cliente não foi fornecido.</p> :
               <p>Comprovantes enviados para <br/><strong>
-              {customerEmail}
+              {clientProfile.email}
               </strong></p>
             }
+            <div>
+              { clientProfile.document === '' ?
+                ''
+                 :
+                <p><strong>CPF</strong>: {`${clientProfile.document.slice(0, 3)}.${clientProfile.document.slice(3, 6)}.${clientProfile.document.slice(6, 9)}-${clientProfile.document.slice(9,11)}`}</p>
+              }
+            </div>
             <p>
-              <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovantes</button>
+              <button onClick={this.handleClickPrintReceipt} className="btn btn-default">Imprimir comprovante</button>
             </p>
-          </div>
-
-          <hr/>
-
-          <div>
-            { clientProfile.document === '' ?
-              <p>Sem CPF na nota</p>
-               :
-              <p><strong>CPF</strong>: {clientProfile.document}</p>
-            }
           </div>
         </div>
       </div>
