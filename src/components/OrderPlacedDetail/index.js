@@ -52,7 +52,7 @@ export default class OrderPlacedDetail extends React.Component {
               { clientProfile.document === '' ?
                 ''
                  :
-                <p><strong>CPF</strong>: {clientProfile.document}</p>
+                <p><strong>CPF</strong>: {`${clientProfile.document.slice(0, 3)}.${clientProfile.document.slice(3, 6)}.${clientProfile.document.slice(6, 9)}-${clientProfile.document.slice(9,11)}`}</p>
               }
             </div>
             <p>
