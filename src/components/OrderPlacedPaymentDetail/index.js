@@ -37,7 +37,6 @@ export default class OrderPlacedPaymentDetail extends React.Component {
 
   render() {
     const { paymentData } = this.props;
-    console.log(paymentData);
 
     let payments = [];
     let totalValue = 0;

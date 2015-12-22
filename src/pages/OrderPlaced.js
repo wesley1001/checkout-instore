@@ -57,7 +57,7 @@ export default class OrderPlaced extends React.Component {
         <Loader loading={checkout.get('loading')} />
         <header className="container"></header>
 
-        {checkout.get('orderGroup') === undefined ? '' : <OrderPlacedDetail order={checkout.get('orderGroup')}  customerEmail={checkout.get('customerEmail')}/>}
+        {checkout.get('orderGroup') === undefined ? '' : <OrderPlacedDetail order={checkout.get('orderGroup')}/>}
 
         <div className="products"></div>
 
