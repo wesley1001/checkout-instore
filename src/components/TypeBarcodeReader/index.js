@@ -64,7 +64,7 @@ export default class TypeBarcodeReader extends React.Component {
     return (
       <div className="TypeBarcodeReader component">
         <form className="text-left" id="TypeBarcodeReaderForm" onSubmit={this.handleSubmit}>
-          <div className="form-group">
+          <div className="form-group container">
             <div className="input-group">
               <input
                 className="form-control"
