@@ -74,7 +74,7 @@
     "alt": "^0.17.1",
     "axios": "^0.7.0",
     "felix": "^0.1.0",
-    "history": "^1.12.5",
+    "history": "1.13.0",
     "immutable": "^3.7.4",
     "lodash": "^3.10.1",
     "offline-js": "^0.7.11",
