@@ -20,9 +20,10 @@
   .quantity {
     background-color: @GreatBlue;
     color: @LightGrey;
-    padding: 2px 10px;
+    padding: 2px 11px;
     position: absolute;
     left: 0;
+    font-size: 18px;
     .border-radius(15px);
   }
 
@@ -34,11 +35,20 @@
     line-height: @DefaultLineHeight;
     .discount {
       text-decoration: line-through;
+      color: #888;
+      font-weight: 500;
     }
   }
+
+  .currency { color: #888; }
+
   .name { margin-bottom: 5px; }
 
   .glyphicon-remove { color: #b12416; }
+}
+
+a:active, a:focus {
+    text-decoration: none;
 }
 
 /* iPad */
