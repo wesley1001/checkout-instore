@@ -1,6 +1,6 @@
-# checkout-instore
+# SPA Checkout inStore
 
-App para o novo checkout instore
+Single page application used inside an iframe in react-native app
 
 ---
 
