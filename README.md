@@ -1,4 +1,4 @@
-# SPA Checkout inStore
+# Checkout inStore
 
 Single page application used inside an iframe in react-native app
 
