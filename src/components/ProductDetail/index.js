@@ -69,7 +69,6 @@ export default class ProductDetail extends React.Component {
       <div className="ProductDetail component">
         <div className="img-wrapper">
           <img className="img" src={product.imageUrl}/>
-          <span className="quantity">{product.quantity}</span>
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
@@ -80,6 +79,9 @@ export default class ProductDetail extends React.Component {
            className="glyphicon glyphicon-remove"
            onClick={this.handleRemove}>
          </a>
+        </div>
+        <div>
+          <span className="quantity">{product.quantity}</span>
         </div>
       </div>
     );
