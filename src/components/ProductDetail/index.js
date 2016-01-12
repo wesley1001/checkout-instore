@@ -81,14 +81,28 @@ export default class ProductDetail extends React.Component {
           <div className="name">{product.name}</div>
           {priceElement}
         </div>
-        <div className="remove">
-         <a href="javascript:void(0)"
-           className="glyphicon glyphicon-remove"
-           onClick={this.handleRemove}>
-         </a>
-        </div>
-        <div>
-          <span className="quantity">{product.quantity}</span>
+        <div className="options">
+          <span className="dropdown btn btn-xs btn-default">
+            <a href="javascript:void(0)"
+              className="glyphicon glyphicon-option-horizontal"
+              onClick={this.handleShow}>
+            </a>
+          </span>
+            {this.state.showOptions ?
+            <div>
+              <div className="remove">
+                <a href="javascript:void(0)"
+                className="remove-text"
+                onClick={this.handleRemove}> Remover produto
+                </a>
+              </div>
+              <div className="extra">
+                <a> Outras funções </a>
+              </div>
+            </div> : ' ' }
+            <div>
+              <span className="quantity">{product.quantity}</span>
+            </div>
         </div>
       </div>
     );
