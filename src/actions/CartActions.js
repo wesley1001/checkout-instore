@@ -143,13 +143,20 @@ class CartActions {
     this.dispatch();
 
     Fetcher.getOrderForm().then((response) => {
-      const defaultPayment = _.find(response.data.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
+      let defaultPayment = _.find(response.data.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
 
       if(defaultPayment && defaultPayment.installments.length > 0) {
         this.actions.orderFormSuccess.defer(response.data);
       }
       else {
-        Fetcher.setPayment(response.data.orderFormId, defaultPayment).then((response) => {
+        defaultPayment = _.find(response.data.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
+
+        const paymentObject = {
+          paymentSystem: defaultPayment.id,
+          referenceValue: response.data.value
+        }
+
+        Fetcher.setPayment(response.data.orderFormId, paymentObject).then((response) => {
           this.actions.orderFormSuccess.defer(response.data);
           this.actions.setDefaultPaymentSuccess.defer(response.data);
         }).catch((err) => {
