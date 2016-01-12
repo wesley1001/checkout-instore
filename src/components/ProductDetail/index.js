@@ -24,12 +24,19 @@ export default class ProductDetail extends React.Component {
     super(props);
 
     this.state = {
-      vendor: VendorStore.getState()
+      vendor: VendorStore.getState(),
+      showOptions: false
     };
 
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleShow = this.handleShow.bind(this);
   }
 
+  handleShow(e) {
+    e.preventDefault();
+
+    this.setState({showOptions : !this.state.showOptions});
+  }
   handleRemove(e) {
     e.preventDefault();
 
