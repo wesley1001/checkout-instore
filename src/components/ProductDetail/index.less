@@ -21,10 +21,11 @@
     background-color: @GreatBlue;
     color: @LightGrey;
     padding: 2px 11px;
-    position: absolute;
-    left: 0;
     font-size: 18px;
-    .border-radius(15px);
+    width: 60px;
+    height: 60px;
+    .grid-cell;
+    .grid-fixed
   }
 
   .info { .grid-cell; }
@@ -44,7 +45,13 @@
 
   .name { margin-bottom: 5px; }
 
-  .glyphicon-remove { color: #b12416; }
+  .dropdown {
+    padding: 2px 7px 1px 7px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    .grid-cell;
+    .grid-fixed;
+  }
 }
 
 a:active, a:focus {
