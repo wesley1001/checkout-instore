@@ -36,9 +36,8 @@ class CartActions {
 
   executeAddToCart(data) {
     this.dispatch();
-
     Fetcher.addToCart(data.orderFormId, data.item, data.vendor, data.tradePolicy).then(() => {
-      this.actions.getOrderForm.defer();
+      this.actions.setDefaultPayment.defer();
     }).catch(() => {
       this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
     });
@@ -138,6 +137,46 @@ class CartActions {
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao setar os dados da loja');
     });
+  }
+
+  setDefaultPayment(data) {
+    this.dispatch();
+
+    Fetcher.getOrderForm().then((response) => {
+      let defaultPayment = _.find(response.data.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
+
+      if(defaultPayment && defaultPayment.installments.length > 0) {
+        this.actions.orderFormSuccess.defer(response.data);
+      }
+      else {
+        defaultPayment = _.find(response.data.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
+
+        const paymentObject = {
+          paymentSystem: defaultPayment.id,
+          referenceValue: response.data.value
+        }
+
+        Fetcher.setPayment(response.data.orderFormId, paymentObject).then((response) => {
+          this.actions.orderFormSuccess.defer(response.data);
+          this.actions.setDefaultPaymentSuccess.defer(response.data);
+        }).catch((err) => {
+          this.actions.setDefaultPaymentFail.defer(err);
+          this.actions.requestFailed.defer('Ocorreu um erro ao setar a opção de pagamento');
+        });
+      }
+
+    }).catch(() => {
+      this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
+    });
+
+  }
+
+  setDefaultPaymentSuccess(orderForm) {
+    this.dispatch(orderForm);
+  }
+
+  setDefaultPaymentFail(errorMessage) {
+    this.dispatch(errorMessage);
   }
 
   setPayment(data) {
