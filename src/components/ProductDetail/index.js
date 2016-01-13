@@ -101,7 +101,12 @@ export default class ProductDetail extends React.Component {
               </div>
             </div> : ' ' }
             <div>
-              <span className="quantity">{product.quantity}</span>
+              <span className="btn-xs quantity">{product.quantity}</span>
+              <span className="form-inline form-quantity">
+                <span className="form-group"><i className="fa fa-minus-circle fa-lg"></i></span>
+                <span className="form-group"><input className="product-quantity form-control input-sm text-center"></input></span>
+                <span className="form-group"><i className="fa fa-plus-circle fa-lg"></i></span>
+              </span>
             </div>
         </div>
       </div>
