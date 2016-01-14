@@ -23,7 +23,7 @@ export default class App extends React.Component {
             case 'barcodeReaded':
               CheckoutActions.findProduct(message.data.barcode);
               break;
-            case 'userLoggedOut':
+            case 'vendorLogoutIntent':
               VendorActions.clearVendorData();
               this.props.history.pushState(null, '/vendor/login');
               break;

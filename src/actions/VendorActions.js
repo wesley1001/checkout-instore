@@ -75,6 +75,17 @@ class VendorActions {
 
   clearVendorData() {
     window.localStorage.removeItem('vendorData');
+
+    if(window.WebViewBridge){
+      window.WebViewBridge.send(JSON.stringify({
+        type: 'event',
+        event: 'clearVendorData'
+      }));
+    }
+    else{
+      console.warn('WebViewBridge is not defined!');
+    }
+
     this.dispatch();
   }
 }

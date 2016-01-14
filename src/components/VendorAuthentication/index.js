@@ -32,7 +32,6 @@ export default class VendorAuthentication extends React.Component {
 
   handleClick() {
     this.setState({toggleTask: false});
-    console.log('lalala');
   }
   render() {
     return (
