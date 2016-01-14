@@ -21,10 +21,13 @@ export default class CartPage extends React.Component {
     this.state = {
       checkout: CheckoutStore.getState(),
       cart: CartStore.getState(),
-      vendor: VendorStore.getState()
+      vendor: VendorStore.getState(),
+      ofid: this.props.location.query.ofid
     };
 
-    if(!CartStore.getState().get('orderForm')){
+    console.log('this.state.ofid', this.state.ofid);
+
+    if(!this.state.ofid && !CartStore.getState().get('orderForm')){
       this.props.history.pushState(null, '/');
     }
 
@@ -56,17 +59,24 @@ export default class CartPage extends React.Component {
   }
 
   componentDidUpdate() {
-    const { cart } = this.state;
+    const { cart, ofid } = this.state;
 
-    if(!cart.get('orderForm').items || cart.get('orderForm').items.length === 0) {
+    if(!ofid && (!cart.get('orderForm').items || cart.get('orderForm').items.length === 0)) {
       this.props.history.pushState(null, '/shop');
     }
   }
 
   render() {
-    const {cart, checkout, vendor} = this.state;
+    const {cart, checkout, vendor, ofid} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
+
+    if(ofid && !CartStore.getState().get('orderForm')){
+      console.log('esperando ofid carregar o order form');
+      return (
+        <Loader loading={true} />
+      );
+    }
 
     return (
       <div className="content">
