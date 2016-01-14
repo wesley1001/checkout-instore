@@ -25,18 +25,26 @@ export default class ProductDetail extends React.Component {
 
     this.state = {
       vendor: VendorStore.getState(),
-      showOptions: false
+      showOptions: false,
+      showInput: false
     };
 
     this.handleRemove = this.handleRemove.bind(this);
-    this.handleShow = this.handleShow.bind(this);
+    this.handleShowOptions = this.handleShowOptions.bind(this);
+    this.handleShowInput = this.handleShowInput.bind(this);
   }
 
-  handleShow(e) {
+  handleShowOptions(e) {
     e.preventDefault();
 
     this.setState({showOptions : !this.state.showOptions});
   }
+  handleShowInput(e){
+    e.preventDefault();
+
+    this.setState({showInput : true});
+  }
+
   handleRemove(e) {
     e.preventDefault();
 
@@ -85,11 +93,11 @@ export default class ProductDetail extends React.Component {
           <span className="dropdown btn btn-xs btn-default">
             <a href="javascript:void(0)"
               className="glyphicon glyphicon-option-horizontal"
-              onClick={this.handleShow}>
+              onClick={this.handleShowOptions}>
             </a>
           </span>
             {this.state.showOptions ?
-            <div>
+            <div className="second-options">
               <div className="remove">
                 <a href="javascript:void(0)"
                 className="remove-text"
@@ -101,12 +109,14 @@ export default class ProductDetail extends React.Component {
               </div>
             </div> : ' ' }
             <div>
-              <span className="btn-xs quantity">{product.quantity}</span>
+              {this.state.showInput ?
               <span className="form-inline form-quantity">
                 <span className="form-group"><i className="fa fa-minus-circle fa-lg"></i></span>
                 <span className="form-group"><input className="product-quantity form-control input-sm text-center"></input></span>
                 <span className="form-group"><i className="fa fa-plus-circle fa-lg"></i></span>
-              </span>
+              </span> :
+              <span className="btn-xs quantity" onClick={this.handleShowInput}>{product.quantity}</span>
+              }
             </div>
         </div>
       </div>
