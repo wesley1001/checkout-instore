@@ -24,6 +24,10 @@ export default class CartPage extends React.Component {
       vendor: VendorStore.getState()
     };
 
+    if(!CartStore.getState().get('orderForm')){
+      this.props.history.pushState(null, '/');
+    }
+
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
     this.onVendorChange = this.onVendorChange.bind(this);
@@ -63,7 +67,7 @@ export default class CartPage extends React.Component {
     const {cart, checkout, vendor} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
-    
+
     return (
       <div className="content">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
