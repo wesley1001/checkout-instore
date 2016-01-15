@@ -125,15 +125,15 @@ export default class ProductDetail extends React.Component {
             </a>
           </span>
             {this.state.showOptions ?
-            <div className="second-options">
-              <div className="remove">
-                <a href="javascript:void(0)"
+            <div className="menu">
+              <div className="remove list">
+                <div href="javascript:void(0)"
                 className="remove-text"
                 onClick={this.handleRemove}> Remover produto
-                </a>
+                </div>
               </div>
-              <div className="extra">
-                <a> Outras funções </a>
+              <div className="extra list">
+                <div> Outras funções </div>
               </div>
             </div> : ' ' }
             <div>
