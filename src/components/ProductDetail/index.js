@@ -32,6 +32,8 @@ export default class ProductDetail extends React.Component {
     this.handleRemove = this.handleRemove.bind(this);
     this.handleShowOptions = this.handleShowOptions.bind(this);
     this.handleShowInput = this.handleShowInput.bind(this);
+    this.addProduct = this.addProduct.bind(this);
+    this.subtractProduct = this.subtractProduct.bind(this);
   }
 
   handleShowOptions(e) {
@@ -43,6 +45,32 @@ export default class ProductDetail extends React.Component {
     e.preventDefault();
 
     this.setState({showInput : true});
+  }
+
+  addProduct(){
+    const tradePolicy = this.state.vendor.get('store').tradePolicy;
+    let product = this.props.product;
+    product.quantity += 1;
+    product.index = this.props.index;
+
+    CartActions.updateCart({
+      orderFormId: this.props.orderFormId,
+      item: [product],
+      tradePolicy: tradePolicy
+    });
+  }
+
+  subtractProduct(){
+    const tradePolicy = this.state.vendor.get('store').tradePolicy;
+    let product = this.props.product;
+    product.quantity -= 1;
+    product.index = this.props.index;
+
+    CartActions.updateCart({
+      orderFormId: this.props.orderFormId,
+      item: [product],
+      tradePolicy: tradePolicy
+    });
   }
 
   handleRemove(e) {
@@ -111,9 +139,9 @@ export default class ProductDetail extends React.Component {
             <div>
               {this.state.showInput ?
               <span className="form-inline form-quantity">
-                <span className="form-group"><i className="fa fa-minus-circle fa-lg"></i></span>
-                <span className="form-group"><input className="product-quantity form-control input-sm text-center"></input></span>
-                <span className="form-group"><i className="fa fa-plus-circle fa-lg"></i></span>
+                <span className="form-group"><i className="fa fa-minus-circle fa-lg" onClick={this.subtractProduct}></i></span>
+                <span className="form-group"><input className="product-quantity form-control input-sm text-center" value={product.quantity}></input></span>
+                <span className="form-group"><i className="fa fa-plus-circle fa-lg" onClick={this.addProduct}></i></span>
               </span> :
               <span className="btn-xs quantity" onClick={this.handleShowInput}>{product.quantity}</span>
               }
