@@ -45,7 +45,6 @@ export default class ProductDetail extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-console.log('lala');
     const tradePolicy = this.state.vendor.get('store').tradePolicy;
     let product = this.props.product;
     product.quantity = this.state.productQuantity;
