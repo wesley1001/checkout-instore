@@ -104,7 +104,13 @@ class CheckoutStore {
   onGetOrderGroupDataFail(err) {
     this.setState(this.state.set('orderGroup', undefined));
     this.setState(this.state.set('orderPlacedError', true));
-    this.setState(this.state.set('error', err));
+    if(err.data){
+      this.setState(this.state.set('error', err.data.error.message));
+    }
+    else{
+      console.log(err);
+      this.setState(this.state.set('error', 'Houve um erro ao carregar a página'));
+    }
     this.setState(this.state.set('loading', false));
   }
 }
