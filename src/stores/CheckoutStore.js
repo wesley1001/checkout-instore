@@ -99,17 +99,17 @@ class CheckoutStore {
     this.setState(this.state.set('loading', false));
   }
 
-
-
   onGetOrderGroupDataFail(err) {
     this.setState(this.state.set('orderGroup', undefined));
     this.setState(this.state.set('orderPlacedError', true));
-    if(err.data){
-      this.setState(this.state.set('error', err.data.error.message));
+    if(err.status == 403){
+      this.setState(this.state.set('error', 'Acesso Negado'));
+    }
+    else if(err.status == 500){
+      this.setState(this.state.set('error', 'Houve um erro ao carregar a página.'));
     }
     else{
-      console.log(err);
-      this.setState(this.state.set('error', 'Houve um erro ao carregar a página'));
+      this.setState(this.state.set('error', 'Houve um erro ao carregar a página. \n HTTP Status: ' + err.status));
     }
     this.setState(this.state.set('loading', false));
   }
