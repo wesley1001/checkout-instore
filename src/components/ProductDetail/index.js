@@ -137,6 +137,23 @@ export default class ProductDetail extends React.Component {
         <div className="info">
           <div className="name">{product.name}</div>
           {priceElement}
+          <div>
+            {this.state.showInput ?
+            <span className="form-inline form-quantity">
+              <span className="form-group">
+                <form onSubmit={this.handleSubmit} onBlur={this.handleSubmit}>
+                  <input className="product-quantity form-control input-sm text-center" value={this.state.productQuantity} onChange={this.handleChange}>
+                  </input>
+                </form>
+              </span>
+            </span> :
+            <div className="btn-group">
+              <span type ="button" className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onClick={this.handleShowInput}>{product.quantity}
+                <span className="caret"></span>
+              </span>
+            </div>
+            }
+          </div>
         </div>
         <div className="options">
           <span className="dropdown btn btn-xs btn-default">
