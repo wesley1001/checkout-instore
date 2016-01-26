@@ -22,14 +22,8 @@ export default class CartPage extends React.Component {
       checkout: CheckoutStore.getState(),
       cart: CartStore.getState(),
       vendor: VendorStore.getState(),
-      ofid: this.props.location.query.ofid
+      orderFormId: this.props.location.query.ofid
     };
-
-    console.log('this.state.ofid', this.state.ofid);
-
-    if(!this.state.ofid && !CartStore.getState().get('orderForm')){
-      this.props.history.pushState(null, '/');
-    }
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
@@ -37,6 +31,13 @@ export default class CartPage extends React.Component {
   }
 
   componentDidMount() {
+    const orderForm = this.state.cart.get('orderForm');
+    const orderFormId = this.state.orderFormId;
+
+    if(!orderForm && !orderFormId){
+      this.props.history.pushState(null, '/');
+    }
+
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
@@ -54,25 +55,27 @@ export default class CartPage extends React.Component {
   onCheckoutChange(state) {
     this.setState({checkout: state});
   }
+  
   onVendorChange(state) {
     this.setState({vendor: state});
   }
 
   componentDidUpdate() {
-    const { cart, ofid } = this.state;
+    const { cart, orderFormId } = this.state;
+    const orderForm = cart.get('orderForm');
 
-    if(!ofid && (!cart.get('orderForm').items || cart.get('orderForm').items.length === 0)) {
+    if(!orderFormId && (!orderForm.items || orderForm.items.length === 0)) {
       this.props.history.pushState(null, '/shop');
     }
   }
 
   render() {
-    const {cart, checkout, vendor, ofid} = this.state;
+    const {cart, checkout, vendor, orderFormId} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
 
-    if(ofid && !CartStore.getState().get('orderForm')){
-      console.log('esperando ofid carregar o order form');
+    if(orderFormId && !orderForm){
+      //loading orderForm by url param orderFormId
       return (
         <Loader loading={true} />
       );
