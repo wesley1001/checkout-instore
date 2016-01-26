@@ -15,6 +15,10 @@ class CheckoutActions {
     }
   }
 
+  updateClientDocument(cpf){
+    this.dispatch(cpf);
+  }
+
   executeSetClientData(data) {
     this.dispatch(data.email);
 

@@ -11,6 +11,7 @@ class CheckoutStore {
 
     this.state = Immutable.Map({
       customerEmail: '',
+      customerDocument: '',
       selectedPaymentId: 0,
       selectedInstallment: 0,
       sku: '',
@@ -24,6 +25,10 @@ class CheckoutStore {
       orderGroup: undefined,
       orderPlacedError: false
     });
+  }
+
+  onUpdateClientDocument(cpf){
+    this.setState(this.state.set('customerDocument', cpf));
   }
 
   onExecuteSetClientData(email) {
