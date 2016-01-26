@@ -1,4 +1,5 @@
 import axios from 'axios';
+import requestCache from 'utils/Cache';
 
 const ORDER_FORM_SECTIONS = ['items','gifts','totalizers','clientProfileData','shippingData','paymentData','sellers','messages','marketingData','clientPreferencesData','storePreferencesData'];
 const CHECKOUT_ORDER_FORM_PATH = '/api/checkout/pub/orderForm';
@@ -21,6 +22,10 @@ const CPF_DOCUMENT_TYPE_KEY = 'cpf';
 const ORDER_GROUP_DEFAULT_HEADERS = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
+};
+const MOCK_EAN_TO_SKU_MAP = {
+  3000000000069: 25,
+  3000000000076: 24
 };
 
 class Fetcher {
@@ -62,8 +67,27 @@ class Fetcher {
     return axios.put(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/isCheckedIn`, request);
   }
 
-  getProduct(code) {
-    return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${code}`);
+  getSKUByEAN(ean) {
+    return new Promise((resolve, reject) => {
+      let sku = requestCache.get(ean);
+
+      //TODO: remove this code in stable. using just to ignore catalog errors
+      if(!sku && MOCK_EAN_TO_SKU_MAP[ean]){
+        sku = MOCK_EAN_TO_SKU_MAP[ean];
+      }
+
+      if(sku) {
+        resolve(sku);
+        return;
+      }
+
+      return axios.get(`/api/catalog_system/pub/sku/stockkeepingunitByEan/${ean}`).then((response) => {
+        requestCache.put(ean, response.data.Id);
+        resolve(response.data.Id);
+      }).catch((err) => {
+        reject({message: 'Produto não encontrado'});
+      });
+    });
   }
 
   addToCart(orderForm, item, vendor, tradePolicy = 1) {
