@@ -33,6 +33,10 @@ export default class CartPage extends React.Component {
   }
 
   componentWillMount() {
+    this.handleVendorLoginVerification();
+  }
+
+  handleVendorLoginVerification(){
     if(!this.state.vendor.get('logged')) {
       let vendorData = window.localStorage.getItem('vendorData');
 
@@ -50,17 +54,18 @@ export default class CartPage extends React.Component {
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
 
-    const orderForm = this.state.cart.get('orderForm');
-    const orderFormId = this.state.orderFormId;
-
-    if(!orderForm && !orderFormId){
+    if(this.shouldRedirectToHomePage()) {
       this.props.history.pushState(null, '/');
     }
 
-    if(!orderForm && orderFormId){
+    if(this.orderFormWillLoad()){
       CartActions.getOrderForm.defer();
     }
 
+    this.loadStoreInfo();
+  }
+
+  loadStoreInfo(){
     const storeData = this.state.vendor.get('store');
     if(storeData && storeData.store && !storeData.tradePolicy) {
       VendorActions.GetStoreInfo.defer(storeData.store);
@@ -85,10 +90,7 @@ export default class CartPage extends React.Component {
   }
 
   componentDidUpdate() {
-    const { cart, orderFormId } = this.state;
-    const orderForm = cart.get('orderForm');
-
-    if(this.isOrderFormEmpty()) {
+    if(this.shouldRedirectToHomePage()) {
       this.props.history.pushState(null, '/');
     }
   }
@@ -98,10 +100,14 @@ export default class CartPage extends React.Component {
     return orderForm && (!orderForm.items || orderForm.items.length === 0);
   }
 
-  isOrderFormLoading(){
-    const {cart, orderFormId} = this.state;
-    const orderForm = cart.get('orderForm');
-    return orderFormId && !orderForm;
+  orderFormWillLoad(){
+    const orderForm = this.state.cart.get('orderForm');
+    return this.state.orderFormId && !orderForm;
+  }
+
+  shouldRedirectToHomePage(){
+    const orderForm = this.state.cart.get('orderForm');
+    return !this.orderFormWillLoad() && (!orderForm || this.isOrderFormEmpty());
   }
 
   render() {
@@ -109,7 +115,7 @@ export default class CartPage extends React.Component {
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
 
-    if(this.isOrderFormLoading() || this.isOrderFormEmpty()){
+    if(this.orderFormWillLoad() || this.shouldRedirectToHomePage()){
       return (
         <Loader loading={true} />
       );
