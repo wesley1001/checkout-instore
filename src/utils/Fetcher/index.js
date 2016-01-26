@@ -89,6 +89,10 @@ class Fetcher {
   }
 
   getProfileSystemData(id) {
+    if(id){
+      id = id.toLowerCase().trim();
+    }
+
     const entity = 'VN', query = `user=${id}`, fields = ['store', 'name', 'user'];
     const hostname = window.location.hostname;
 
