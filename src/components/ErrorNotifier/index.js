@@ -6,9 +6,12 @@ import bug from 'assets/images/bug.svg';
 
 
 export default class ErrorNotifier extends React.Component {
+  static defaultProps = {
+    closeButton: true
+  };
+
   constructor(props) {
     super(props);
-
     this.hideMessage = this.hideMessage.bind(this);
   }
 
@@ -17,12 +20,16 @@ export default class ErrorNotifier extends React.Component {
   }
 
   render() {
+    const closeButton = (
+      <button className="btn btn-default" onClick={this.hideMessage}>Fechar</button>
+    );
+
     const message = (
       <div id="errorMessage" className="background">
         <div className="wrapper">
           <img src={bug} width="120"/><br/><br/>
           <span className="message">{this.props.message}</span><br/><br/>
-          <button className="btn btn-default" onClick={this.hideMessage}>Fechar</button>
+          {this.props.closeButton ? closeButton : ''}
         </div>
       </div>
     );
