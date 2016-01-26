@@ -176,7 +176,7 @@ class Fetcher {
     const url = `/api/checkout/pub/orders/order-group/${orderGroupId}`;
 
     let configs = {
-      'headers': ORDER_GROUP_DEFAULT_HEADERS
+      headers: ORDER_GROUP_DEFAULT_HEADERS
     };
 
     return axios.get(url, configs).then((response) => response.data);
