@@ -11,6 +11,7 @@ class CheckoutStore {
 
     this.state = Immutable.Map({
       customerEmail: '',
+      customerDocument: '',
       selectedPaymentId: 0,
       selectedInstallment: 0,
       sku: '',
