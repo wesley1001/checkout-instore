@@ -117,7 +117,7 @@ class Fetcher {
 
     const checkoutRequest = {
       orderItems: items,
-      expectedOrderFormSections: this.orderFormSections
+      expectedOrderFormSections: ORDER_FORM_SECTIONS
     };
 
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/items/update`, checkoutRequest, {
