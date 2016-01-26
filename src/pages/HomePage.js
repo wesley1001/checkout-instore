@@ -60,7 +60,7 @@ export default class HomePage extends React.Component {
     }
 
     const storeData = this.state.vendor.get('store');
-    if(storeData) {
+    if(storeData && storeData.store) {
       VendorActions.GetStoreInfo.defer(storeData.store);
     }
   }
@@ -85,7 +85,6 @@ export default class HomePage extends React.Component {
 
   componentDidUpdate() {
     const orderForm = this.state.cart.get('orderForm');
-
     if(orderForm) {
       CartActions.clearCart.defer(orderForm);
     }

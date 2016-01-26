@@ -1,45 +1,65 @@
-import AuthenticationHelper from 'utils/AuthenticationHelper';
-
 import axios from 'axios';
 
+const ORDER_FORM_SECTIONS = ['items','gifts','totalizers','clientProfileData','shippingData','paymentData','sellers','messages','marketingData','clientPreferencesData','storePreferencesData'];
+const CHECKOUT_ORDER_FORM_PATH = '/api/checkout/pub/orderForm';
+const CRM_ADDRESS = 'api.vtexcrm.com.br';
+const HOSTNAME = window.location.hostname;
+const CRM_DATA_ENTITIES_ENDPOINT = `//${CRM_ADDRESS}/${HOSTNAME}/dataentities`;
+const CRM_VENDOR_ENTITY = 'VN';
+const CRM_STORE_ENTITY = 'SO';
+const CRM_DEFAULT_HEADERS = {
+  'Accept': 'application/vnd.vtex.ds.v10+json',
+  'Content-Type': 'application/vnd.vtex.ds.v10+json',
+  'REST-Range': 'resources=0-99'
+};
+const DEFAULT_FIRST_NAME = 'VTEX';
+const DEFAULT_LAST_NAME = 'inStore';
+const DEFAULT_PHONE = '+55 11 4058 9990';
+const DEFAULT_IS_CORPORATE_VALUE = false;
+const DEFAULT_STATE_INSCRIPTION = '';
+const CPF_DOCUMENT_TYPE_KEY = 'cpf';
+const ORDER_GROUP_DEFAULT_HEADERS = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+};
+
 class Fetcher {
-  constructor() {
-    this.orderFormSections = ['items','gifts','totalizers','clientProfileData','shippingData','paymentData','sellers','messages','marketingData','clientPreferencesData','storePreferencesData'];
-    this.checkoutUrl = '/api/checkout/pub/orderForm';
-  }
-
   getOrderForm() {
-    return axios.get(this.checkoutUrl);
+    return axios.get(CHECKOUT_ORDER_FORM_PATH);
   }
 
-  setClientProfile(orderForm, email, cpf = '') {
-    const clientProfileRequest = {
-      expectedOrderFormSections: this.orderFormSections,
+  setClientProfile(orderFormId, email, cpf = '') {
+    const request = {
+      expectedOrderFormSections: ORDER_FORM_SECTIONS,
       email,
       firstEmail: email,
       document: cpf,
-      documentType: 'cpf',
-      firstName: 'VTEX',
-      isCorporate: false,
-      lastName: 'inStore',
-      phone: '+55 11 4058 9990',
-      stateInscription: ''
+      documentType: CPF_DOCUMENT_TYPE_KEY,
+      firstName: DEFAULT_FIRST_NAME,
+      isCorporate: DEFAULT_IS_CORPORATE_VALUE,
+      lastName: DEFAULT_LAST_NAME,
+      phone: DEFAULT_PHONE,
+      stateInscription: DEFAULT_STATE_INSCRIPTION
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/clientProfileData`, clientProfileRequest);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
   }
 
-  setShipping(orderForm, address) {
-    const shippingRequest = {
-      expectedOrderFormSections: this.orderFormSections,
+  setShipping(orderFormId, address) {
+    const request = {
+      expectedOrderFormSections: ORDER_FORM_SECTIONS,
       address
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/shippingData`, shippingRequest);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/shippingData`, request);
   }
 
   setCheckedIn(orderFormId) {
-    return axios.put(`${this.checkoutUrl}/${orderFormId}/isCheckedIn`, {isCheckedIn: true});
+    const request = {
+      isCheckedIn: true
+    };
+
+    return axios.put(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/isCheckedIn`, request);
   }
 
   getProduct(code) {
@@ -47,45 +67,62 @@ class Fetcher {
   }
 
   addToCart(orderForm, item, vendor, tradePolicy = 1) {
-    const checkoutRequest = {
-      orderItems: [item],
-      expectedOrderFormSections: this.orderFormSections
+    const queryString = {
+      sku: item.id,
+      qty: item.quantity,
+      seller: item.seller,
+      sc: tradePolicy,
+      utm_source: vendor,
+      redirect: false
     };
 
-    return axios.post(`/checkout/cart/add?sku=${item.id}&qty=${item.quantity}&seller=${item.seller}&sc=${tradePolicy}&utm_source=${vendor}&redirect=false`, checkoutRequest);
+    const request = {
+      orderItems: [item],
+      expectedOrderFormSections: ORDER_FORM_SECTIONS
+    };
+
+    return axios.post(`/checkout/cart/add`, request, {
+      params: queryString
+    });
   }
 
-  updateItems(orderForm, items, tradePolicy = 1) {
+  updateItems(orderFormId, items, tradePolicy = 1) {
+    const queryString = {
+      sc: tradePolicy
+    };
+
     const checkoutRequest = {
       orderItems: items,
       expectedOrderFormSections: this.orderFormSections
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/items/update?sc=${tradePolicy}`, checkoutRequest);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/items/update`, checkoutRequest, {
+      params: queryString
+    });
   }
 
-  setPayment(orderForm, payment) {
-    const paymentRequest = {
-      expectedOrderFormSections: this.orderFormSections,
+  setPayment(orderFormId, payment) {
+    const request = {
+      expectedOrderFormSections: ORDER_FORM_SECTIONS,
       payments: [payment],
       giftCards: []
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/attachments/paymentData`, paymentRequest);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/paymentData`, request);
   }
 
-  startTransaction(orderForm, value) {
-    const transactionRequest = {
-      referenceId: orderForm,
+  startTransaction(orderFormId, value) {
+    const request = {
+      referenceId: orderFormId,
       savePersonalData: false,
       optinNewsLetter: false,
       value: value,
       referenceValue: value,
       interestValue: value,
-      expectedOrderFormSections : this.orderFormSections
+      expectedOrderFormSections : ORDER_FORM_SECTIONS
     };
 
-    return axios.post(`${this.checkoutUrl}/${orderForm}/transaction`, transactionRequest);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/transaction`, request);
   }
 
   getProfileSystemData(id) {
@@ -93,23 +130,23 @@ class Fetcher {
       id = id.toLowerCase().trim();
     }
 
-    const entity = 'VN', query = `user=${id}`, fields = ['store', 'name', 'user'];
-    const hostname = window.location.hostname;
+    const fields = ['store', 'name', 'user'];
+    const queryString = {
+      _where: `user=${id}`,
+      _fields: fields.join(',')
+    };
 
-    const url = `//api.vtexcrm.com.br/${hostname}/dataentities/${entity}/search?_where=${query}&_fields=${fields.join(',')}`
+    const url = `${CRM_DATA_ENTITIES_ENDPOINT}/${CRM_VENDOR_ENTITY}/search`
 
     let configs = {
-      'headers': {
-        'Accept': 'application/vnd.vtex.ds.v10+json',
-        'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'REST-Range': 'resources=0-99'
-      }
+      headers: CRM_DEFAULT_HEADERS,
+      params: queryString
     };
-    const promise = new Promise((resolve, reject) => {
+
+    return new Promise((resolve, reject) => {
       return axios.get(url, configs).then((response) => {
-        let data = response.data;
-        if(data && data.length) {
-          resolve(data[0]);
+        if(response.data && response.data.length) {
+          resolve(response.data[0]);
           return;
         }
         reject({message:`Vendedor não identificado`});
@@ -117,21 +154,19 @@ class Fetcher {
         reject({message:`Oops, houve um erro ao identificar o vendedor`});
       });
     });
-
-    return promise;
   }
 
   getStoreData(id) {
     const fields = ['name', 'tradePolicy'];
-    const hostname = window.location.hostname;
-    const url = `//api.vtexcrm.com.br/${hostname}/dataentities/SO/documents/${id}?_fields=${fields.join(',')}`
+    const queryString = {
+      _fields: fields.join(',')
+    };
+
+    const url = `${CRM_DATA_ENTITIES_ENDPOINT}/${CRM_STORE_ENTITY}/documents/${id}`
 
     let configs = {
-      'headers': {
-        'Accept': 'application/vnd.vtex.ds.v10+json',
-        'Content-Type': 'application/vnd.vtex.ds.v10+json',
-        'REST-Range': 'resources=0-99'
-      }
+      headers: CRM_DEFAULT_HEADERS,
+      params: queryString
     };
 
     return axios.get(url, configs).then((response) => response.data);
@@ -141,10 +176,7 @@ class Fetcher {
     const url = `/api/checkout/pub/orders/order-group/${orderGroupId}`;
 
     let configs = {
-      'headers': {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+      'headers': ORDER_GROUP_DEFAULT_HEADERS
     };
 
     return axios.get(url, configs).then((response) => response.data);
