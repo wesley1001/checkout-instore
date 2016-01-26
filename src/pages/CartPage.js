@@ -3,7 +3,9 @@ import React from 'react';
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
 import VendorStore from 'stores/VendorStore';
-
+import CookieHelper from 'utils/CookieHelper';
+import CartActions from 'actions/CartActions';
+import VendorActions from 'actions/VendorActions';
 import BarcodeReader from 'components/BarcodeReader';
 import ProductShowcase from 'components/ProductShowcase';
 import PaymentSelection from 'components/PaymentSelection';
@@ -22,7 +24,7 @@ export default class CartPage extends React.Component {
       checkout: CheckoutStore.getState(),
       cart: CartStore.getState(),
       vendor: VendorStore.getState(),
-      orderFormId: this.props.location.query.ofid
+      orderFormId: CookieHelper.getOrderFormId()
     };
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
@@ -30,7 +32,24 @@ export default class CartPage extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
+  componentWillMount() {
+    if(!this.state.vendor.get('logged')) {
+      let vendorData = window.localStorage.getItem('vendorData');
+
+      if(vendorData) {
+        vendorData = JSON.parse(vendorData);
+        VendorActions.SetVendorDataSuccess(vendorData);
+      } else  {
+        this.props.history.pushState(null, '/vendor/login');
+      }
+    }
+  }
+
   componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+    CartStore.listen(this.onCartChange);
+    VendorStore.listen(this.onVendorChange);
+
     const orderForm = this.state.cart.get('orderForm');
     const orderFormId = this.state.orderFormId;
 
@@ -38,9 +57,14 @@ export default class CartPage extends React.Component {
       this.props.history.pushState(null, '/');
     }
 
-    CheckoutStore.listen(this.onCheckoutChange);
-    CartStore.listen(this.onCartChange);
-    VendorStore.listen(this.onVendorChange);
+    if(!orderForm && orderFormId){
+      CartActions.getOrderForm.defer();
+    }
+
+    const storeData = this.state.vendor.get('store');
+    if(storeData && storeData.store && !storeData.tradePolicy) {
+      VendorActions.GetStoreInfo.defer(storeData.store);
+    }
   }
 
   componentWillUnmount() {
@@ -55,7 +79,7 @@ export default class CartPage extends React.Component {
   onCheckoutChange(state) {
     this.setState({checkout: state});
   }
-  
+
   onVendorChange(state) {
     this.setState({vendor: state});
   }
@@ -64,9 +88,20 @@ export default class CartPage extends React.Component {
     const { cart, orderFormId } = this.state;
     const orderForm = cart.get('orderForm');
 
-    if(!orderFormId && (!orderForm.items || orderForm.items.length === 0)) {
-      this.props.history.pushState(null, '/shop');
+    if(this.isOrderFormEmpty()) {
+      this.props.history.pushState(null, '/');
     }
+  }
+
+  isOrderFormEmpty(){
+    const orderForm = this.state.cart.get('orderForm');
+    return orderForm && (!orderForm.items || orderForm.items.length === 0);
+  }
+
+  isOrderFormLoading(){
+    const {cart, orderFormId} = this.state;
+    const orderForm = cart.get('orderForm');
+    return orderFormId && !orderForm;
   }
 
   render() {
@@ -74,8 +109,7 @@ export default class CartPage extends React.Component {
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
 
-    if(orderFormId && !orderForm){
-      //loading orderForm by url param orderFormId
+    if(this.isOrderFormLoading() || this.isOrderFormEmpty()){
       return (
         <Loader loading={true} />
       );

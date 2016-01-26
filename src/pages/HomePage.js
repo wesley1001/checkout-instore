@@ -60,7 +60,7 @@ export default class HomePage extends React.Component {
     }
 
     const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store) {
+    if(storeData && storeData.store && !storeData.tradePolicy) {
       VendorActions.GetStoreInfo.defer(storeData.store);
     }
   }
