@@ -25,7 +25,7 @@ class VendorStore {
 
   onGetStoreInfoSuccess(data) {
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', _.merge(this.state.get('store'),data)));
+    this.setState(this.state.set('store', _.merge(this.state.get('store'), data)));
     this.setState(this.state.set('error', ''));
   }
 
@@ -55,15 +55,6 @@ class VendorStore {
 
   onSetVendorDataFail(error) {
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('logged', false));
-    this.setState(this.state.set('user', undefined));
-    this.setState(this.state.set('store', {}));
-    this.setState(this.state.set('error', error.message));
-  }
-
-  onGetStoreByHostFail(error) {
-    this.setState(this.state.set('loading', false));
-
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
     this.setState(this.state.set('store', {}));

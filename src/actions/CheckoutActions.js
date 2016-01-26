@@ -1,7 +1,5 @@
 import flux from '../flux';
-
 import Fetcher from 'utils/Fetcher';
-import requestCache from 'utils/Cache';
 
 class CheckoutActions {
   setClientData(data) {
@@ -41,20 +39,14 @@ class CheckoutActions {
     this.dispatch();
   }
 
-  findProduct(code) {
+  findProduct(ean) {
     this.dispatch();
 
-    const sku = requestCache.get(code);
-    if(!sku) {
-      Fetcher.getProduct(code).then((response) => {
-        requestCache.put(code, response.data.Id);
-        this.actions.readSuccess.defer(response.data.Id);
-      }).catch((err) => {
-        this.actions.readFailed.defer('Produto não encontrado');
-      });
-    } else {
+    Fetcher.getSKUByEAN(ean).then((sku) => {
       this.actions.readSuccess.defer(sku);
-    }
+    }).catch((err) => {
+      this.actions.readFailed.defer('Produto não encontrado');
+    });
   }
 
   readSuccess(skuId) {

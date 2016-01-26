@@ -50,26 +50,24 @@ class VendorActions {
 
   SetVendorData(id) {
     this.dispatch();
+
     if (!id) {
-      this.actions.SetVendorDataFail({message:`Você deve digitar ao menos 1 caractere de identificação`});
+      this.actions.SetVendorDataFail({
+        message: `Você deve digitar ao menos 1 caractere de identificação`
+      });
       return;
     }
 
-    Fetcher.getStoreByHost().then((storeData) => {
-      const storename = storeData.MainAccountName;
-      Fetcher.getProfileSystemData(id).then((response) => {
-        response.id = id;
-        const data = {
-          user: response
-        };
+    Fetcher.getProfileSystemData(id).then((response) => {
+      response.id = id;
+      const data = {
+        user: response
+      };
 
-        this.actions.SetVendorDataSuccess(data);
-        window.localStorage.setItem('vendorData', JSON.stringify(data));
-      }, (err) => {
-        this.actions.SetVendorDataFail({message: err.message});
-      });
+      this.actions.SetVendorDataSuccess(data);
+      window.localStorage.setItem('vendorData', JSON.stringify(data));
     }, (err) => {
-      this.actions.GetStoreByHostFail({message: 'Oops, houve um erro ao identificar a loja pelo host!'});
+      this.actions.SetVendorDataFail({message: err.message});
     });
   }
 
