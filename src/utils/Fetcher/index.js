@@ -137,14 +137,6 @@ class Fetcher {
     return axios.get(url, configs).then((response) => response.data);
   }
 
-  getStoreByHost() {
-    let promise = new Promise((resolve, reject) => {
-      resolve({MainAccountName: window.location.hostname.split('.vtex')[0]});
-    });
-
-    return promise;
-  }
-
   getOrderGroup(orderGroupId) {
     const url = `/api/checkout/pub/orders/order-group/${orderGroupId}`;
 
