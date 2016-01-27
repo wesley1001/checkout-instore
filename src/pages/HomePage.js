@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookie';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
@@ -13,6 +12,7 @@ import UserAnonymous from 'components/UserAnonymous';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import Notifier from 'components/Notifier';
+import CookieHelper from 'utils/CookieHelper';
 
 import client from 'assets/images/client.svg';
 
@@ -28,7 +28,7 @@ export default class HomePage extends React.Component {
       vendor: VendorStore.getState()
     };
 
-    cookie.remove('checkout.vtex.com');
+    CookieHelper.removeCheckoutCookie();
 
     this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
