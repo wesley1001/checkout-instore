@@ -1,8 +1,8 @@
 import flux from '../flux';
 import Immutable from 'immutable';
 import immutable from 'alt/utils/ImmutableUtil';
-
 import CartActions from 'actions/CartActions';
+import MessageUtils from 'utils/MessageUtils';
 
 @immutable
 class CartStore {
@@ -19,6 +19,7 @@ class CartStore {
       addError: '',
       updateError: '',
       error: '',
+      message: '',
 
       paymentObj: {},
       paymentUrl: '',
@@ -37,12 +38,14 @@ class CartStore {
     this.setState(this.state.set('addLoading', false));
     this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('message', MessageUtils.getFirstMessageText(orderForm)));
   }
 
   onOrderFormFailed(errorMessage) {
     this.setState(this.state.set('orderForm', undefined));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
+    this.setState(this.state.set('message', ''));
   }
 
   onExecuteAddToCart() {

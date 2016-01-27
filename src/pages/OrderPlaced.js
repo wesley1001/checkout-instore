@@ -8,7 +8,7 @@ import CheckoutActions from 'actions/CheckoutActions';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 import OrderPlacedDetail from 'components/OrderPlacedDetail';
-import ErrorNotifier from 'components/ErrorNotifier';
+import Notifier from 'components/Notifier';
 
 import 'styles/orderplaced.less';
 
@@ -63,7 +63,7 @@ export default class OrderPlaced extends React.Component {
 
         <button onClick={this.handleClickNewOrder} className="btn btn-default btn-lg btn-block btn-bottom">Realizar nova venda</button>
 
-        <ErrorNotifier message={checkout.get('error')} />
+        <Notifier error={checkout.get('error')} />
         <Footer />
       </div>
     );

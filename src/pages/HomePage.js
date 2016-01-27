@@ -12,7 +12,7 @@ import UserAuthentication from 'components/UserAuthentication';
 import UserAnonymous from 'components/UserAnonymous';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
-import ErrorNotifier from 'components/ErrorNotifier';
+import Notifier from 'components/Notifier';
 
 import client from 'assets/images/client.svg';
 
@@ -116,7 +116,7 @@ export default class HomePage extends React.Component {
 
         <UserAnonymous orderForm={cart.get('orderForm')} history={this.props.history}/>
 
-        <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
+        <Notifier error={cart.get('error') || checkout.get('error')} />
         <Footer />
       </div>
     );

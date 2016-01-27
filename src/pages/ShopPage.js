@@ -10,7 +10,7 @@ import ScanIndicator from 'components/ScanIndicator';
 import OrderHeader from 'components/OrderHeader';
 import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
-import ErrorNotifier from 'components/ErrorNotifier';
+import Notifier from 'components/Notifier';
 
 export default class ShopPage extends React.Component {
   constructor(props) {
@@ -102,7 +102,7 @@ export default class ShopPage extends React.Component {
           vendor={vendorId}>
           <OrderHeader />
           <ScanIndicator />
-          <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
+          <Notifier error={cart.get('error') || checkout.get('error')} />
         </BarcodeReader>
       </div>
     );
