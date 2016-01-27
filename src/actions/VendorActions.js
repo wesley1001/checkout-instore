@@ -1,7 +1,6 @@
 import flux from '../flux';
 
 import Fetcher from 'utils/Fetcher';
-import AuthenticationHelper from 'utils/AuthenticationHelper';
 
 class VendorActions {
   GetStoreInfo(storeId) {
