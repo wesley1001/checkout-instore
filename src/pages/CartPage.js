@@ -147,7 +147,7 @@ export default class CartPage extends React.Component {
             orderFormId={orderForm.orderFormId}
             email={checkout.get('customerEmail')}
           />
-          <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
+          <ErrorNotifier message={cart.get('error') || checkout.get('error') || cart.get('message')} />
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
