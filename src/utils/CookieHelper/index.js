@@ -1,6 +1,8 @@
 import cookie from 'react-cookie';
 
 const CHECKOUT_COOKIE_KEY = 'checkout.vtex.com';
+const CHECKOUT_COOKIE_PATH = '/';
+const CHECKOUT_COOKIE_DOMAIN = window.location.hostname;
 const ORDER_FORM_ID_KEY = '__ofid';
 
 class CookieHelper {
@@ -17,6 +19,13 @@ class CookieHelper {
       }
 
       return orderFormId;
+    }
+
+    removeCheckoutCookie(){
+      cookie.remove(CHECKOUT_COOKIE_KEY, {
+        path: CHECKOUT_COOKIE_PATH,
+        domain: CHECKOUT_COOKIE_DOMAIN
+      });
     }
 }
 
