@@ -42,7 +42,7 @@ export default class OrderPlacedDetail extends React.Component {
           <OrderPlacedPaymentDetail paymentData={order.paymentData} />
 
           <div className="receipts">
-            { clientProfile.email.endsWith('@vtex-instore.com') ?
+            { clientProfile.email.indexOf('@vtex-instore.com') > 0 ?
               <p>E-mail do cliente não foi fornecido.</p> :
               <p>Comprovantes enviados para <br/><strong>
               {clientProfile.email}
