@@ -6,7 +6,7 @@ import VendorActions from 'actions/VendorActions';
 import VendorAuthentication from 'components/VendorAuthentication';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
-import ErrorNotifier from 'components/ErrorNotifier';
+import Notifier from 'components/Notifier';
 
 import 'pages/VendorLoginPage/VendorLoginPage.less';
 
@@ -50,7 +50,7 @@ export default class VendorLogin extends React.Component {
           <VendorAuthentication history={this.props.history}/>
         </div>
 
-        <ErrorNotifier message={vendor.get('error')} />
+        <Notifier error={vendor.get('error')} />
       </div>
     );
   }
