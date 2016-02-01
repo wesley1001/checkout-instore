@@ -47,7 +47,7 @@ export default class ProductDetail extends React.Component {
     e.preventDefault();
     const tradePolicy = this.state.vendor.get('store').tradePolicy;
     let product = this.props.product;
-    product.quantity = this.state.productQuantity;
+    product.quantity = e.target.value;
     CartActions.updateCart({
       orderFormId: this.props.orderFormId,
       item: [product],
@@ -138,39 +138,27 @@ export default class ProductDetail extends React.Component {
           <div className="name">{product.name}</div>
           {priceElement}
           <div>
-            {this.state.showInput ?
-            <span className="form-inline form-quantity">
-              <span className="form-group">
-                <form onSubmit={this.handleSubmit} onBlur={this.handleSubmit}>
-                  <input className="product-quantity form-control input-sm text-center" value={this.state.productQuantity} onChange={this.handleChange}>
-                  </input>
-                </form>
-              </span>
-            </span> :
             <div className="btn-group">
-              <span type ="button" className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onClick={this.handleShowInput}>{product.quantity}
-                <span className="caret"></span>
-              </span>
+              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onChange={this.handleSubmit}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
             </div>
-            }
           </div>
         </div>
-        <div className="options">
-          <span className="dropdown btn btn-xs btn-default">
-            <a href="javascript:void(0)"
-              className="glyphicon glyphicon-option-horizontal"
-              onClick={this.handleShowOptions}>
-            </a>
-          </span>
-            {this.state.showOptions ?
-            <div className="menu">
-              <div className="remove list">
-                <div href="javascript:void(0)"
-                className="remove-text"
-                onClick={this.handleRemove}> Remover produto
-                </div>
-              </div>
-            </div> : ' ' }
+        <div className="remove">
+         <a href="javascript:void(0)"
+           className="glyphicon glyphicon-remove"
+           onClick={this.handleRemove}>
+         </a>
         </div>
       </div>
     );
