@@ -24,10 +24,32 @@ export default class ProductDetail extends React.Component {
     super(props);
 
     this.state = {
-      vendor: VendorStore.getState()
+      vendor: VendorStore.getState(),
+      showOptions: false,
+      productQuantity: this.props.product.quantity
     };
 
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleShowOptions = this.handleShowOptions.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    const tradePolicy = this.state.vendor.get('store').tradePolicy;
+    let product = this.props.product;
+    product.quantity = e.target.value;
+    CartActions.updateCart({
+      orderFormId: this.props.orderFormId,
+      item: [product],
+      tradePolicy: tradePolicy
+    });
+  }
+
+  handleShowOptions(e) {
+    e.preventDefault();
+
+    this.setState({showOptions : !this.state.showOptions});
   }
 
   handleRemove(e) {
@@ -69,11 +91,26 @@ export default class ProductDetail extends React.Component {
       <div className="ProductDetail component">
         <div className="img-wrapper">
           <img className="img" src={product.imageUrl}/>
-          <span className="quantity">{product.quantity}</span>
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
           {priceElement}
+          <div>
+            <div className="btn-group">
+              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onChange={this.handleSubmit}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div className="remove">
          <a href="javascript:void(0)"
