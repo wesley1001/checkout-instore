@@ -26,21 +26,12 @@ export default class ProductDetail extends React.Component {
     this.state = {
       vendor: VendorStore.getState(),
       showOptions: false,
-      showInput: false,
       productQuantity: this.props.product.quantity
     };
 
     this.handleRemove = this.handleRemove.bind(this);
     this.handleShowOptions = this.handleShowOptions.bind(this);
-    this.handleShowInput = this.handleShowInput.bind(this);
-    this.addProduct = this.addProduct.bind(this);
-    this.subtractProduct = this.subtractProduct.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e){
-    this.setState({productQuantity: e.target.value});
   }
 
   handleSubmit(e){
@@ -59,39 +50,6 @@ export default class ProductDetail extends React.Component {
     e.preventDefault();
 
     this.setState({showOptions : !this.state.showOptions});
-  }
-  handleShowInput(e){
-    e.preventDefault();
-
-    this.setState({showInput : true});
-  }
-
-  addProduct(){
-    const tradePolicy = this.state.vendor.get('store').tradePolicy;
-    let product = this.props.product;
-    product.quantity += 1;
-    this.setState({productQuantity: product.quantity});
-    product.index = this.props.index;
-
-    CartActions.updateCart({
-      orderFormId: this.props.orderFormId,
-      item: [product],
-      tradePolicy: tradePolicy
-    });
-  }
-
-  subtractProduct(){
-    const tradePolicy = this.state.vendor.get('store').tradePolicy;
-    let product = this.props.product;
-    product.quantity -= 1;
-    this.setState({productQuantity: product.quantity});
-    product.index = this.props.index;
-
-    CartActions.updateCart({
-      orderFormId: this.props.orderFormId,
-      item: [product],
-      tradePolicy: tradePolicy
-    });
   }
 
   handleRemove(e) {
