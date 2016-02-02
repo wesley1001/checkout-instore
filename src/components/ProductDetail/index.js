@@ -96,8 +96,7 @@ export default class ProductDetail extends React.Component {
           <div className="name">{product.name}</div>
           {priceElement}
           <div>
-            <div className="btn-group">
-              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onChange={this.handleSubmit}>
+              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" onChange={this.handleSubmit}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -109,7 +108,6 @@ export default class ProductDetail extends React.Component {
                   <option value="9">9</option>
                   <option value="10">10</option>
               </select>
-            </div>
           </div>
         </div>
         <div className="remove">
