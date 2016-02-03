@@ -17,7 +17,7 @@ export default class Product extends React.Component {
   }
 
   render () {
-    const {product, itemCount, orderFormId, tradePolicy, history} = this.props;
+    const {product, itemCount, orderFormId, tradePolicy, history, index} = this.props;
 
     return (
       <div className="Product component">
@@ -27,6 +27,7 @@ export default class Product extends React.Component {
            orderFormId={orderFormId}
            history={history}
            tradePolicy={tradePolicy}
+           index={index}
          />
       </div>
     );

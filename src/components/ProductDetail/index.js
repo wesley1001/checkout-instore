@@ -39,6 +39,7 @@ export default class ProductDetail extends React.Component {
     const tradePolicy = this.state.vendor.get('store').tradePolicy;
     let product = this.props.product;
     product.quantity = e.target.value;
+    product.index = this.props.index;
     CartActions.updateCart({
       orderFormId: this.props.orderFormId,
       item: [product],
