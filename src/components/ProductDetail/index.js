@@ -97,17 +97,18 @@ export default class ProductDetail extends React.Component {
           <div className="name">{product.name}</div>
           {priceElement}
           <div>
+              <span className="caret"></span>
               <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" onChange={this.handleSubmit}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+                  <option className="option" value="1">1</option>
+                  <option className="option" value="2">2</option>
+                  <option className="option" value="3">3</option>
+                  <option className="option" value="4">4</option>
+                  <option className="option" value="5">5</option>
+                  <option className="option" value="6">6</option>
+                  <option className="option" value="7">7</option>
+                  <option className="option" value="8">8</option>
+                  <option className="option" value="9">9</option>
+                  <option className="option" value="10">10</option>
               </select>
           </div>
         </div>
