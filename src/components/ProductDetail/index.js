@@ -39,6 +39,7 @@ export default class ProductDetail extends React.Component {
     const tradePolicy = this.state.vendor.get('store').tradePolicy;
     let product = this.props.product;
     product.quantity = e.target.value;
+    product.index = this.props.index;
     CartActions.updateCart({
       orderFormId: this.props.orderFormId,
       item: [product],
@@ -96,20 +97,19 @@ export default class ProductDetail extends React.Component {
           <div className="name">{product.name}</div>
           {priceElement}
           <div>
-            <div className="btn-group">
-              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" data-toggle="dropdown" onChange={this.handleSubmit}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
+              <span className="caret"></span>
+              <select type ="button" value={product.quantity} className="btn btn-primary dropdown-toggle quantity" onChange={this.handleSubmit}>
+                  <option className="option" value="1">1</option>
+                  <option className="option" value="2">2</option>
+                  <option className="option" value="3">3</option>
+                  <option className="option" value="4">4</option>
+                  <option className="option" value="5">5</option>
+                  <option className="option" value="6">6</option>
+                  <option className="option" value="7">7</option>
+                  <option className="option" value="8">8</option>
+                  <option className="option" value="9">9</option>
+                  <option className="option" value="10">10</option>
               </select>
-            </div>
           </div>
         </div>
         <div className="remove">
