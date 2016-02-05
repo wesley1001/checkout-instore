@@ -28,6 +28,7 @@ export default class BarcodeReader extends React.Component {
 
   componentWillUnmount() {
     CheckoutStore.unlisten(this.onCheckoutChange);
+    window.handleBarcodeRead = undefined;
   }
 
   onCheckoutChange(state) {
