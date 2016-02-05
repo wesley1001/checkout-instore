@@ -106,9 +106,19 @@ class Fetcher {
       expectedOrderFormSections: ORDER_FORM_SECTIONS
     };
 
-    return axios.post(`/checkout/cart/add`, request, {
-      params: queryString
+    let promise = new Promise((resolve, reject) => {
+      axios.post(`/checkout/cart/add`, request, {
+        params: queryString
+      }).then(() => {
+        this.getOrderForm().then((orderForm) => {
+          resolve(orderForm);
+        }, (err) => reject(err));
+      },(err) => {
+        reject({message:`Oops, ocorreu um erro ao adicionar o item`});
+      });
     });
+
+    return promise;
   }
 
   updateItems(orderFormId, items, tradePolicy = 1) {

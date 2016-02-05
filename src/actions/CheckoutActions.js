@@ -3,23 +3,6 @@ import Fetcher from 'utils/Fetcher';
 
 class CheckoutActions {
   setClientData(data) {
-    if(!data.orderForm) {
-      Fetcher.getOrderForm().then((response) => {
-        data.orderForm = response.data.orderForm;
-        this.actions.executeSetClientData.defer(data);
-      }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-      });
-    } else {
-      this.actions.executeSetClientData.defer(data);
-    }
-  }
-
-  updateClientDocument(cpf){
-    this.dispatch(cpf);
-  }
-
-  executeSetClientData(data) {
     this.dispatch(data.email);
 
     data.email = data.email || Date.now().toString() + '@vtex-instore.com';
@@ -29,6 +12,10 @@ class CheckoutActions {
     }).catch(() => {
       this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
     });
+  }
+
+  updateClientDocument(cpf){
+    this.dispatch(cpf);
   }
 
   setClientDataSuccess() {
