@@ -111,7 +111,7 @@ class CartActions {
     Fetcher.setShipping(data.orderFormId, data.address).then(() => {
       this.actions.setCheckedIn.defer(data.orderFormId);
     }).catch(() => {
-      this.actions.requestFailed.defer('Ocorreu um erro ao setar os dados da loja');
+      this.actions.requestFailed.defer('Ocorreu um erro ao definir os dados de entrega');
     });
   }
 
@@ -135,7 +135,7 @@ class CartActions {
     Fetcher.setCheckedIn(orderFormId).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
-      this.actions.requestFailed.defer('Ocorreu um erro ao setar os dados da loja');
+      this.actions.requestFailed.defer('Ocorreu um erro ao fazer o checkin da loja');
     });
   }
 
@@ -161,7 +161,7 @@ class CartActions {
           this.actions.setDefaultPaymentSuccess.defer(response.data);
         }).catch((err) => {
           this.actions.setDefaultPaymentFail.defer(err);
-          this.actions.requestFailed.defer('Ocorreu um erro ao setar a opção de pagamento');
+          this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
         });
       }
 
@@ -185,7 +185,7 @@ class CartActions {
     Fetcher.setPayment(data.orderFormId, data.payment).then(() => {
       this.actions.startTransaction.defer(data);
     }).catch(() => {
-      this.actions.requestFailed.defer('Ocorreu um erro ao setar a opção de pagamento');
+      this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
     });
   }
 
