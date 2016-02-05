@@ -68,6 +68,10 @@ class VendorStore {
     this.setState(this.state.set('store', {}));
     this.setState(this.state.set('error', ''));
   }
+
+  onDismissCurrentNotifications(){
+    this.setState(this.state.set('error', ''));
+  }
 }
 
 export default flux.createStore(VendorStore, 'VendorStore');

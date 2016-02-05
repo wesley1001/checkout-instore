@@ -206,6 +206,10 @@ class CartActions {
   requestFailed(errorMessage) {
     this.dispatch(errorMessage);
   }
+
+  dismissCurrentNotifications(){
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(CartActions);

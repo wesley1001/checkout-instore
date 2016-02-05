@@ -7,6 +7,8 @@ import setViewport from 'utils/SetViewport';
 import CheckoutActions from '../actions/CheckoutActions';
 import VendorActions from '../actions/VendorActions';
 
+import Notifier from 'components/Notifier';
+
 @setViewport
 export default class App extends React.Component {
 
@@ -48,6 +50,7 @@ export default class App extends React.Component {
     return (
       <div>
         { this.props.children }
+        <Notifier />
       </div>
     );
   }

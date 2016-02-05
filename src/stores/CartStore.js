@@ -16,8 +16,6 @@ class CartStore {
       updateLoading: false,
       loading: false,
 
-      addError: '',
-      updateError: '',
       error: '',
       message: '',
 
@@ -29,8 +27,6 @@ class CartStore {
 
   onGetOrderForm() {
     this.setState(this.state.set('error', ''));
-    this.setState(this.state.set('addError', ''));
-    this.setState(this.state.set('updateError', ''));
   }
 
   onOrderFormSuccess(orderForm) {
@@ -51,7 +47,6 @@ class CartStore {
   onExecuteAddToCart() {
     this.setState(this.state.set('addLoading', true));
     this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('addError', ''));
     this.setState(this.state.set('error', ''));
   }
 
@@ -64,7 +59,6 @@ class CartStore {
   onExecuteUpdateCart() {
     this.setState(this.state.set('updateLoading', true));
     this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('updateError', ''));
     this.setState(this.state.set('error', ''));
   }
 
@@ -125,6 +119,11 @@ class CartStore {
   onRequestFailed(errorMessage) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
+  }
+
+  onDismissCurrentNotifications(){
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('message', ''));
   }
 }
 
