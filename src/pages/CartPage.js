@@ -13,7 +13,6 @@ import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
-import Notifier from 'components/Notifier';
 import TypeBarcodeReaderShowButton from 'components/TypeBarcodeReaderShowButton';
 
 export default class CartPage extends React.Component {
@@ -146,11 +145,6 @@ export default class CartPage extends React.Component {
             paymentData={orderForm.paymentData}
             orderFormId={orderForm.orderFormId}
             email={checkout.get('customerEmail')}
-          />
-
-          <Notifier
-            error={cart.get('error') || checkout.get('error')}
-            message={cart.get('message')}
           />
         </BarcodeReader>
 

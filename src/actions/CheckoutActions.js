@@ -104,14 +104,16 @@ class CheckoutActions {
     });
   }
 
-
-
   getOrderGroupDataSuccess(data) {
     this.dispatch(data);
   }
 
   getOrderGroupDataFail(err) {
     this.dispatch(err);
+  }
+
+  dismissCurrentNotifications(){
+    this.dispatch();
   }
 }
 

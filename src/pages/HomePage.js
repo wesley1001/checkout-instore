@@ -11,7 +11,6 @@ import UserAuthentication from 'components/UserAuthentication';
 import UserAnonymous from 'components/UserAnonymous';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
-import Notifier from 'components/Notifier';
 import CookieHelper from 'utils/CookieHelper';
 
 import client from 'assets/images/client.svg';
@@ -27,8 +26,6 @@ export default class HomePage extends React.Component {
       cart: CartStore.getState(),
       vendor: VendorStore.getState()
     };
-
-    CookieHelper.removeCheckoutCookie();
 
     this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
@@ -46,23 +43,20 @@ export default class HomePage extends React.Component {
         this.props.history.pushState(null, '/vendor/login');
       }
     }
+
+    CookieHelper.removeCheckoutCookie();
+    CartActions.getOrderForm.defer();
+
+    const storeData = this.state.vendor.get('store');
+    if(storeData && storeData.store && !storeData.tradePolicy) {
+      VendorActions.GetStoreInfo.defer(storeData.store);
+    }
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
-
-    const orderForm = this.state.cart.get('orderForm');
-
-    if(!orderForm) {
-      CartActions.getOrderForm.defer();
-    }
-
-    const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store && !storeData.tradePolicy) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
   }
 
   componentWillUnmount() {
@@ -81,13 +75,6 @@ export default class HomePage extends React.Component {
 
   onCartChange(state) {
     this.setState({cart: state});
-  }
-
-  componentDidUpdate() {
-    const orderForm = this.state.cart.get('orderForm');
-    if(orderForm) {
-      CartActions.clearCart.defer(orderForm);
-    }
   }
 
   render() {
@@ -115,8 +102,6 @@ export default class HomePage extends React.Component {
         </div>
 
         <UserAnonymous orderForm={cart.get('orderForm')} history={this.props.history}/>
-
-        <Notifier error={cart.get('error') || checkout.get('error')} />
         <Footer />
       </div>
     );

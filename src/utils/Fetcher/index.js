@@ -176,7 +176,7 @@ class Fetcher {
         }
         reject({message:`Vendedor não identificado`});
       }, (err) => {
-        reject({message:`Oops, houve um erro ao identificar o vendedor`});
+        reject({message:`Houve um erro ao identificar o vendedor`});
       });
     });
   }

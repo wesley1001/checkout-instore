@@ -118,6 +118,10 @@ class CheckoutStore {
     }
     this.setState(this.state.set('loading', false));
   }
+
+  onDismissCurrentNotifications(){
+    this.setState(this.state.set('error', ''));
+  }
 }
 
 export default flux.createStore(CheckoutStore, 'CheckoutStore');

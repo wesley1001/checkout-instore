@@ -85,6 +85,10 @@ class VendorActions {
 
     this.dispatch();
   }
+
+  dismissCurrentNotifications(){
+    this.dispatch();
+  }
 }
 
 export default flux.createActions(VendorActions);
