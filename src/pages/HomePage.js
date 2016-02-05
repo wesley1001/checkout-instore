@@ -27,8 +27,6 @@ export default class HomePage extends React.Component {
       vendor: VendorStore.getState()
     };
 
-    CookieHelper.removeCheckoutCookie();
-
     this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
@@ -45,23 +43,20 @@ export default class HomePage extends React.Component {
         this.props.history.pushState(null, '/vendor/login');
       }
     }
+
+    CookieHelper.removeCheckoutCookie();
+    CartActions.getOrderForm.defer();
+
+    const storeData = this.state.vendor.get('store');
+    if(storeData && storeData.store && !storeData.tradePolicy) {
+      VendorActions.GetStoreInfo.defer(storeData.store);
+    }
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
-
-    const orderForm = this.state.cart.get('orderForm');
-
-    if(!orderForm) {
-      CartActions.getOrderForm.defer();
-    }
-
-    const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store && !storeData.tradePolicy) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
   }
 
   componentWillUnmount() {
@@ -80,13 +75,6 @@ export default class HomePage extends React.Component {
 
   onCartChange(state) {
     this.setState({cart: state});
-  }
-
-  componentDidUpdate() {
-    const orderForm = this.state.cart.get('orderForm');
-    if(orderForm) {
-      CartActions.clearCart.defer(orderForm);
-    }
   }
 
   render() {
