@@ -6,6 +6,8 @@ import CheckoutActions from 'actions/CheckoutActions';
 import CartActions from 'actions/CartActions';
 import CheckoutStore from 'stores/CheckoutStore';
 
+const BARCODE_MINIMAL_LENGTH = 3;
+
 export default class BarcodeReader extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +70,7 @@ export default class BarcodeReader extends React.Component {
       barcode: value
     });
 
-    if (this.state.barcode.length === 13) {
+    if (this.state.barcode.length >= BARCODE_MINIMAL_LENGTH) {
       CheckoutActions.findProduct(this.state.barcode);
     }
   }
