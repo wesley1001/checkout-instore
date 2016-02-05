@@ -2,7 +2,6 @@ import flux from '../flux';
 
 import Fetcher from 'utils/Fetcher';
 import requestCache from 'utils/Cache';
-import StoresUtil from '../utils/StoresUtil';
 
 class CartActions {
   getOrderForm() {
@@ -24,11 +23,11 @@ class CartActions {
   addToCart(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
-    const vendor = StoresUtil.getVendor();
+    const vendor = VendorStore.getState('user');
     data.vendor = vendor.id;
-    const store = StoresUtil.getStore();
+    const store = VendorStore.getState('store');
     data.tradePolicy = store.tradePolicy;
 
 
@@ -50,9 +49,9 @@ class CartActions {
   updateCart(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
-    const store = StoresUtil.getStore();
+    const store = VendorStore.getState('store');
     data.tradePolicy = store.tradePolicy;
 
     Fetcher.updateItems(data.orderFormId, data.item, data.tradePolicy).then((response) => {
@@ -69,7 +68,7 @@ class CartActions {
   clearCart() {
     requestCache.clear();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
 
     let items = orderForm.items || [];
     items = items.map(item => {
@@ -88,10 +87,10 @@ class CartActions {
   setShipping(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
 
-    Fetcher.setShipping(data.orderformId, ata.address).then(() => {
+    Fetcher.setShipping(data.orderformId, data.address).then(() => {
       this.actions.setCheckedIn.defer(data.orderFormId);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao definir os dados de entrega');
@@ -101,9 +100,9 @@ class CartActions {
   checkedIn(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
-    const store = StoresUtil.getStore();
+    const store = VendorStore.getState('store');
     data.storeId = store.id;
 
     Fetcher.checkedIn(data.orderformId, data.isCheckedIn, data.storeId).then((response) => {
@@ -156,7 +155,7 @@ class CartActions {
   setPayment(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.setPayment(data.orderFormId, data.payment).then(() => {
@@ -169,7 +168,7 @@ class CartActions {
   startTransaction(data) {
     this.dispatch();
 
-    const orderForm = StoresUtil.getOrderForm();
+    const orderForm = CartStore.getState('orderForm')();
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {

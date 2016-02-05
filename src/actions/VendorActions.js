@@ -13,7 +13,9 @@ class VendorActions {
     }
 
     Fetcher.getStoreData(storeId).then((response) => {
+      response.id = storeId;
       this.actions.GetStoreInfoSuccess(response);
+      window.localStorage.setItem('storeData', JSON.stringify(response));
     }).catch((err) => {
       console.error('Fail on get trade policy. We\'ll use default trade policy');
       this.actions.GetStoreInfoFail({message: errorReason});

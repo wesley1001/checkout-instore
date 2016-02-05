@@ -10,13 +10,23 @@ import OrderPlaced from './pages/OrderPlaced';
 import VendorLoginPage from './pages/VendorLoginPage/VendorLoginPage';
 import VendorLogoutPage from './pages/VendorLogoutPage';
 
+import VendorHelper from './utils/VendorHelper';
+import StoreHelper from './utils/StoreHelper';
+
+function isIdentified(nextState, replaceState) {
+  if (!VendorHelper.isIdentified() || !StoreHelper.isIdentified()) {
+      replaceState({ nextPathname: nextState.location.pathname }, '/vendor/login')
+  }
+}
+
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={HomePage} />
-    <Route path='shop' component={ShopPage} />
-    <Route path='cart' component={CartPage} />
-    <Route path='orderplaced' component={OrderPlaced} />
-    <Route path='vendor/login' component={VendorLoginPage} />
+    <IndexRoute component={HomePage} onEnter={isIdentified}/>
+    <Route path='shop' component={ShopPage} onEnter={isIdentified}/>
+    <Route path='cart' component={CartPage} onEnter={isIdentified}/>
+    <Route path='orderplaced' component={OrderPlaced} onEnter={isIdentified}/>
+
     <Route path='vendor/logout' component={VendorLogoutPage} />
+    <Route path='vendor/login' component={VendorLoginPage} />
   </Route>
 );
