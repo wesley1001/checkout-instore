@@ -1,17 +1,40 @@
 import flux from '../flux';
 import Fetcher from 'utils/Fetcher';
+import CheckoutStore from 'stores/CheckoutStore';
+import CartStore from 'stores/CartStore';
 
 class CheckoutActions {
-  setClientData(data) {
-    this.dispatch(data.email);
+  setDefaultClientData(email) {
+    this.dispatch(email);
+    const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
 
-    data.email = data.email || Date.now().toString() + '@vtex-instore.com';
-
-    Fetcher.setClientProfile(data.orderForm, data.email, data.cpf).then(() => {
+    Fetcher.setDefaultClientProfile(orderFormId, email).then(() => {
       this.actions.setClientDataSuccess.defer();
     }).catch(() => {
-      this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
+      this.actions.setClientDataFail.defer('Ocorreu um erro ao setar os dados do cliente');
     });
+  }
+
+  setClientData(email) {
+    Fetcher.getPublicProfile(email).then(() => {
+      this.dispatch(email);
+
+      const orderFormId = CartStore.getState('orderForm').orderFormId;
+
+      Fetcher.setClientProfile(orderFormId, email, cpf).then(() => {
+        this.actions.setClientDataSuccess.defer();
+      }).catch(() => {
+        this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
+      });
+    },(err) =>{
+      this.actions.setDefaultClientData.defer(email);
+    });
+  }
+
+  setAnonymousData() {
+    const generatedEmail = Date.now().toString() + '@vtex-instore.com';
+
+    this.actions.setDefaultClientData.defer(generatedEmail);
   }
 
   updateClientDocument(cpf){

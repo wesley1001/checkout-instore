@@ -23,7 +23,7 @@ class CartActions {
   addToCart(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
     const vendor = VendorStore.getState('user');
     data.vendor = vendor.id;
@@ -49,7 +49,7 @@ class CartActions {
   updateCart(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
     const store = VendorStore.getState('store');
     data.tradePolicy = store.tradePolicy;
@@ -68,7 +68,7 @@ class CartActions {
   clearCart() {
     requestCache.clear();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
 
     let items = orderForm.items || [];
     items = items.map(item => {
@@ -87,7 +87,7 @@ class CartActions {
   setShipping(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.setShipping(data.orderformId, data.address).then(() => {
@@ -100,7 +100,7 @@ class CartActions {
   checkedIn(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
     const store = VendorStore.getState('store');
     data.storeId = store.id;
@@ -155,7 +155,7 @@ class CartActions {
   setPayment(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.setPayment(data.orderFormId, data.payment).then(() => {
@@ -168,7 +168,7 @@ class CartActions {
   startTransaction(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm')();
+    const orderForm = CartStore.getState('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {

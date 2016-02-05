@@ -12,7 +12,7 @@ export default class Authentication extends React.Component {
   }
 
   handleAnonymous() {
-    CheckoutActions.setClientData({email: '', orderForm: this.props.orderForm.orderFormId});
+    CheckoutActions.setAnonymousData();
   }
 
   render() {

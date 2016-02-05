@@ -3,6 +3,7 @@ import requestCache from 'utils/Cache';
 
 const ORDER_FORM_SECTIONS = ['items','gifts','totalizers','clientProfileData','shippingData','paymentData','sellers','messages','marketingData','clientPreferencesData','storePreferencesData'];
 const CHECKOUT_ORDER_FORM_PATH = '/api/checkout/pub/orderForm';
+const CHECKOUT_PROFILE_PATH = '/api/checkout/pub/profiles';
 const CRM_ADDRESS = 'api.vtexcrm.com.br';
 const HOSTNAME = window.location.hostname;
 const CRM_DATA_ENTITIES_ENDPOINT = `//${CRM_ADDRESS}/${HOSTNAME}/dataentities`;
@@ -34,7 +35,7 @@ class Fetcher {
     return axios.get(CHECKOUT_ORDER_FORM_PATH);
   }
 
-  setClientProfile(orderFormId, email, cpf = '') {
+  setDefaultClientProfile(orderFormId, email, cpf = '') {
     const request = {
       expectedOrderFormSections: ORDER_FORM_SECTIONS,
       email,
@@ -49,6 +50,29 @@ class Fetcher {
     };
 
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
+  }
+
+  setClientProfile(orderFormId, email) {
+    const request = {
+      expectedOrderFormSections: ORDER_FORM_SECTIONS,
+      email,
+    };
+
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
+  }
+
+  getPublicProfile(email) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${CHECKOUT_PROFILE_PATH}?email=${email}`, email).then((response) => {
+        if(response.data && response.data.userProfileId != null) {
+          resolve(response.data);
+        }
+
+        reject({error: 'profile not found'});
+      }, (err) => {
+        reject({error: 'unable to find profileprofile'});
+      });
+    })
   }
 
   setShipping(orderFormId, address) {
