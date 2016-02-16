@@ -4,37 +4,34 @@ import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
 
 class CheckoutActions {
-  setDefaultClientData(email) {
-    this.dispatch(email);
-    const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
-
-    Fetcher.setDefaultClientProfile(orderFormId, email).then(() => {
-      this.actions.setClientDataSuccess.defer();
-    }).catch(() => {
-      this.actions.setClientDataFail.defer('Ocorreu um erro ao setar os dados do cliente');
-    });
-  }
 
   setClientData(email) {
     Fetcher.getPublicProfile(email).then(() => {
       this.dispatch(email);
 
-      const orderFormId = CartStore.getState('orderForm').orderFormId;
+      const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
 
-      Fetcher.setClientProfile(orderFormId, email, cpf).then(() => {
+      Fetcher.setClientProfile(orderFormId, email).then(() => {
         this.actions.setClientDataSuccess.defer();
       }).catch(() => {
         this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
       });
     },(err) =>{
-      this.actions.setDefaultClientData.defer(email);
+      this.actions.setAnonymousData.defer();
     });
   }
 
   setAnonymousData() {
     const generatedEmail = Date.now().toString() + '@vtex-instore.com';
+    this.dispatch(generatedEmail);
 
-    this.actions.setDefaultClientData.defer(generatedEmail);
+    const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
+
+    Fetcher.setDefaultClientProfile(orderFormId, generatedEmail).then(() => {
+      this.actions.setClientDataSuccess.defer();
+    }).catch(() => {
+      this.actions.setClientDataFail.defer('Ocorreu um erro ao setar os dados do cliente');
+    });
   }
 
   updateClientDocument(cpf){
