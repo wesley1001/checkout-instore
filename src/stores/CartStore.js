@@ -27,6 +27,7 @@ class CartStore {
 
   onGetOrderForm() {
     this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
   }
 
   onOrderFormSuccess(orderForm) {

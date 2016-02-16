@@ -8,6 +8,7 @@ import VendorStore from 'stores/VendorStore';
 
 class CartActions {
   getOrderForm() {
+    this.dispatch();
     Fetcher.getOrderForm().then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
