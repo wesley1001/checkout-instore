@@ -84,12 +84,13 @@ class Fetcher {
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/shippingData`, request);
   }
 
-  setCheckedIn(orderFormId) {
+  checkedIn(orderFormId, isCheckedIn, storeId) {
     const request = {
-      isCheckedIn: true
+      isCheckedIn,
+      storeId
     };
 
-    return axios.put(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/isCheckedIn`, request);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/checkIn`, request);
   }
 
   getSKUByEAN(ean) {
