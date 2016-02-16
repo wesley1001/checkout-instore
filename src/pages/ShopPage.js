@@ -48,12 +48,13 @@ export default class ShopPage extends React.Component {
     if(!orderForm){
       this.props.history.pushState(null, '/');
     }
+    else {
+      CartActions.setShipping.defer({address: shippingRequest});
 
-    CartActions.setShipping.defer({orderFormId: orderForm ? orderForm.orderFormId : undefined, address: shippingRequest});
-
-    CheckoutStore.listen(this.onCheckoutChange);
-    CartStore.listen(this.onCartChange);
-    VendorStore.listen(this.onVendorChange);
+      CheckoutStore.listen(this.onCheckoutChange);
+      CartStore.listen(this.onCartChange);
+      VendorStore.listen(this.onVendorChange);
+    }
   }
 
   componentWillUnmount() {
