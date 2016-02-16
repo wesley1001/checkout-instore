@@ -10,6 +10,9 @@ import OrderPlaced from './pages/OrderPlaced';
 import VendorLoginPage from './pages/VendorLoginPage/VendorLoginPage';
 import VendorLogoutPage from './pages/VendorLogoutPage';
 
+import CartActions from 'actions/CartActions';
+import CartStore from 'stores/CartStore';
+
 import VendorHelper from './utils/VendorHelper';
 import StoreHelper from './utils/StoreHelper';
 
@@ -19,7 +22,9 @@ function isIdentified(nextState, replaceState) {
   }
 }
 function getOrderForm() {
-  console.log(1);
+  const orderForm = CartStore.getState('orderForm').get('orderForm');
+  if(!orderForm || !orderForm.orderFormId)
+    CartActions.getOrderForm();
 }
 export default (
   <Route path='/' component={App}>
