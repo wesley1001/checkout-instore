@@ -77,7 +77,6 @@
     "history": "1.13.0",
     "immutable": "^3.7.4",
     "lodash": "^3.10.1",
-    "offline-js": "^0.7.11",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.1",
     "react-cookie": "^0.4.2",
