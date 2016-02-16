@@ -18,12 +18,14 @@ function isIdentified(nextState, replaceState) {
       replaceState({ nextPathname: nextState.location.pathname }, '/vendor/login')
   }
 }
-
+function getOrderForm() {
+  console.log(1);
+}
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={HomePage} onEnter={isIdentified}/>
-    <Route path='shop' component={ShopPage} onEnter={isIdentified}/>
-    <Route path='cart' component={CartPage} onEnter={isIdentified}/>
+    <IndexRoute component={HomePage} onEnter={isIdentified, getOrderForm}/>
+    <Route path='shop' component={ShopPage} onEnter={isIdentified, getOrderForm}/>
+    <Route path='cart' component={CartPage} onEnter={isIdentified, getOrderForm}/>
     <Route path='orderplaced' component={OrderPlaced} onEnter={isIdentified}/>
 
     <Route path='vendor/logout' component={VendorLogoutPage} />
