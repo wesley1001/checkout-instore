@@ -117,33 +117,24 @@ class CartActions {
   setDefaultPayment(data) {
     this.dispatch();
 
-    Fetcher.getOrderForm().then((response) => {
-      let defaultPayment = _.find(response.data.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
+    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    let defaultPayment = _.find(orderForm.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
 
-      if(defaultPayment && defaultPayment.installments.length > 0) {
+    if(!defaultPayment || defaultPayment.installments.length == 0) {
+      defaultPayment = _.find(orderForm.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
+
+      const paymentObject = {
+        paymentSystem: defaultPayment.id,
+        referenceValue: orderForm.value
+      }
+      Fetcher.setPayment(orderForm.orderFormId, paymentObject).then((response) => {
         this.actions.orderFormSuccess.defer(response.data);
-      }
-      else {
-        defaultPayment = _.find(response.data.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
-
-        const paymentObject = {
-          paymentSystem: defaultPayment.id,
-          referenceValue: response.data.value
-        }
-
-        Fetcher.setPayment(response.data.orderFormId, paymentObject).then((response) => {
-          this.actions.orderFormSuccess.defer(response.data);
-          this.actions.setDefaultPaymentSuccess.defer(response.data);
-        }).catch((err) => {
-          this.actions.setDefaultPaymentFail.defer(err);
-          this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
-        });
-      }
-
-    }).catch(() => {
-      this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-    });
-
+        this.actions.setDefaultPaymentSuccess.defer(response.data);
+      }).catch((err) => {
+        this.actions.setDefaultPaymentFail.defer(err);
+        this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
+      });
+    }
   }
 
   setDefaultPaymentSuccess(orderForm) {

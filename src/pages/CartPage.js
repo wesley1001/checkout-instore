@@ -34,40 +34,10 @@ export default class CartPage extends React.Component {
     this.handleVendorLoginVerification();
   }
 
-  handleVendorLoginVerification(){
-    if(!this.state.vendor.get('logged')) {
-      let vendorData = window.localStorage.getItem('vendorData');
-
-      if(vendorData) {
-        vendorData = JSON.parse(vendorData);
-        VendorActions.SetVendorDataSuccess(vendorData);
-      } else  {
-        this.props.history.pushState(null, '/vendor/login');
-      }
-    }
-  }
-
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
-
-    if(this.shouldRedirectToHomePage()) {
-      this.props.history.pushState(null, '/');
-    }
-
-    if(this.orderFormWillLoad()){
-      CartActions.getOrderForm.defer();
-    }
-
-    this.loadStoreInfo();
-  }
-
-  loadStoreInfo(){
-    const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store && !storeData.tradePolicy) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
   }
 
   componentWillUnmount() {
@@ -87,37 +57,10 @@ export default class CartPage extends React.Component {
     this.setState({vendor: state});
   }
 
-  componentDidUpdate() {
-    if(this.shouldRedirectToHomePage()) {
-      this.props.history.pushState(null, '/');
-    }
-  }
-
-  isOrderFormEmpty(){
-    const orderForm = this.state.cart.get('orderForm');
-    return orderForm && (!orderForm.items || orderForm.items.length === 0);
-  }
-
-  orderFormWillLoad(){
-    const orderForm = this.state.cart.get('orderForm');
-    return this.state.orderFormId && !orderForm;
-  }
-
-  shouldRedirectToHomePage(){
-    const orderForm = this.state.cart.get('orderForm');
-    return !this.orderFormWillLoad() && (!orderForm || this.isOrderFormEmpty());
-  }
-
   render() {
     const {cart, checkout, vendor, orderFormId} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
-
-    if(this.orderFormWillLoad() || this.shouldRedirectToHomePage()){
-      return (
-        <Loader loading={true} />
-      );
-    }
 
     return (
       <div className="content">

@@ -32,27 +32,6 @@ export default class HomePage extends React.Component {
     this.onCartChange = this.onCartChange.bind(this);
   }
 
-  componentWillMount() {
-    if(!this.state.vendor.get('logged')) {
-      let vendorData = window.localStorage.getItem('vendorData');
-
-      if(vendorData) {
-        vendorData = JSON.parse(vendorData);
-        VendorActions.SetVendorDataSuccess(vendorData);
-      } else  {
-        this.props.history.pushState(null, '/vendor/login');
-      }
-    }
-
-    CookieHelper.removeCheckoutCookie();
-    CartActions.getOrderForm.defer();
-
-    const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store && !storeData.tradePolicy) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
-  }
-
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
