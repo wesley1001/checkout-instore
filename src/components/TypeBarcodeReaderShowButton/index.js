@@ -14,7 +14,7 @@ export default class TypeBarcodeReaderShowButton extends React.Component {
   render() {
     return (
       <div id="TypeBarcodeReaderShowButton" className="TypeBarcodeReaderShowButton component">
-        <button className="btn btn-default btn-lg btn-block btn-bottom" onClick={this.showsBarcodeType}>Digitar código do produto</button>
+        <button className="btn btn-default btn-lg btn-typebarcode" onClick={this.showsBarcodeType}>Digitar código do produto</button>
       </div>
     );
   }
