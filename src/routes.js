@@ -15,11 +15,15 @@ import CartStore from 'stores/CartStore';
 
 import VendorHelper from './utils/VendorHelper';
 import StoreHelper from './utils/StoreHelper';
+import CookieHelper from 'utils/CookieHelper';
 
 function isIdentified(nextState, replaceState) {
   if (!VendorHelper.isIdentified() || !StoreHelper.isIdentified()) {
       replaceState({ nextPathname: nextState.location.pathname }, '/vendor/login')
   }
+}
+function clearOrderFormCookie() {
+  CookieHelper.removeCheckoutCookie();
 }
 function getOrderForm() {
   const orderForm = CartStore.getState('orderForm').get('orderForm');
@@ -28,7 +32,7 @@ function getOrderForm() {
 }
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={HomePage} onEnter={isIdentified, getOrderForm}/>
+    <IndexRoute component={HomePage} onEnter={isIdentified, clearOrderFormCookie, getOrderForm}/>
     <Route path='shop' component={ShopPage} onEnter={isIdentified, getOrderForm}/>
     <Route path='cart' component={CartPage} onEnter={isIdentified, getOrderForm}/>
     <Route path='orderplaced' component={OrderPlaced} onEnter={isIdentified}/>
