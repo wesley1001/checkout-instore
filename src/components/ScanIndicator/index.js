@@ -46,6 +46,7 @@ export default class ScanIndicator extends React.Component {
         <div className="image-wrapper">
           <img className="image" src={pinpad}/>
         </div>
+        <div className="text">ou</div>
         {this.state.checkout.get('typingBarcode') ? '' : <TypeBarcodeReaderShowButton/>}
       </div>
     );
