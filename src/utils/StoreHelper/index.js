@@ -12,11 +12,10 @@ function retriveCachedId() {
 
 class StoreHelper {
   isIdentified() {
-    if(!VendorStore.getState('store')) {
+    if(!VendorStore.getState('store').get('store')) {
       retriveCachedId();
     }
-
-    return VendorStore.getState('store');
+    return VendorStore.getState('store').get('store');
   }
 }
 
