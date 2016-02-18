@@ -43,18 +43,12 @@ export default class ShopPage extends React.Component {
         geoCoordinates: []
     };
 
-    const orderForm = this.state.cart.get('orderForm');
-
-    if(!orderForm){
-      this.props.history.pushState(null, '/');
-    }
-    else {
       CartActions.setShipping.defer({address: shippingRequest});
 
       CheckoutStore.listen(this.onCheckoutChange);
       CartStore.listen(this.onCartChange);
       VendorStore.listen(this.onVendorChange);
-    }
+    
   }
 
   componentWillUnmount() {
