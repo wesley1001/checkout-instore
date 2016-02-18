@@ -10,32 +10,14 @@ import OrderPlaced from './pages/OrderPlaced';
 import VendorLoginPage from './pages/VendorLoginPage/VendorLoginPage';
 import VendorLogoutPage from './pages/VendorLogoutPage';
 
-import CartActions from 'actions/CartActions';
-import CartStore from 'stores/CartStore';
+import RouteHandler  from './routeHandler';
 
-import VendorHelper from './utils/VendorHelper';
-import StoreHelper from './utils/StoreHelper';
-import CookieHelper from 'utils/CookieHelper';
-
-function isIdentified(nextState, replaceState) {
-  if (!VendorHelper.isIdentified() || !StoreHelper.isIdentified()) {
-      replaceState({ nextPathname: nextState.location.pathname }, '/vendor/login')
-  }
-}
-function clearOrderFormCookie() {
-  CookieHelper.removeCheckoutCookie();
-}
-function getOrderForm() {
-  const orderForm = CartStore.getState('orderForm').get('orderForm');
-  if(!orderForm || !orderForm.orderFormId)
-    CartActions.getOrderForm();
-}
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={HomePage} onEnter={isIdentified, clearOrderFormCookie, getOrderForm}/>
-    <Route path='shop' component={ShopPage} onEnter={isIdentified, getOrderForm}/>
-    <Route path='cart' component={CartPage} onEnter={isIdentified, getOrderForm}/>
-    <Route path='orderplaced' component={OrderPlaced} onEnter={isIdentified}/>
+    <IndexRoute component={HomePage} onEnter={RouteHandler}/>
+    <Route path='shop' component={ShopPage} onEnter={RouteHandler}/>
+    <Route path='cart' component={CartPage} onEnter={RouteHandler}/>
+    <Route path='orderplaced' component={OrderPlaced} onEnter={RouteHandler}/>
 
     <Route path='vendor/logout' component={VendorLogoutPage} />
     <Route path='vendor/login' component={VendorLoginPage} />

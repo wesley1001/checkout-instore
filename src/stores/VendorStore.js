@@ -18,24 +18,7 @@ class VendorStore {
     });
   }
 
-  onGetStoreInfo() {
-    this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('store', _.merge(this.state.get('store'), {tradePolicy: undefined})));
-  }
-
-  onGetStoreInfoSuccess(data) {
-    this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', _.merge(this.state.get('store'), data)));
-    this.setState(this.state.set('error', ''));
-  }
-
-  onGetStoreInfoFail(error) {
-    this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('store', _.merge(this.state.get('store'), {tradePolicy: undefined})));
-    this.setState(this.state.set('error', error.message));
-  }
-
-  onSetVendorData() {
+  onSetInstoreData() {
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
@@ -43,17 +26,16 @@ class VendorStore {
     this.setState(this.state.set('error', ''));
   }
 
-  onSetVendorDataSuccess(data) {
+  onSetInstoreDataSuccess(data) {
     this.setState(this.state.set('loading', false));
 
     this.setState(this.state.set('logged', true));
     this.setState(this.state.set('user', data.user));
-
-    this.setState(this.state.set('store', _.merge(this.state.get('store'), {store:data.user.store})));
+    this.setState(this.state.set('store', _.merge(this.state.get('store'), data.store)));
     this.setState(this.state.set('error', ''));
   }
 
-  onSetVendorDataFail(error) {
+  onSetInstoreDataFail(error) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));
@@ -61,7 +43,7 @@ class VendorStore {
     this.setState(this.state.set('error', error.message));
   }
 
-  onClearVendorData()  {
+  onClearInstoreData()  {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('logged', false));
     this.setState(this.state.set('user', undefined));

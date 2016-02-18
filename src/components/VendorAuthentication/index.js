@@ -27,7 +27,7 @@ export default class VendorAuthentication extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    VendorActions.SetVendorData(this.state.id);
+    VendorActions.SetInstoreData.defer(this.state.id);
   }
 
   handleClick() {

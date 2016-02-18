@@ -1,55 +1,28 @@
 import flux from '../flux';
-
 import Fetcher from 'utils/Fetcher';
 
-class VendorActions {
-  GetStoreInfo(storeId) {
-    this.dispatch();
-    const errorReason = 'Oops, houve um erro ao buscar a política comercial da sua loja. Usaremos a política comercial padrão.';
+function GetStoreInfo(storeId) {
+  const errorReason = 'Oops, houve um erro ao buscar a política comercial da sua loja. Usaremos a política comercial padrão.';
 
+  return new Promise((resolve, reject) => {
     if(!storeId) {
       console.error('storeId is undefined. We\'ll use default trade policy');
-      this.actions.GetStoreInfoFail({message: errorReason});
+      storeId = 1;
     }
 
-    Fetcher.getStoreData(storeId).then((response) => {
+    return Fetcher.getStoreData(storeId).then((response) => {
       response.id = storeId;
-      this.actions.GetStoreInfoSuccess(response);
-      window.localStorage.setItem('storeData', JSON.stringify(response));
+      resolve(response);
     }).catch((err) => {
       console.error('Fail on get trade policy. We\'ll use default trade policy');
-      this.actions.GetStoreInfoFail({message: errorReason});
+      reject({message: errorReason});
     });
-  }
 
-  GetStoreInfoSuccess(data){
-    this.dispatch(data);
-  }
+  });
+}
 
-  GetStoreInfoFail(error){
-    this.dispatch(error);
-  }
-
-  SetVendorDataSuccess(data){
-    if(window.WebViewBridge){
-      window.WebViewBridge.send(JSON.stringify({
-        type: 'event',
-        event: 'userLoggedIn',
-        data: data
-      }));
-    }
-    else{
-      console.warn('WebViewBridge is not defined!');
-    }
-
-    this.dispatch(data);
-  }
-
-  SetVendorDataFail(error){
-    this.dispatch(error);
-  }
-
-  SetVendorData(id) {
+class VendorActions {
+  SetInstoreData(id) {
     this.dispatch();
 
     if (!id) {
@@ -59,33 +32,64 @@ class VendorActions {
       return;
     }
 
-    Fetcher.getProfileSystemData(id).then((response) => {
-      response.id = id;
-      const data = {
-        user: response
-      };
+    Fetcher.getProfileSystemData(id).then((userData) => {
+      userData.id = id;
 
-      this.actions.SetVendorDataSuccess(data);
-      window.localStorage.setItem('vendorData', JSON.stringify(data));
+      GetStoreInfo(userData.store).then((storeData) => {
+        const instoreData = {
+          user: userData,
+          store: storeData
+        };
+
+        this.actions.SetInstoreDataSuccess.defer(instoreData);
+      });
     }, (err) => {
       this.actions.SetVendorDataFail({message: err.message});
     });
   }
 
-  clearVendorData() {
-    window.localStorage.removeItem('vendorData');
+  clearInstoreData() {
+    window.localStorage.removeItem('store');
+    window.localStorage.removeItem('user');
 
     if(window.WebViewBridge){
       window.WebViewBridge.send(JSON.stringify({
         type: 'event',
-        event: 'clearVendorData'
+        event: 'clearInstoreData'
       }));
     }
-    else{
+    else {
+
+    }{
       console.warn('WebViewBridge is not defined!');
     }
 
     this.dispatch();
+  }
+
+  SetInstoreDataSuccess(data) {
+    if(window.WebViewBridge){
+      window.WebViewBridge.send(JSON.stringify({
+        type: 'event',
+        event: 'userLoggedIn',
+        data: data.user
+      }));
+    }
+    else {
+      console.warn('WebViewBridge is not defined!');
+    }
+
+    window.localStorage.setItem('store', JSON.stringify(data.store));
+    window.localStorage.setItem('user', JSON.stringify(data.user));
+
+    this.dispatch(data);
+  }
+
+  SetInstoreDataFail(data) {
+    window.localStorage.removeItem('store');
+    window.localStorage.removeItem('user');
+
+    this.dispatch(data);
   }
 
   dismissCurrentNotifications(){
