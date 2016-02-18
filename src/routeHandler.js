@@ -27,9 +27,9 @@ function getOrderForm() {
 
 const pageHandlers = {
   '/': [hasCredentials, clearOrderFormCookie, getOrderForm],
-  'shop': [hasCredentials, getOrderForm],
-  'cart': [hasCredentials, getOrderForm],
-  'orderplaced': [hasCredentials]
+  '/shop': [hasCredentials, getOrderForm],
+  '/cart': [hasCredentials, getOrderForm],
+  '/orderplaced': [hasCredentials]
 }
 
 export default function handler(nextState, replaceState) {
