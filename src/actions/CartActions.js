@@ -2,9 +2,6 @@ import flux from '../flux';
 
 import Fetcher from 'utils/Fetcher';
 import requestCache from 'utils/Cache';
-import CheckoutStore from 'stores/CheckoutStore';
-import CartStore from 'stores/CartStore';
-import VendorStore from 'stores/VendorStore';
 
 class CartActions {
   getOrderForm() {
@@ -27,11 +24,11 @@ class CartActions {
   addToCart(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
-    const vendor = VendorStore.getState('user').get('user');
+    const vendor = flux.getStore('VendorStore').getState('user').get('user');
     data.vendor = vendor.id;
-    const store = VendorStore.getState('store').get('store');
+    const store = flux.getStore('VendorStore').getState('store').get('store');
     data.tradePolicy = store.tradePolicy;
 
 
@@ -53,9 +50,9 @@ class CartActions {
   updateCart(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
-    const store = VendorStore.getState('store').get('store');
+    const store = flux.getStore('VendorStore').getState('store').get('store');
     data.tradePolicy = store.tradePolicy;
 
     Fetcher.updateItems(data.orderFormId, data.item, data.tradePolicy).then((response) => {
@@ -72,7 +69,7 @@ class CartActions {
   clearCart() {
     requestCache.clear();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
 
     let items = orderForm.items || [];
     items = items.map(item => {
@@ -91,7 +88,7 @@ class CartActions {
   setShipping(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.setShipping(data.orderFormId, data.address).then(() => {
@@ -104,8 +101,8 @@ class CartActions {
   checkedIn() {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
-    const store = VendorStore.getState('store').get('store');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    const store = flux.getStore('VendorStore').getState('store').get('store');
 
     Fetcher.checkedIn(orderForm.orderFormId, true, store.id).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
@@ -117,7 +114,7 @@ class CartActions {
   setDefaultPayment(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     let defaultPayment = _.find(orderForm.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
 
     if(!defaultPayment || defaultPayment.installments.length == 0) {
@@ -148,7 +145,7 @@ class CartActions {
   setPayment(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.setPayment(data.orderFormId, data.payment).then(() => {
@@ -161,7 +158,7 @@ class CartActions {
   startTransaction(data) {
     this.dispatch();
 
-    const orderForm = CartStore.getState('orderForm').get('orderForm');
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {

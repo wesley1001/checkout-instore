@@ -1,7 +1,5 @@
 import flux from '../flux';
 import Fetcher from 'utils/Fetcher';
-import CheckoutStore from 'stores/CheckoutStore';
-import CartStore from 'stores/CartStore';
 
 class CheckoutActions {
 
@@ -9,7 +7,7 @@ class CheckoutActions {
     Fetcher.getPublicProfile(email).then(() => {
       this.dispatch(email);
 
-      const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
+      const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
 
       Fetcher.setClientProfile(orderFormId, email).then(() => {
         this.actions.setClientDataSuccess.defer();
@@ -25,7 +23,7 @@ class CheckoutActions {
     const generatedEmail = Date.now().toString() + '@vtex-instore.com';
     this.dispatch(generatedEmail);
 
-    const orderFormId = CartStore.getState('orderForm').get('orderForm').orderFormId;
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
 
     Fetcher.setDefaultClientProfile(orderFormId, generatedEmail).then(() => {
       this.actions.setClientDataSuccess.defer();
