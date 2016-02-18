@@ -135,8 +135,8 @@ class Fetcher {
       axios.post(`/checkout/cart/add`, request, {
         params: queryString
       }).then(() => {
-        this.getOrderForm().then((orderForm) => {
-          resolve(orderForm);
+        this.getOrderForm().then((response) => {
+          resolve(response.data);
         }, (err) => reject(err));
       },(err) => {
         reject({message:`Oops, ocorreu um erro ao adicionar o item`});

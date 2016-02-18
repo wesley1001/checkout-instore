@@ -32,8 +32,8 @@ class CartActions {
     data.tradePolicy = store.tradePolicy;
 
 
-    Fetcher.addToCart(data.orderFormId, data.item, data.vendor, data.tradePolicy).then(() => {
-      this.actions.orderFormSuccess.defer(response.data);
+    Fetcher.addToCart(data.orderFormId, data.item, data.vendor, data.tradePolicy).then((response) => {
+      this.actions.orderFormSuccess.defer(response);
     }).catch(() => {
       this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
     });

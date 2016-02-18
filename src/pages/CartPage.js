@@ -30,10 +30,6 @@ export default class CartPage extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
-  componentWillMount() {
-    this.handleVendorLoginVerification();
-  }
-
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
