@@ -43,12 +43,12 @@ export default class ShopPage extends React.Component {
         geoCoordinates: []
     };
 
-      CartActions.setShipping.defer({address: shippingRequest});
+    CartActions.setShipping.defer({address: shippingRequest});
 
-      CheckoutStore.listen(this.onCheckoutChange);
-      CartStore.listen(this.onCartChange);
-      VendorStore.listen(this.onVendorChange);
-    
+    CheckoutStore.listen(this.onCheckoutChange);
+    CartStore.listen(this.onCartChange);
+    VendorStore.listen(this.onVendorChange);
+
   }
 
   componentWillUnmount() {
