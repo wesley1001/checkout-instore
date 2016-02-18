@@ -6,7 +6,7 @@ function retriveCachedData() {
   const store = JSON.parse(window.localStorage.getItem('store'));
 
   if(user && store) {
-    VendorActions.SetInstoreDataSuccess.defer({user, store});
+    VendorActions.SetInstoreDataSuccess({user, store});
   }
 }
 
