@@ -8,9 +8,6 @@ function retriveCachedData() {
   if(user && store) {
     VendorActions.SetInstoreDataSuccess.defer({user, store});
   }
-  else {
-    // VendorActions.SetInstoreDataFail.defer({message: 'localstore data not found'});
-  }
 }
 
 class InstoreHelper {
