@@ -55,7 +55,7 @@ class VendorActions {
     if(window.WebViewBridge){
       window.WebViewBridge.send(JSON.stringify({
         type: 'event',
-        event: 'clearInstoreData'
+        event: 'clearVendorData'
       }));
     }
     else {
