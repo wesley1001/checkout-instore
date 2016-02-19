@@ -31,7 +31,7 @@ class CheckoutStore {
     this.setState(this.state.set('customerDocument', cpf));
   }
 
-  onExecuteSetClientData(email) {
+  onSetClientData(email) {
     this.setState(this.state.set('customerEmail', email));
     this.setState(this.state.set('error', ''));
   }
