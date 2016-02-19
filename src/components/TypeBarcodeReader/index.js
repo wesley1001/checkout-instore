@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 import CheckoutActions from 'actions/CheckoutActions';
 import CheckoutStore from 'stores/CheckoutStore';

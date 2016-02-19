@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 
 import VendorActions from 'actions/VendorActions';
 import './index.less';

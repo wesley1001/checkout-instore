@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
