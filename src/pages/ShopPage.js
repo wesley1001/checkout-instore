@@ -27,28 +27,11 @@ export default class ShopPage extends React.Component {
   }
 
   componentDidMount() {
-    const shippingRequest = {
-        addressType: 'residental',
-        receiverName: 'cliente',
-        addressId: '-1387193636431',
-        postalCode: '02055-000',
-        city: 'Sao Paulo',
-        state: 'SP',
-        country: 'BRA',
-        street: 'Rua Jose Bernardo Pinto',
-        number: '333',
-        neighborhood: 'Vila Guilherme',
-        complement: 'Estande Loja do Futuro',
-        reference: null,
-        geoCoordinates: []
-    };
-
-    CartActions.setShipping.defer({address: shippingRequest});
-
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
 
+    this.setCartInfo();
   }
 
   componentWillUnmount() {
@@ -60,8 +43,29 @@ export default class ShopPage extends React.Component {
   onCartChange(state) {
     this.setState({cart: state});
 
-    if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
-      this.props.history.pushState(null, '/cart');
+    this.setCartInfo();
+  }
+
+  setCartInfo() {
+    const state = this.state.cart;
+
+    if(state.get('orderForm')) {
+      if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
+        this.props.history.pushState(null, '/cart');
+      }
+
+      const loading = state.get('loading');
+      const mktData = state.get('orderForm').marketingData;
+      const isCheckedIn = state.get('orderForm').isCheckedIn;
+
+      if(!loading) {
+        if(mktData == null || !mktData.utmSource) {
+          CartActions.setVendor.defer();
+        }
+        else if(isCheckedIn !== true) {
+          CartActions.checkIn.defer();
+        }
+      }
     }
   }
 

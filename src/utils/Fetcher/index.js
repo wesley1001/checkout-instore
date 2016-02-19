@@ -75,16 +75,7 @@ class Fetcher {
     })
   }
 
-  setShipping(orderFormId, address) {
-    const request = {
-      expectedOrderFormSections: ORDER_FORM_SECTIONS,
-      address
-    };
-
-    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/shippingData`, request);
-  }
-
-  checkedIn(orderFormId, isCheckedIn, storeId) {
+  checkIn(orderFormId, isCheckedIn, storeId) {
     const request = {
       isCheckedIn,
       storeId
@@ -116,34 +107,19 @@ class Fetcher {
     });
   }
 
-  addToCart(orderForm, item, vendor, tradePolicy = 1) {
+  addToCart(orderFormId, items, tradePolicy = 1) {
     const queryString = {
-      sku: item.id,
-      qty: item.quantity,
-      seller: item.seller,
-      sc: tradePolicy,
-      utm_source: vendor,
-      redirect: false
+      sc: tradePolicy
     };
 
     const request = {
-      orderItems: [item],
+      orderItems: [items],
       expectedOrderFormSections: ORDER_FORM_SECTIONS
     };
 
-    let promise = new Promise((resolve, reject) => {
-      axios.post(`/checkout/cart/add`, request, {
-        params: queryString
-      }).then(() => {
-        this.getOrderForm().then((response) => {
-          resolve(response.data);
-        }, (err) => reject(err));
-      },(err) => {
-        reject({message:`Oops, ocorreu um erro ao adicionar o item`});
-      });
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/items`, request, {
+      params: queryString
     });
-
-    return promise;
   }
 
   updateItems(orderFormId, items, tradePolicy = 1) {
@@ -240,6 +216,15 @@ class Fetcher {
     };
 
     return axios.get(url, configs).then((response) => response.data);
+  }
+
+  setOrderVendor(orderFormId, vendorId) {
+    const request = {
+      expectedOrderFormSections: ORDER_FORM_SECTIONS,
+      utmSource:vendorId
+    };
+
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/marketingData`, request);
   }
 }
 

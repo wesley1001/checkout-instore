@@ -41,6 +41,8 @@ class CartStore {
   onOrderFormFailed(errorMessage) {
     this.setState(this.state.set('orderForm', undefined));
     this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('addLoading', false));
+    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('error', errorMessage));
     this.setState(this.state.set('message', ''));
   }
@@ -69,11 +71,7 @@ class CartStore {
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onExecuteSetShipping() {
-    this.setState(this.state.set('error', ''));
-  }
-
-  onExecuteSetCheckedIn() {
+  onExecuteSetCheckIn() {
     this.setState(this.state.set('error', ''));
   }
 
@@ -125,6 +123,11 @@ class CartStore {
   onDismissCurrentNotifications(){
     this.setState(this.state.set('error', ''));
     this.setState(this.state.set('message', ''));
+  }
+
+  onCheckIn() {
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('checkInLoading', true));
   }
 }
 

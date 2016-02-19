@@ -26,14 +26,11 @@ class CartActions {
 
     const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     data.orderFormId = orderForm.orderFormId;
-    const vendor = flux.getStore('VendorStore').getState('user').get('user');
-    data.vendor = vendor.id;
     const store = flux.getStore('VendorStore').getState('store').get('store');
     data.tradePolicy = store.tradePolicy;
 
-
-    Fetcher.addToCart(data.orderFormId, data.item, data.vendor, data.tradePolicy).then((response) => {
-      this.actions.orderFormSuccess.defer(response);
+    Fetcher.addToCart(data.orderFormId, data.item, data.tradePolicy).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
     });
@@ -85,29 +82,15 @@ class CartActions {
     });
   }
 
-  setShipping(data) {
-    this.dispatch();
-
-    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
-    data.orderFormId = orderForm.orderFormId;
-
-    Fetcher.setShipping(data.orderFormId, data.address).then(() => {
-      this.actions.checkedIn.defer();
-    }).catch(() => {
-      this.actions.requestFailed.defer('Ocorreu um erro ao definir os dados de entrega');
-    });
-  }
-
-  checkedIn() {
-    this.dispatch();
-
+  checkIn() {
     const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     const store = flux.getStore('VendorStore').getState('store').get('store');
 
-    Fetcher.checkedIn(orderForm.orderFormId, true, store.id).then((response) => {
+    Fetcher.checkIn(orderForm.orderFormId, true, store.id).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao fazer o checkin da loja');
+    }).catch(() => {
     });
   }
 
@@ -178,6 +161,21 @@ class CartActions {
 
   dismissCurrentNotifications(){
     this.dispatch();
+  }
+
+  executeRequest(){
+    this.dispatch();
+  }
+
+  setVendor() {
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+
+    Fetcher.setOrderVendor(orderFormId, vendorId).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
+    }).catch(() => {
+      this.actions.requestFailed.defer('Ocorreu um erro ao atribuir a venda ao vendedor');
+    });
   }
 }
 
