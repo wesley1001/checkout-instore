@@ -33,6 +33,8 @@ export default class CartPage extends React.Component {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
+
+    this.checkCartState();
   }
 
   componentWillUnmount() {
@@ -43,7 +45,11 @@ export default class CartPage extends React.Component {
   onCartChange(state) {
     this.setState({cart: state});
 
-    const orderForm = state.get('orderForm');
+    this.checkCartState();
+  }
+
+  checkCartState() {
+    const orderForm = this.state.cart.get('orderForm');
     if(!orderForm || !orderForm.items || orderForm.items.length == 0) {
       this.props.history.pushState(null, '/shop');
     }
