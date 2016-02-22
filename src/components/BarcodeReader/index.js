@@ -13,7 +13,8 @@ export default class BarcodeReader extends React.Component {
 
     this.state = {
       barcode: '',
-      isReading: false
+      isReading: false,
+      checkout: CheckoutStore.getState()
     };
 
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
@@ -23,6 +24,8 @@ export default class BarcodeReader extends React.Component {
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     window.handleBarcodeRead = this.handleBarcodeInput;
+
+    this.checkSkuStatus();
   }
 
   componentWillUnmount() {
@@ -31,10 +34,15 @@ export default class BarcodeReader extends React.Component {
   }
 
   onCheckoutChange(state) {
-    const {orderForm} = this.props;
-    const sku = state.get('sku');
+    this.setState({checkout: state});
 
-    if(sku) {
+    this.checkSkuStatus();
+  }
+
+  checkSkuStatus(state) {
+    const sku = this.state.checkout.get('sku');
+    const {orderForm} = this.props;
+    if(orderForm && sku) {
       let item = {
         id: sku,
         quantity: 1,
@@ -52,10 +60,7 @@ export default class BarcodeReader extends React.Component {
         });
       } else {
         CartActions.addToCart.defer({
-          orderFormId: orderForm.orderFormId,
-          item: item,
-          tradePolicy: this.props.tradePolicy,
-          vendor: this.props.vendor
+          item: item
         });
       }
 
