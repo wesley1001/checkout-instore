@@ -49,9 +49,7 @@ export default class ShopPage extends React.Component {
   setCartInfo() {
     const orderForm= this.state.cart.get('orderForm');
 
-    if(orderForm && orderForm.items && orderForm.items.length > 0) {
-      this.props.history.pushState(null, '/cart');
-
+    if(orderForm && orderForm.items) {
       const loading = this.state.cart.get('loading');
       const mktData = orderForm.marketingData;
       const isCheckedIn = orderForm.isCheckedIn;
@@ -62,6 +60,9 @@ export default class ShopPage extends React.Component {
         }
         else if(isCheckedIn !== true) {
           CartActions.checkIn.defer();
+        }
+        else if(orderForm.items.length > 0) {
+          this.props.history.pushState(null, '/cart');
         }
       }
     }

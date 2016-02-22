@@ -12,6 +12,8 @@ class CartStore {
     this.state = Immutable.Map({
       orderForm: undefined,
 
+      couponDocument: '',
+
       addLoading: false,
       updateLoading: false,
       loading: false,
@@ -133,6 +135,10 @@ class CartStore {
   onSetVendor() {
     this.setState(this.state.set('error', ''));
     this.setState(this.state.set('loading', true));
+  }
+
+  onUpdateCouponDocument(cpf){
+    this.setState(this.state.set('couponDocument', cpf));
   }
 }
 

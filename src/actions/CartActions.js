@@ -173,11 +173,28 @@ class CartActions {
     const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
     const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
 
-    Fetcher.setOrderVendor(orderFormId, vendorId).then((response) => {
+    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId}).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao atribuir a venda ao vendedor');
     });
+  }
+
+  setClientCouponDocumentId(cpf) {
+    this.dispatch();
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+
+    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId, utmCampaign:cpf}).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
+    }).catch(() => {
+      this.actions.requestFailed.defer('Ocorreu um erro ao atribuir o cpf na nota');
+    });
+  }
+
+
+  updateCouponDocument(cpf) {
+    this.dispatch(cpf);
   }
 }
 

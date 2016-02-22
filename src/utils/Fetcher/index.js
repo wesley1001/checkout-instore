@@ -218,13 +218,10 @@ class Fetcher {
     return axios.get(url, configs).then((response) => response.data);
   }
 
-  setOrderVendor(orderFormId, vendorId) {
-    const request = {
-      expectedOrderFormSections: ORDER_FORM_SECTIONS,
-      utmSource:vendorId
-    };
+  setMarketingData(orderFormId, data) {
+    data.expectedOrderFormSections = ORDER_FORM_SECTIONS;
 
-    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/marketingData`, request);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/marketingData`, data);
   }
 }
 
