@@ -127,7 +127,12 @@ class CartStore {
 
   onCheckIn() {
     this.setState(this.state.set('error', ''));
-    this.setState(this.state.set('checkInLoading', true));
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetVendor() {
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
   }
 }
 

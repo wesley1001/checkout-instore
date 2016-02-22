@@ -83,6 +83,7 @@ class CartActions {
   }
 
   checkIn() {
+    this.dispatch();
     const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
     const store = flux.getStore('VendorStore').getState('store').get('store');
 
@@ -168,6 +169,7 @@ class CartActions {
   }
 
   setVendor() {
+    this.dispatch();
     const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
     const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
 

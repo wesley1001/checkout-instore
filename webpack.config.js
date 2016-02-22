@@ -86,6 +86,8 @@ module.exports = {
   noInfo: true,
 
   proxy: {
-    '*': 'http://janus-edge.vtex.com.br/'
+    '*': {
+      target: 'http://janus-edge.vtex.com.br/'
+    }
   }
 };

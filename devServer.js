@@ -35,6 +35,10 @@ if (config.proxy) {
       proxy.on('error', (error, req, res) => {
         res.end();
       });
+
+      proxy.on('proxyReq', function(proxyReq, req, res, options) {
+        proxyReq.setHeader('X-VTEX-Janus-Router-CurrentApp-EnvironmentType', 'beta');
+      });
     });
   });
 }
