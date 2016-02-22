@@ -42,7 +42,9 @@ export default class CartPage extends React.Component {
 
   onCartChange(state) {
     this.setState({cart: state});
-    if(!state.get('orderForm').items || state.get('orderForm').items.length == 0) {
+
+    const orderForm = state.get('orderForm');
+    if(!orderForm || !orderForm.items || orderForm.items.length == 0) {
       this.props.history.pushState(null, '/shop');
     }
   }
@@ -60,10 +62,14 @@ export default class CartPage extends React.Component {
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
 
+    const loading = cart.get('loading') || checkout.get('loading');
+
     return (
       <div className="content">
-        <Loader loading={cart.get('loading') || checkout.get('loading')} />
+        <Loader loading={loading} />
 
+        {loading ? '' :
+          <div>
         <header>
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
@@ -88,6 +94,8 @@ export default class CartPage extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
+      </div>
+        }
       </div>
     );
   }

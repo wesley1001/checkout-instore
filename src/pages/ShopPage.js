@@ -47,14 +47,14 @@ export default class ShopPage extends React.Component {
   }
 
   setCartInfo() {
-    const state = this.state.cart;
+    const orderForm= this.state.cart.get('orderForm');
 
-    if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
+    if(orderForm && orderForm.items && orderForm.items.length > 0) {
       this.props.history.pushState(null, '/cart');
 
-      const loading = state.get('loading');
-      const mktData = state.get('orderForm').marketingData;
-      const isCheckedIn = state.get('orderForm').isCheckedIn;
+      const loading = this.state.cart.get('loading');
+      const mktData = orderForm.marketingData;
+      const isCheckedIn = orderForm.isCheckedIn;
 
       if(!loading) {
         if(mktData == null || !mktData.utmSource) {
