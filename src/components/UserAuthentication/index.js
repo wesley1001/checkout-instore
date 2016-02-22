@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 
 import AuthenticationHelper from '../../utils/AuthenticationHelper';
 import CheckoutActions from 'actions/CheckoutActions';
@@ -28,7 +27,7 @@ export default class Authentication extends React.Component {
       if(!AuthenticationHelper.validateEmail(this.state.email)) {
         this.setState({isValid: false});
       } else {
-        CheckoutActions.setClientData({email: this.state.email, orderForm: this.props.orderForm.orderFormId});
+        CheckoutActions.setClientData(this.state.email);
         this.props.history.pushState(null, '/shop');
       }
     }

@@ -5,6 +5,7 @@ import requestCache from 'utils/Cache';
 
 class CartActions {
   getOrderForm() {
+    this.dispatch();
     Fetcher.getOrderForm().then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
@@ -21,26 +22,22 @@ class CartActions {
   }
 
   addToCart(data) {
-    if(!data.orderFormId) {
-      Fetcher.getOrderForm().then((response) => {
-        data.orderFormId = response.data.orderFormId;
-        this.actions.orderFormSuccess.defer(response.data);
-        this.actions.executeAddToCart.defer(data);
-      }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-      });
-    } else {
-      this.actions.executeAddToCart.defer(data);
-    }
+    this.dispatch();
+
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    data.orderFormId = orderForm.orderFormId;
+    const store = flux.getStore('VendorStore').getState('store').get('store');
+    data.tradePolicy = store.tradePolicy;
+
+    Fetcher.addToCart(data.orderFormId, data.item, data.tradePolicy).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
+    }).catch(() => {
+      this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
+    });
   }
 
   executeAddToCart(data) {
     this.dispatch();
-    Fetcher.addToCart(data.orderFormId, data.item, data.vendor, data.tradePolicy).then(() => {
-      this.actions.setDefaultPayment.defer();
-    }).catch(() => {
-      this.actions.addFailed.defer('Erro ao adicionar produto ao carrinho');
-    });
   }
 
   addFailed(errorMessage) {
@@ -48,21 +45,12 @@ class CartActions {
   }
 
   updateCart(data) {
-    if(!data.orderFormId) {
-      Fetcher.getOrderForm().then((response) => {
-        data.orderFormId = response.data.orderFormId;
-        this.actions.orderFormSuccess.defer(response.data);
-        this.actions.executeUpdateCart.defer(data);
-      }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-      });
-    } else {
-      this.actions.executeUpdateCart.defer(data);
-    }
-  }
-
-  executeUpdateCart(data) {
     this.dispatch();
+
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    data.orderFormId = orderForm.orderFormId;
+    const store = flux.getStore('VendorStore').getState('store').get('store');
+    data.tradePolicy = store.tradePolicy;
 
     Fetcher.updateItems(data.orderFormId, data.item, data.tradePolicy).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
@@ -75,8 +63,10 @@ class CartActions {
     this.dispatch(errorMessage);
   }
 
-  clearCart(orderForm) {
+  clearCart() {
     requestCache.clear();
+
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
 
     let items = orderForm.items || [];
     items = items.map(item => {
@@ -84,6 +74,7 @@ class CartActions {
       return item;
     });
 
+    ///TODO - REVER ESSE LOOP
     items.forEach(item => {
       Fetcher.updateItems(orderForm.orderFormId, [item]).then((response) => {
         this.actions.orderFormSuccess.defer(response.data);
@@ -91,84 +82,40 @@ class CartActions {
     });
   }
 
-  setShipping(data) {
-    if(!data.orderFormId) {
-      Fetcher.getOrderForm().then((response) => {
-        data.orderFormId = response.data.orderFormId;
-        this.actions.orderFormSuccess.defer(response.data);
-        this.actions.executeSetShipping.defer(data);
-      }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-      });
-    } else {
-      this.actions.executeSetShipping.defer(data);
-    }
-  }
-
-  executeSetShipping(data) {
+  checkIn() {
     this.dispatch();
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    const store = flux.getStore('VendorStore').getState('store').get('store');
 
-    Fetcher.setShipping(data.orderFormId, data.address).then(() => {
-      this.actions.setCheckedIn.defer(data.orderFormId);
-    }).catch(() => {
-      this.actions.requestFailed.defer('Ocorreu um erro ao definir os dados de entrega');
-    });
-  }
-
-  setCheckedIn(orderFormId) {
-    if(!orderFormId) {
-      Fetcher.getOrderForm().then((response) => {
-        orderFormId = response.data.orderFormId;
-        this.actions.orderFormSuccess.defer(response.data);
-        this.actions.executeSetCheckedIn.defer(orderFormId);
-      }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-      });
-    } else {
-      this.actions.executeSetCheckedIn.defer(orderFormId);
-    }
-  }
-
-  executeSetCheckedIn(orderFormId) {
-    this.dispatch();
-
-    Fetcher.setCheckedIn(orderFormId).then((response) => {
+    Fetcher.checkIn(orderForm.orderFormId, true, store.id).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao fazer o checkin da loja');
+    }).catch(() => {
     });
   }
 
   setDefaultPayment(data) {
     this.dispatch();
 
-    Fetcher.getOrderForm().then((response) => {
-      let defaultPayment = _.find(response.data.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    let defaultPayment = _.find(orderForm.paymentData.installmentOptions, (payment) => payment.paymentSystem == 45 || payment.paymentSystem == 44);
 
-      if(defaultPayment && defaultPayment.installments.length > 0) {
+    if(!defaultPayment || defaultPayment.installments.length == 0) {
+      defaultPayment = _.find(orderForm.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
+
+      const paymentObject = {
+        paymentSystem: defaultPayment.id,
+        referenceValue: orderForm.value
+      }
+      Fetcher.setPayment(orderForm.orderFormId, paymentObject).then((response) => {
         this.actions.orderFormSuccess.defer(response.data);
-      }
-      else {
-        defaultPayment = _.find(response.data.paymentData.paymentSystems, (payment) => payment.id == 45 || payment.id == 44);
-
-        const paymentObject = {
-          paymentSystem: defaultPayment.id,
-          referenceValue: response.data.value
-        }
-
-        Fetcher.setPayment(response.data.orderFormId, paymentObject).then((response) => {
-          this.actions.orderFormSuccess.defer(response.data);
-          this.actions.setDefaultPaymentSuccess.defer(response.data);
-        }).catch((err) => {
-          this.actions.setDefaultPaymentFail.defer(err);
-          this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
-        });
-      }
-
-    }).catch(() => {
-      this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
-    });
-
+        this.actions.setDefaultPaymentSuccess.defer(response.data);
+      }).catch((err) => {
+        this.actions.setDefaultPaymentFail.defer(err);
+        this.actions.requestFailed.defer('Ocorreu um erro ao definir a opção de pagamento');
+      });
+    }
   }
 
   setDefaultPaymentSuccess(orderForm) {
@@ -182,6 +129,9 @@ class CartActions {
   setPayment(data) {
     this.dispatch();
 
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    data.orderFormId = orderForm.orderFormId;
+
     Fetcher.setPayment(data.orderFormId, data.payment).then(() => {
       this.actions.startTransaction.defer(data);
     }).catch(() => {
@@ -191,6 +141,9 @@ class CartActions {
 
   startTransaction(data) {
     this.dispatch();
+
+    const orderForm = flux.getStore('CartStore').getState('orderForm').get('orderForm');
+    data.orderFormId = orderForm.orderFormId;
 
     Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {
       this.actions.transactionSuccess.defer(response.data);
@@ -209,6 +162,39 @@ class CartActions {
 
   dismissCurrentNotifications(){
     this.dispatch();
+  }
+
+  executeRequest(){
+    this.dispatch();
+  }
+
+  setVendor() {
+    this.dispatch();
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+
+    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId}).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
+    }).catch(() => {
+      this.actions.requestFailed.defer('Ocorreu um erro ao atribuir a venda ao vendedor');
+    });
+  }
+
+  setClientCouponDocumentId(cpf) {
+    this.dispatch();
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+
+    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId, utmCampaign:cpf}).then((response) => {
+      this.actions.orderFormSuccess.defer(response.data);
+    }).catch(() => {
+      this.actions.requestFailed.defer('Ocorreu um erro ao atribuir o cpf na nota');
+    });
+  }
+
+
+  updateCouponDocument(cpf) {
+    this.dispatch(cpf);
   }
 }
 

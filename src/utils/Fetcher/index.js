@@ -3,6 +3,7 @@ import requestCache from 'utils/Cache';
 
 const ORDER_FORM_SECTIONS = ['items','gifts','totalizers','clientProfileData','shippingData','paymentData','sellers','messages','marketingData','clientPreferencesData','storePreferencesData'];
 const CHECKOUT_ORDER_FORM_PATH = '/api/checkout/pub/orderForm';
+const CHECKOUT_PROFILE_PATH = '/api/checkout/pub/profiles';
 const CRM_ADDRESS = 'api.vtexcrm.com.br';
 const HOSTNAME = window.location.hostname;
 const CRM_DATA_ENTITIES_ENDPOINT = `//${CRM_ADDRESS}/${HOSTNAME}/dataentities`;
@@ -34,7 +35,7 @@ class Fetcher {
     return axios.get(CHECKOUT_ORDER_FORM_PATH);
   }
 
-  setClientProfile(orderFormId, email, cpf = '') {
+  setDefaultClientProfile(orderFormId, email, cpf = '') {
     const request = {
       expectedOrderFormSections: ORDER_FORM_SECTIONS,
       email,
@@ -51,21 +52,36 @@ class Fetcher {
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
   }
 
-  setShipping(orderFormId, address) {
+  setClientProfile(orderFormId, email) {
     const request = {
       expectedOrderFormSections: ORDER_FORM_SECTIONS,
-      address
+      email,
     };
 
-    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/shippingData`, request);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
   }
 
-  setCheckedIn(orderFormId) {
+  getPublicProfile(email) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${CHECKOUT_PROFILE_PATH}?email=${email}`, email).then((response) => {
+        if(response.data && response.data.userProfileId != null) {
+          resolve(response.data);
+        }
+
+        reject({error: 'profile not found'});
+      }, (err) => {
+        reject({error: 'unable to find profileprofile'});
+      });
+    })
+  }
+
+  checkIn(orderFormId, isCheckedIn, storeId) {
     const request = {
-      isCheckedIn: true
+      isCheckedIn,
+      storeId
     };
 
-    return axios.put(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/isCheckedIn`, request);
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/checkIn`, request);
   }
 
   getSKUByEAN(ean) {
@@ -91,22 +107,17 @@ class Fetcher {
     });
   }
 
-  addToCart(orderForm, item, vendor, tradePolicy = 1) {
+  addToCart(orderFormId, items, tradePolicy = 1) {
     const queryString = {
-      sku: item.id,
-      qty: item.quantity,
-      seller: item.seller,
-      sc: tradePolicy,
-      utm_source: vendor,
-      redirect: false
+      sc: tradePolicy
     };
 
     const request = {
-      orderItems: [item],
+      orderItems: [items],
       expectedOrderFormSections: ORDER_FORM_SECTIONS
     };
 
-    return axios.post(`/checkout/cart/add`, request, {
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/items`, request, {
       params: queryString
     });
   }
@@ -205,6 +216,12 @@ class Fetcher {
     };
 
     return axios.get(url, configs).then((response) => response.data);
+  }
+
+  setMarketingData(orderFormId, data) {
+    data.expectedOrderFormSections = ORDER_FORM_SECTIONS;
+
+    return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/marketingData`, data);
   }
 }
 

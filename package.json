@@ -4,9 +4,9 @@
   "deploy": "deploy/",
   "description": "Client side application consuming the VTEX Checkout API",
   "scripts": {
+    "build": "webpack --progress --colors",
     "start": "babel-node devServer.js",
     "test": "set NODE_ENV=production && karma start",
-    "build": "webpack --progress --colors",
     "test-all": "NODE_ENV=production && karma start"
   },
   "repository": {
@@ -77,11 +77,10 @@
     "history": "1.13.0",
     "immutable": "^3.7.4",
     "lodash": "^3.10.1",
-    "offline-js": "^0.7.11",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.1",
     "react-cookie": "^0.4.2",
-    "react-dom": "^0.14.0",
+    "react-dom": "^0.14.7",
     "react-router": "1.0.2",
     "vtex-css-utils": "^1.1.6"
   },
@@ -91,8 +90,8 @@
     "npm": ">=2.0"
   },
   "keywords": [
-    "vtex",
     "checkout",
-    "instore"
+    "instore",
+    "vtex"
   ]
 }

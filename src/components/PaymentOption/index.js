@@ -1,10 +1,8 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
 
 import CartStore from 'stores/CartStore';
 import CheckoutActions from 'actions/CheckoutActions';
 import CheckoutStore from 'stores/CheckoutStore';
-import CartActions from 'actions/CartActions';
 import InstallmentList from 'components/InstallmentList';
 import PaymentLabel from 'components/PaymentLabel';
 import PaymentDetail from 'components/PaymentDetail';

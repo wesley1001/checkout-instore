@@ -10,13 +10,16 @@ import OrderPlaced from './pages/OrderPlaced';
 import VendorLoginPage from './pages/VendorLoginPage/VendorLoginPage';
 import VendorLogoutPage from './pages/VendorLogoutPage';
 
+import RouteHandler  from './routeHandler';
+
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={HomePage} />
-    <Route path='shop' component={ShopPage} />
-    <Route path='cart' component={CartPage} />
-    <Route path='orderplaced' component={OrderPlaced} />
-    <Route path='vendor/login' component={VendorLoginPage} />
+    <IndexRoute component={HomePage} onEnter={RouteHandler}/>
+    <Route path='shop' component={ShopPage} onEnter={RouteHandler}/>
+    <Route path='cart' component={CartPage} onEnter={RouteHandler}/>
+    <Route path='orderplaced' component={OrderPlaced} onEnter={RouteHandler}/>
+
     <Route path='vendor/logout' component={VendorLogoutPage} />
+    <Route path='vendor/login' component={VendorLoginPage} />
   </Route>
 );

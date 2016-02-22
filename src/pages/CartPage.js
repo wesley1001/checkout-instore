@@ -9,7 +9,6 @@ import VendorActions from 'actions/VendorActions';
 import BarcodeReader from 'components/BarcodeReader';
 import ProductShowcase from 'components/ProductShowcase';
 import PaymentSelection from 'components/PaymentSelection';
-import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
@@ -30,44 +29,12 @@ export default class CartPage extends React.Component {
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
-  componentWillMount() {
-    this.handleVendorLoginVerification();
-  }
-
-  handleVendorLoginVerification(){
-    if(!this.state.vendor.get('logged')) {
-      let vendorData = window.localStorage.getItem('vendorData');
-
-      if(vendorData) {
-        vendorData = JSON.parse(vendorData);
-        VendorActions.SetVendorDataSuccess(vendorData);
-      } else  {
-        this.props.history.pushState(null, '/vendor/login');
-      }
-    }
-  }
-
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
 
-    if(this.shouldRedirectToHomePage()) {
-      this.props.history.pushState(null, '/');
-    }
-
-    if(this.orderFormWillLoad()){
-      CartActions.getOrderForm.defer();
-    }
-
-    this.loadStoreInfo();
-  }
-
-  loadStoreInfo(){
-    const storeData = this.state.vendor.get('store');
-    if(storeData && storeData.store && !storeData.tradePolicy) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
+    this.checkCartState();
   }
 
   componentWillUnmount() {
@@ -77,6 +44,15 @@ export default class CartPage extends React.Component {
 
   onCartChange(state) {
     this.setState({cart: state});
+
+    this.checkCartState();
+  }
+
+  checkCartState() {
+    const orderForm = this.state.cart.get('orderForm');
+    if(!orderForm || !orderForm.items || orderForm.items.length == 0) {
+      this.props.history.pushState(null, '/shop');
+    }
   }
 
   onCheckoutChange(state) {
@@ -87,44 +63,20 @@ export default class CartPage extends React.Component {
     this.setState({vendor: state});
   }
 
-  componentDidUpdate() {
-    if(this.shouldRedirectToHomePage()) {
-      this.props.history.pushState(null, '/');
-    }
-  }
-
-  isOrderFormEmpty(){
-    const orderForm = this.state.cart.get('orderForm');
-    return orderForm && (!orderForm.items || orderForm.items.length === 0);
-  }
-
-  orderFormWillLoad(){
-    const orderForm = this.state.cart.get('orderForm');
-    return this.state.orderFormId && !orderForm;
-  }
-
-  shouldRedirectToHomePage(){
-    const orderForm = this.state.cart.get('orderForm');
-    return !this.orderFormWillLoad() && (!orderForm || this.isOrderFormEmpty());
-  }
-
   render() {
     const {cart, checkout, vendor, orderFormId} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
 
-    if(this.orderFormWillLoad() || this.shouldRedirectToHomePage()){
-      return (
-        <Loader loading={true} />
-      );
-    }
+    const loading = cart.get('loading') || checkout.get('loading');
 
     return (
       <div className="content">
-        <Loader loading={cart.get('loading') || checkout.get('loading')} />
+        <Loader loading={loading} />
 
+        {loading ? '' :
+          <div>
         <header>
-          <Logo />
           <UserInfo email={checkout.get('customerEmail')} />
         </header>
 
@@ -148,6 +100,8 @@ export default class CartPage extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
+      </div>
+        }
       </div>
     );
   }

@@ -3,7 +3,6 @@ import React from 'react';
 import OrderPlacedPaymentDetail from 'components/OrderPlacedPaymentDetail';
 
 import check from 'assets/images/icon-check.svg';
-import './index.less';
 
 export default class OrderPlacedDetail extends React.Component {
   static defaultProps = {
