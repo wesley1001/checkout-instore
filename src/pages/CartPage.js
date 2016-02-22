@@ -13,7 +13,6 @@ import Logo from 'components/GeneralLogo';
 import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
-import TypeBarcodeReaderShowButton from 'components/TypeBarcodeReaderShowButton';
 
 export default class CartPage extends React.Component {
   constructor(props) {
@@ -149,7 +148,6 @@ export default class CartPage extends React.Component {
         </BarcodeReader>
 
         <PaymentForm cart={this.state.cart} />
-        {this.state.checkout.get('typingBarcode') ? '' : <TypeBarcodeReaderShowButton/>}
       </div>
     );
   }
