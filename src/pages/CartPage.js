@@ -42,6 +42,9 @@ export default class CartPage extends React.Component {
 
   onCartChange(state) {
     this.setState({cart: state});
+    if(!state.get('orderForm').items || state.get('orderForm').items.length == 0) {
+      this.props.history.pushState(null, '/shop');
+    }
   }
 
   onCheckoutChange(state) {
