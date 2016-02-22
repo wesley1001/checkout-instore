@@ -49,10 +49,8 @@ export default class ShopPage extends React.Component {
   setCartInfo() {
     const state = this.state.cart;
 
-    if(state.get('orderForm')) {
-      if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
-        this.props.history.pushState(null, '/cart');
-      }
+    if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
+      this.props.history.pushState(null, '/cart');
 
       const loading = state.get('loading');
       const mktData = state.get('orderForm').marketingData;
