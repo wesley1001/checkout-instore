@@ -43,7 +43,7 @@ class CartStore {
     this.setState(this.state.set('message', ''));
   }
 
-  onExecuteAddToCart() {
+  onAddToCart() {
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('error', ''));
   }
@@ -53,7 +53,7 @@ class CartStore {
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onExecuteUpdateCart() {
+  onUpdateCart() {
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('error', ''));
   }
