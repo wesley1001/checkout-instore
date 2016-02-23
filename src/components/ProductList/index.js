@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-
 import Product from 'components/Product';
 import TypeBarcodeReader from 'components/TypeBarcodeReader';
 import CheckoutStore from 'stores/CheckoutStore';
+import ProductAdder from 'components/ProductAdder';
 
 import './index.less';
 
@@ -37,26 +37,26 @@ export default class ProductList extends React.Component {
     CheckoutStore.unlisten(this.onCheckoutChange);
   }
 
-    render () {
-      const {products, orderFormId, history} = this.props;
+  render () {
+    const {products, orderFormId, history} = this.props;
 
-      let items = products.map((product, index) => {
-        return (
-          <Product key={index}
-            product={product}
-            itemCount={products.length}
-            index={index}
-            orderFormId={orderFormId}
-            history={history}
-          />
-        );
-      });
-
+    let items = products.map((product, index) => {
       return (
-        <section className="ProductList component">
-          {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader/> : ''}
-          {items}
-        </section>
+        <Product key={index}
+          product={product}
+          itemCount={products.length}
+          index={index}
+          orderFormId={orderFormId}
+          history={history}
+        />
       );
-    }
+    });
+
+    return (
+      <section className="ProductList component">
+        {items}
+        <ProductAdder />
+      </section>
+    );
+  }
 }
