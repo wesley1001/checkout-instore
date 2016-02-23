@@ -14,8 +14,6 @@ class CartStore {
 
       couponDocument: '',
 
-      addLoading: false,
-      updateLoading: false,
       loading: false,
 
       error: '',
@@ -34,8 +32,6 @@ class CartStore {
 
   onOrderFormSuccess(orderForm) {
     this.setState(this.state.set('orderForm', orderForm));
-    this.setState(this.state.set('addLoading', false));
-    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('message', MessageUtils.getFirstMessageText(orderForm)));
   }
@@ -43,32 +39,26 @@ class CartStore {
   onOrderFormFailed(errorMessage) {
     this.setState(this.state.set('orderForm', undefined));
     this.setState(this.state.set('loading', false));
-    this.setState(this.state.set('addLoading', false));
-    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('error', errorMessage));
     this.setState(this.state.set('message', ''));
   }
 
   onExecuteAddToCart() {
-    this.setState(this.state.set('addLoading', true));
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('error', ''));
   }
 
   onAddFailed(errorMessage) {
-    this.setState(this.state.set('addLoading', false));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
   }
 
   onExecuteUpdateCart() {
-    this.setState(this.state.set('updateLoading', true));
     this.setState(this.state.set('loading', true));
     this.setState(this.state.set('error', ''));
   }
 
   onUpdateFailed(errorMessage) {
-    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
   }
