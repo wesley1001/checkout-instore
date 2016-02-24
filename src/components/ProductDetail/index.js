@@ -95,7 +95,7 @@ export default class ProductDetail extends React.Component {
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
-          <div>
+          <div className="actions">
               <span className="caret"></span>
               <select type ="button" value={product.quantity} className="btn btn-default dropdown-toggle quantity" onChange={this.handleSubmit}>
                   <option className="option" value="1">1</option>
