@@ -95,7 +95,6 @@ export default class ProductDetail extends React.Component {
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
-          {priceElement}
           <div>
               <span className="caret"></span>
               <select type ="button" value={product.quantity} className="btn btn-default dropdown-toggle quantity" onChange={this.handleSubmit}>
@@ -110,14 +109,15 @@ export default class ProductDetail extends React.Component {
                   <option className="option" value="9">9</option>
                   <option className="option" value="10">10</option>
               </select>
+              <div className="remove">
+               <a href="javascript:void(0)"
+                 className="glyphicon glyphicon-trash"
+                 onClick={this.handleRemove}>
+               </a>
+              </div>
           </div>
         </div>
-        <div className="remove">
-         <a href="javascript:void(0)"
-           className="glyphicon glyphicon-remove"
-           onClick={this.handleRemove}>
-         </a>
-        </div>
+        <div>{priceElement}</div>
       </div>
     );
   }
