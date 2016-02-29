@@ -1,7 +1,5 @@
 import React from 'react';
 
-import CartStore from 'stores/CartStore';
-
 import './index.less';
 import loader from 'assets/images/loader.svg';
 
@@ -12,29 +10,18 @@ export default class Loader extends React.Component {
 
     this.state = {
       elapsed: 0,
-      cartLoading: CartStore.getState('loading').get('loading'),
       start: Date.now()
     };
-
-    this.onCartChange = this.onCartChange.bind(this);
   }
 
-  componentDidMount() {
-    CartStore.listen(this.onCartChange);
-  }
-
-  componentWillUnmount(){
-    CartStore.unlisten(this.onCartChange);
-  }
-
-  onCartChange(state) {
-    this.setState({cartLoading: state.get('loading')});
-    if(this.state.cartLoading){
+  componentWillReceiveProps(nextProps) {
+    let loading = nextProps.loading;
+    if(loading){
       this.timer = setInterval(()=>{
         this.setState({
           elapsed: new Date() - this.state.start
         });
-      }, 1000);
+      }, 500);
     }
     else {
       clearInterval(this.timer);
@@ -42,33 +29,42 @@ export default class Loader extends React.Component {
     }
   }
 
-  render() {
-    console.log('elapsed: ', this.state.elapsed);
-    let message = '';
-    let smallMessage = '';
+  componentWillUpdate() {
+    this.render();
+  }
+
+  composeContent(message, smallMessage, content) {
     if(this.state.elapsed > 9999){
       message = (
         <span>Por favor, aguarde<br/>mais alguns segundos</span>
       );
-
       smallMessage = (
         <span>O sistema está<br/>um pouco lento no momento 😣</span>
       );
     }
 
-    let content = (
-      <div id="loaderContent" className="background">
-        <div className="wrapper">
-          <div className="message">{message}</div><br/>
-          <img src={loader} width="150"/><br/><br/>
-          <div className="message small">{smallMessage}</div>
+    if(this.state.elapsed > 999){
+      content = (
+        <div id="loaderContent" className="background">
+          <div className="wrapper">
+            <div className="message">{message}</div><br/>
+            <img src={loader} width="150"/><br/><br/>
+            <div className="message small">{smallMessage}</div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return content;
+  }
+
+  render() {
+    let message = '';
+    let smallMessage = '';
+    let content = '';
 
     return (
       <div className="Loader component">
-        {this.props.loading ? content : ''}
+        {this.props.loading ? this.composeContent(message, smallMessage, content) : ''}
       </div>
     );
   }
