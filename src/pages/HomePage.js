@@ -58,6 +58,9 @@ export default class HomePage extends React.Component {
 
   render() {
     const {cart, checkout} = this.state;
+    if(!this.state.cart.get('orderForm')){
+      return null;
+    }
     return (
       <div className="HomePage component">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
