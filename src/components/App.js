@@ -24,7 +24,7 @@ export default class App extends React.Component {
               CheckoutActions.findProduct(message.data.barcode);
               break;
             case 'vendorLogoutIntent':
-              VendorActions.clearVendorData();
+              VendorActions.clearInstoreData();
               this.props.history.pushState(null, '/vendor/login');
               break;
             case 'goHome':

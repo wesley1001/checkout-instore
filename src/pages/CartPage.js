@@ -83,8 +83,6 @@ export default class CartPage extends React.Component {
         <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={tradePolicy}>
           <ProductShowcase
             products={orderForm.items}
-            isAddingProduct={cart.get('addLoading')}
-            isUpdatingProduct={cart.get('updateLoading')}
             cartError={cart.get('error')}
             lastSkuScanned={checkout.get('sku')}
             orderFormId={orderForm.orderFormId}

@@ -8,15 +8,11 @@ import './index.less';
 
 export default class ProductList extends React.Component {
   static propTypes = {
-    products: PropTypes.array,
-    isUpdatingProduct: PropTypes.bool,
-    isAddingProduct: PropTypes.bool
+    products: PropTypes.array
   }
 
   static defaultProps = {
-    products: [],
-    isUpdatingProduct: false,
-    isAddingProduct: false
+    products: []
   }
 
   constructor(props) {
@@ -26,7 +22,6 @@ export default class ProductList extends React.Component {
       checkout: CheckoutStore.getState()
     };
 
-    this.handleClick = this.handleClick.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
@@ -40,25 +35,6 @@ export default class ProductList extends React.Component {
 
   componentWillUnmount() {
     CheckoutStore.unlisten(this.onCheckoutChange);
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({ isExpanded: true });
-  }
-
-  checkMoreProducts() {
-    const {products} = this.props;
-
-    if (products.length > 1 && !this.state.isExpanded) {
-      return (
-        <a href="#"
-          className="more"
-          onClick={this.handleClick}>
-          + {products.length - 1} {products.length - 1 === 1 ? 'item' : 'itens'}
-        </a>
-      );
-    }
   }
 
     render () {

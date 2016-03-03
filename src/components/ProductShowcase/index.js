@@ -6,19 +6,15 @@ import OrderHeader from 'components/OrderHeader';
 
 export default class ProductShowcase extends React.Component {
   static propTypes = {
-    products: PropTypes.array,
-    isUpdatingProduct: PropTypes.bool,
-    isAddingProduct: PropTypes.bool
+    products: PropTypes.array
   }
 
   static defaultProps = {
-    products: [],
-    isUpdatingProduct: false,
-    isAddingProduct: false
+    products: []
   }
 
   render() {
-    const {products, isAddingProduct, isUpdatingProduct, orderFormId, history} = this.props;
+    const {products, orderFormId, history} = this.props;
 
     return (
       <section className="ProductShowcase component">
@@ -27,8 +23,6 @@ export default class ProductShowcase extends React.Component {
         <section>
           <ProductList
             products={products}
-            isAddingProduct={isAddingProduct}
-            isUpdatingProduct={isUpdatingProduct}
             orderFormId={orderFormId}
             history={history}
           />
