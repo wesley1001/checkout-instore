@@ -9,32 +9,36 @@ export default class Loader extends React.Component {
     super(props);
 
     this.state = {
-      elapsed: 0,
-      start: Date.now()
+      seconds: 0,
+      timer: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
     let loading = nextProps.loading;
     if(loading){
-      this.timer = setInterval(()=>{
+      clearInterval(this.state.timer);
+      let timer = setInterval(()=>{
         this.setState({
-          elapsed: new Date() - this.state.start
+          seconds: this.state.seconds+1
         });
-      }, 500);
+      }, 1000);
+      this.setState({
+        timer: timer
+      });
     }
     else {
-      clearInterval(this.timer);
-      this.setState({elapsed: 0, start: Date.now()});
+      clearInterval(this.state.timer);
+      this.setState({seconds: 0, timer: null});
     }
   }
 
-  componentWillUpdate() {
-    this.render();
+  componentWillUnmount(){
+    clearInterval(this.state.timer);
   }
 
   composeContent(message, smallMessage, content) {
-    if(this.state.elapsed > 9999){
+    if(this.state.seconds >= 10){
       message = (
         <span>Por favor, aguarde<br/>mais alguns segundos</span>
       );
@@ -43,7 +47,7 @@ export default class Loader extends React.Component {
       );
     }
 
-    if(this.state.elapsed > 999){
+    if(this.state.seconds > 1){
       content = (
         <div id="loaderContent" className="background">
           <div className="wrapper">
