@@ -89,7 +89,10 @@ export default class InstallmentList extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    CartActions.setClientCouponDocumentId.defer(this.state.cart.get('couponDocument'));
+    const couponDocument = this.state.cart.get('couponDocument');
+    if(couponDocument){
+      CartActions.setClientCouponDocumentId.defer(couponDocument);
+    }
 
     if(this.props.selectedInstallment !== 0) {
       const {selectedPaymentId, selectedInstallment, orderFormId, price} = this.props;
