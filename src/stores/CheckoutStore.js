@@ -31,9 +31,20 @@ class CheckoutStore {
     this.setState(this.state.set('customerDocument', cpf));
   }
 
-  onSetClientData(email) {
-    this.setState(this.state.set('customerEmail', email));
+  onSetClientData() {
     this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetAnonymousData(){
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetClientDataSuccess(email){
+    if(email){
+      this.setState(this.state.set('customerEmail', email));
+    }
+    this.setState(this.state.set('loading', false));
   }
 
   onSetClientDataFailed(errorMessage) {

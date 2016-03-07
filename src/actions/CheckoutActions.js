@@ -4,12 +4,14 @@ import Fetcher from 'utils/Fetcher';
 class CheckoutActions {
 
   setClientData(email) {
+    this.dispatch();
+
     Fetcher.getPublicProfile(email).then((response) => {
       const isNewUser = !response.data.userProfileId;
       const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
 
       Fetcher.setClientProfile(orderFormId, email, isNewUser).then(() => {
-        this.dispatch(email);
+        this.actions.setClientDataSuccess.defer(email);
       }).catch(() => {
         this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
       });
@@ -17,9 +19,9 @@ class CheckoutActions {
   }
 
   setAnonymousData() {
-    const generatedEmail = Date.now().toString() + '@vtex-instore.com';
-    this.dispatch(generatedEmail);
+    this.dispatch();
 
+    const generatedEmail = Date.now().toString() + '@vtex-instore.com';
     const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
 
     Fetcher.setDefaultClientProfile(orderFormId, generatedEmail).then(() => {
@@ -33,8 +35,8 @@ class CheckoutActions {
     this.dispatch(cpf);
   }
 
-  setClientDataSuccess() {
-    this.dispatch();
+  setClientDataSuccess(email) {
+    this.dispatch(email);
   }
 
   setClientDataFailed(errorMessage) {
