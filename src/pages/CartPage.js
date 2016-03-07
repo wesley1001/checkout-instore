@@ -49,7 +49,9 @@ export default class CartPage extends React.Component {
 
   checkCartState() {
     const orderForm = this.state.cart.get('orderForm');
-    if(!orderForm || !orderForm.items || orderForm.items.length == 0) {
+    const orderFormHasItems = orderForm && orderForm.items && orderForm.items.length > 0;
+
+    if(!this.state.orderFormId && !orderFormHasItems) {
       this.props.history.pushState(null, '/shop');
     }
   }
@@ -66,34 +68,38 @@ export default class CartPage extends React.Component {
     const {cart, checkout, vendor, orderFormId} = this.state;
     const orderForm = cart.get('orderForm');
     const tradePolicy = vendor.get('store').tradePolicy;
-    const loading = cart.get('loading') || checkout.get('loading');
+    const loading = cart.get('loading') || checkout.get('loading') || !orderForm;
 
     return (
       <div className="content">
         <Loader loading={loading} />
 
-        <header>
-          <UserInfo email={checkout.get('customerEmail')} />
-        </header>
+        {orderForm ?
+          <div>
+            <header>
+              <UserInfo email={checkout.get('customerEmail')} />
+            </header>
 
-        <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={tradePolicy}>
-          <ProductShowcase
-            products={orderForm.items}
-            cartError={cart.get('error')}
-            lastSkuScanned={checkout.get('sku')}
-            orderFormId={orderForm.orderFormId}
-            history={this.props.history}
-          />
+            <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={tradePolicy}>
+              <ProductShowcase
+                products={orderForm.items}
+                cartError={cart.get('error')}
+                lastSkuScanned={checkout.get('sku')}
+                orderFormId={orderForm.orderFormId}
+                history={this.props.history}
+              />
 
-          <PaymentSelection
-            products={orderForm.items}
-            paymentData={orderForm.paymentData}
-            orderFormId={orderForm.orderFormId}
-            email={checkout.get('customerEmail')}
-          />
-        </BarcodeReader>
+              <PaymentSelection
+                products={orderForm.items}
+                paymentData={orderForm.paymentData}
+                orderFormId={orderForm.orderFormId}
+                email={checkout.get('customerEmail')}
+              />
+            </BarcodeReader>
 
-        <PaymentForm cart={this.state.cart} />
+            <PaymentForm cart={this.state.cart} />
+          </div>
+         : ''}
       </div>
     );
   }
