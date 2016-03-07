@@ -111,7 +111,7 @@ export default class ProductDetail extends React.Component {
               </select>
               <div className="remove">
                <a href="javascript:void(0)"
-                 className="glyphicon glyphicon-trash"
+                 className="glyphicon glyphicon-trash remove-icon"
                  onClick={this.handleRemove}>
                </a>
               </div>
