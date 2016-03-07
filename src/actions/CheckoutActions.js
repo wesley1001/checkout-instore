@@ -4,15 +4,16 @@ import Fetcher from 'utils/Fetcher';
 class CheckoutActions {
 
   setClientData(email) {
-    // TODO: Fetcher.getPublicProfile(email).then(() => {
-
+    Fetcher.getPublicProfile(email).then((response) => {
+      const isNewUser = !response.data.userProfileId;
       const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
 
-      Fetcher.setClientProfile(orderFormId, email).then(() => {
+      Fetcher.setClientProfile(orderFormId, email, isNewUser).then(() => {
         this.dispatch(email);
       }).catch(() => {
         this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
       });
+    });
   }
 
   setAnonymousData() {

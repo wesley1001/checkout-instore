@@ -51,27 +51,22 @@ class Fetcher {
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
   }
 
-  setClientProfile(orderFormId, email) {
+  setClientProfile(orderFormId, email, isNewUser) {
     const request = {
       expectedOrderFormSections: ORDER_FORM_SECTIONS,
-      email,
+      email
     };
+
+    if(isNewUser){
+      request.firstName = DEFAULT_FIRST_NAME;
+      request.lastName = DEFAULT_LAST_NAME;
+    }
 
     return axios.post(`${CHECKOUT_ORDER_FORM_PATH}/${orderFormId}/attachments/clientProfileData`, request);
   }
 
   getPublicProfile(email) {
-    return new Promise((resolve, reject) => {
-      axios.get(`${CHECKOUT_PROFILE_PATH}?email=${email}`, email).then((response) => {
-        if(response.data && response.data.userProfileId != null) {
-          resolve(response.data);
-        }
-
-        reject({error: 'profile not found'});
-      }, (err) => {
-        reject({error: 'unable to find profileprofile'});
-      });
-    })
+    return axios.get(`${CHECKOUT_PROFILE_PATH}?email=${email}`);
   }
 
   checkIn(orderFormId, isCheckedIn, storeId) {

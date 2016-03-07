@@ -8,12 +8,17 @@ export default class Authentication extends React.Component {
     super(props);
 
     this.state = {
-      email:'',
-
+      email:''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillUpdate(nextProps){
+    if (nextProps.customerEmail){
+      this.props.history.pushState(null, '/shop');
+    }
   }
 
   handleChange(e) {
@@ -28,7 +33,6 @@ export default class Authentication extends React.Component {
         this.setState({isValid: false});
       } else {
         CheckoutActions.setClientData(this.state.email);
-        this.props.history.pushState(null, '/shop');
       }
     }
   }

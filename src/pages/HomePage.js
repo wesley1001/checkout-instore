@@ -77,7 +77,11 @@ export default class HomePage extends React.Component {
             </h2>
 
             <div className="container">
-              <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
+              <UserAuthentication
+                orderForm={cart.get('orderForm')}
+                history={this.props.history}
+                customerEmail={checkout.get('customerEmail')} />
+
               <div className="help-block text">Ao identificar o cliente, ele terá a vantagem de receber o comprovante por email.</div>
             </div>
           </div>
