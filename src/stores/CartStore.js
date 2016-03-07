@@ -80,6 +80,8 @@ class CartStore {
   onTransactionSuccess(orderForm) {
     const selectedPaymentId = orderForm.paymentData.payments[0].paymentSystem;
     const selectedPayment = orderForm.paymentData.paymentSystems.filter(item => item.id.toString() === selectedPaymentId.toString())[0];
+    const merchantName = (orderForm.merchantTransactions && orderForm.merchantTransactions[0]) ? orderForm.merchantTransactions[0].merchantName : null;
+
     const data = {
       paymentsArray: [{
         paymentSystem: selectedPaymentId,
@@ -90,12 +92,12 @@ class CartStore {
         installmentsValue: orderForm.paymentData.payments[0].merchantSellerPayments[0].installmentValue,
         value: orderForm.paymentData.payments[0].value,
         referenceValue: orderForm.paymentData.payments[0].referenceValue,
-        id: orderForm.merchantTransactions[0].merchantName,
+        id: merchantName,
         interestRate: 0,
         installmentValue: orderForm.paymentData.payments[0].merchantSellerPayments[0].installmentValue,
         transaction: {
           id: orderForm.merchantTransactions[0].transactionId,
-          merchantName: orderForm.merchantTransactions[0].merchantName
+          merchantName: merchantName
         },
         currencyCode: 'BRL'
       }],

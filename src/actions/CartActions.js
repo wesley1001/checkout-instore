@@ -146,7 +146,16 @@ class CartActions {
     data.orderFormId = orderForm.orderFormId;
 
     Fetcher.startTransaction(data.orderFormId, data.payment.referenceValue).then((response) => {
-      this.actions.transactionSuccess.defer(response.data);
+      const fatalMessages = response.data.messages.filter((item) => {
+        return (item.status) ? item.status.toString() === 'fatal' : false;
+      });
+
+      if(fatalMessages.count > 0){
+        this.actions.requestFailed.defer(data.messages[0].text);
+      }
+      else{
+        this.actions.transactionSuccess.defer(response.data);
+      }
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao iniciar a transação');
     });
