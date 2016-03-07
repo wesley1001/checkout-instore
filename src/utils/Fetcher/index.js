@@ -39,7 +39,6 @@ class Fetcher {
     const request = {
       expectedOrderFormSections: ORDER_FORM_SECTIONS,
       email,
-      firstEmail: email,
       document: cpf,
       documentType: CPF_DOCUMENT_TYPE_KEY,
       firstName: DEFAULT_FIRST_NAME,
