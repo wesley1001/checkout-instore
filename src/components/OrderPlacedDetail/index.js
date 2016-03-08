@@ -29,6 +29,7 @@ export default class OrderPlacedDetail extends React.Component {
     const { order } = this.props;
 
     const clientProfile = order.clientProfileData;
+    const document = clientProfile.document;
 
     return (
       <div className="OrderPlacedDetail component">
@@ -48,10 +49,10 @@ export default class OrderPlacedDetail extends React.Component {
               </strong></p>
             }
             <div>
-              { clientProfile.document === '' ?
+              { document ?
+                <p><strong>CPF</strong>: {`${document.slice(0, 3)}.${document.slice(3, 6)}.${document.slice(6, 9)}-${document.slice(9,11)}`}</p>
+                :
                 ''
-                 :
-                <p><strong>CPF</strong>: {`${clientProfile.document.slice(0, 3)}.${clientProfile.document.slice(3, 6)}.${clientProfile.document.slice(6, 9)}-${clientProfile.document.slice(9,11)}`}</p>
               }
             </div>
             <p>
