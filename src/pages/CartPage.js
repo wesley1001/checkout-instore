@@ -49,9 +49,8 @@ export default class CartPage extends React.Component {
 
   checkCartState() {
     const orderForm = this.state.cart.get('orderForm');
-    const orderFormHasItems = orderForm && orderForm.items && orderForm.items.length > 0;
 
-    if(!this.state.orderFormId && !orderFormHasItems) {
+    if(!this.state.orderFormId || (orderForm && (!orderForm.items || orderForm.items.length == 0))) {
       this.props.history.pushState(null, '/shop');
     }
   }
