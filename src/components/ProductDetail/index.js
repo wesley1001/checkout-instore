@@ -110,15 +110,15 @@ export default class ProductDetail extends React.Component {
                   <option className="option" value="9">9</option>
                   <option className="option" value="10">10</option>
               </select>
-              <div className="remove">
-               <a href="javascript:void(0)"
-                 className="glyphicon glyphicon-trash remove-icon"
-                 onClick={this.handleRemove}>
-               </a>
               </div>
+            </div>
           </div>
+        <div className="remove">
+         <a href="javascript:void(0)"
+           className="glyphicon glyphicon-remove remove-icon"
+           onClick={this.handleRemove}>
+         </a>
         </div>
-        <div>{priceElement}</div>
       </div>
     );
   }
