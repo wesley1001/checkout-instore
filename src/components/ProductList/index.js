@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react';
 import Product from 'components/Product';
 import TypeBarcodeReader from 'components/TypeBarcodeReader';
 import CheckoutStore from 'stores/CheckoutStore';
-import ProductAdder from 'components/ProductAdder';
-
 import './index.less';
 
 export default class ProductList extends React.Component {
@@ -55,7 +53,6 @@ export default class ProductList extends React.Component {
     return (
       <section className="ProductList component">
         {items}
-        <ProductAdder />
       </section>
     );
   }
