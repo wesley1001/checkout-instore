@@ -100,15 +100,15 @@ export default class ProductDetail extends React.Component {
             <div className="options">
               <select type ="button" value={product.quantity} className="btn-link quantity options" onChange={this.handleSubmit}>
                   <option className="option" value="1">1 item</option>
-                  <option className="option" value="2">2</option>
-                  <option className="option" value="3">3</option>
-                  <option className="option" value="4">4</option>
-                  <option className="option" value="5">5</option>
-                  <option className="option" value="6">6</option>
-                  <option className="option" value="7">7</option>
-                  <option className="option" value="8">8</option>
-                  <option className="option" value="9">9</option>
-                  <option className="option" value="10">10</option>
+                  <option className="option" value="2">2 itens</option>
+                  <option className="option" value="3">3 itens</option>
+                  <option className="option" value="4">4 itens</option>
+                  <option className="option" value="5">5 itens</option>
+                  <option className="option" value="6">6 itens</option>
+                  <option className="option" value="7">7 itens</option>
+                  <option className="option" value="8">8 itens</option>
+                  <option className="option" value="9">9 itens</option>
+                  <option className="option" value="10">10 itens</option>
               </select>
               </div>
             </div>
