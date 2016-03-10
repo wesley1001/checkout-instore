@@ -1,4 +1,10 @@
 class ProductHelper {
+  changeImageUrlSize(imageUrl, width, height){
+    //imageUrl example http://omniera.vteximg.com.br/arquivos/ids/155401-135-135/CAN-09-04--1-.jpg
+    if(!imageUrl || !width || !height) return undefined;
+    return imageUrl.replace(/-.*\-.*\//, `-${width}-${height}/`);
+  }
+
   calculateTotalPrice(products) {
     if(products.length === 0) return 0;
 
