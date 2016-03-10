@@ -10,13 +10,17 @@ export default class Loader extends React.Component {
 
     this.state = {
       seconds: 0,
-      timer: null
+      timer: null,
+      loading: false,
+      hideTimeout: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
     let loading = nextProps.loading;
     if(loading){
+      this.setState({loading: true});
+      clearTimeout(this.state.hideTimeout);
       clearInterval(this.state.timer);
       let timer = setInterval(()=>{
         this.setState({
@@ -30,11 +34,19 @@ export default class Loader extends React.Component {
     else {
       clearInterval(this.state.timer);
       this.setState({seconds: 0, timer: null});
+
+      let hideTimeout = setTimeout(() => {
+        this.setState({loading: false})
+      }, 200);
+      this.setState({
+        hideTimeout: hideTimeout
+      });
     }
   }
 
   componentWillUnmount(){
     clearInterval(this.state.timer);
+    clearTimeout(this.state.hideTimeout);
   }
 
   composeContent(message, smallMessage, content) {
@@ -68,7 +80,7 @@ export default class Loader extends React.Component {
 
     return (
       <div className="Loader component">
-        {this.props.loading ? this.composeContent(message, smallMessage, content) : ''}
+        {this.state.loading ? this.composeContent(message, smallMessage, content) : ''}
       </div>
     );
   }
