@@ -53,7 +53,7 @@ export default class OrderPlaced extends React.Component {
 
     return (
       <div className="OrderPlaced component">
-        <Loader loading={checkout.get('loading')} waitToShow={0} />
+        <Loader loading={checkout.get('loading')} />
         <header className="container"></header>
 
         {checkout.get('orderGroup') === undefined ? '' : <OrderPlacedDetail order={checkout.get('orderGroup')}/>}

@@ -44,7 +44,7 @@ export default class VendorLogin extends React.Component {
     const {vendor} = this.state;
     return (
       <div className="VendorLoginPage component">
-        <Loader loading={this.state.vendor.get('loading')} waitToShow={0} />
+        <Loader loading={this.state.vendor.get('loading')} />
         <div className="email full-pannel full-pannel-show">
           <VendorAuthentication history={this.props.history}/>
         </div>

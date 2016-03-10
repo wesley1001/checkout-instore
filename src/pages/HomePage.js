@@ -63,7 +63,7 @@ export default class HomePage extends React.Component {
     }
     return (
       <div className="HomePage component">
-        <Loader loading={cart.get('loading') || checkout.get('loading')} waitToShow={0} />
+        <Loader loading={cart.get('loading') || checkout.get('loading')} />
         <header className="container"></header>
 
         <div className="email full-pannel full-pannel-show">

@@ -86,7 +86,7 @@ export default class ShopPage extends React.Component {
 
     return (
       <div className="content">
-        <Loader loading={cart.get('loading') || checkout.get('loading')} waitToShow={0} />
+        <Loader loading={cart.get('loading') || checkout.get('loading')} />
 
         <header>
           <UserInfo email={checkout.get('customerEmail')} />

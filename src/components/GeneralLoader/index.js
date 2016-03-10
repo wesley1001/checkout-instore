@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import './index.less';
 import loader from 'assets/images/loader.svg';
 
 export default class Loader extends React.Component {
+
+  static propTypes = {
+    waitToShow: PropTypes.number
+  }
+
+  static defaultProps = {
+    waitToShow: 0
+  }
 
   constructor(props) {
     super(props);
