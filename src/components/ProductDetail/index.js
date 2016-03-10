@@ -91,7 +91,7 @@ export default class ProductDetail extends React.Component {
     return (
       <div className="ProductDetail component">
         <div className="img-wrapper">
-          <img className="img" src={product.imageUrl}/>
+          <img className="img" src={ProductHelper.changeImageUrlSize(product.imageUrl, 60, 60)}/>
         </div>
         <div className="info">
           <div className="name">{product.name}</div>
