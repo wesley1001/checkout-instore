@@ -71,7 +71,7 @@ export default class CartPage extends React.Component {
 
     return (
       <div className="content">
-        <Loader loading={loading} />
+        <Loader loading={loading} waitToShow={1} />
 
         {orderForm ?
           <div>

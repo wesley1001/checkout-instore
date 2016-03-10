@@ -1,22 +1,34 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import './index.less';
 import loader from 'assets/images/loader.svg';
 
 export default class Loader extends React.Component {
 
+  static propTypes = {
+    waitToShow: PropTypes.number
+  }
+
+  static defaultProps = {
+    waitToShow: 0
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
       seconds: 0,
-      timer: null
+      timer: null,
+      loading: false,
+      hideTimeout: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
     let loading = nextProps.loading;
     if(loading){
+      this.setState({loading: true});
+      clearTimeout(this.state.hideTimeout);
       clearInterval(this.state.timer);
       let timer = setInterval(()=>{
         this.setState({
@@ -30,11 +42,19 @@ export default class Loader extends React.Component {
     else {
       clearInterval(this.state.timer);
       this.setState({seconds: 0, timer: null});
+
+      let hideTimeout = setTimeout(() => {
+        this.setState({loading: false})
+      }, 200);
+      this.setState({
+        hideTimeout: hideTimeout
+      });
     }
   }
 
   componentWillUnmount(){
     clearInterval(this.state.timer);
+    clearTimeout(this.state.hideTimeout);
   }
 
   composeContent(message, smallMessage, content) {
@@ -47,7 +67,7 @@ export default class Loader extends React.Component {
       );
     }
 
-    if(this.state.seconds > 1){
+    if(this.state.seconds >= this.props.waitToShow){
       content = (
         <div id="loaderContent" className="background">
           <div className="wrapper">
@@ -68,7 +88,7 @@ export default class Loader extends React.Component {
 
     return (
       <div className="Loader component">
-        {this.props.loading ? this.composeContent(message, smallMessage, content) : ''}
+        {this.state.loading ? this.composeContent(message, smallMessage, content) : ''}
       </div>
     );
   }
