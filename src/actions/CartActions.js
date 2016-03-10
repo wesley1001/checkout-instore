@@ -180,9 +180,14 @@ class CartActions {
   setVendor() {
     this.dispatch();
     const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
-    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+    const userData = flux.getStore('VendorStore').getState('vendor').get('user');
 
-    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId}).then((response) => {
+    const marketingData = {
+      utmSource: userData.id,
+      utmiCampaign: userData.store
+    };
+
+    Fetcher.setMarketingData(orderFormId, marketingData).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao atribuir a venda ao vendedor');
@@ -192,9 +197,15 @@ class CartActions {
   setClientCouponDocumentId(cpf) {
     this.dispatch();
     const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
-    const vendorId = flux.getStore('VendorStore').getState('vendor').get('user').id;
+    const userData = flux.getStore('VendorStore').getState('vendor').get('user');
 
-    Fetcher.setMarketingData(orderFormId, {utmSource:vendorId, utmCampaign:cpf}).then((response) => {
+    const marketingData = {
+      utmSource: userData.id,
+      utmiCampaign: userData.store,
+      utmCampaign:cpf
+    };
+
+    Fetcher.setMarketingData(orderFormId, marketingData).then((response) => {
       this.actions.orderFormSuccess.defer(response.data);
     }).catch(() => {
       this.actions.requestFailed.defer('Ocorreu um erro ao atribuir o cpf na nota');
