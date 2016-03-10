@@ -47,7 +47,7 @@ export default class Loader extends React.Component {
       );
     }
 
-    if(this.state.seconds > 1){
+    if(this.state.seconds >= this.props.waitToShow){
       content = (
         <div id="loaderContent" className="background">
           <div className="wrapper">
