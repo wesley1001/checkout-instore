@@ -16,7 +16,7 @@ export default class VendorLogoutPage extends React.Component {
   render() {
     return (
       <div className="VendorLogoutPage component">
-        <Loader loading={true} />
+        <Loader loading={true} waitToShow={0} />
       </div>
     );
   }
