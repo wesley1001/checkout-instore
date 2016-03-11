@@ -64,8 +64,8 @@ export default class Notifier extends React.Component {
     let error = cart.get('error') || checkout.get('error') || vendor.get('error');
     let message = cart.get('message');
 
-    let errorContent = error ? (<span className="error container">{error}</span>) : '';
-    let messageContent = !error && message ? (<span className="message container">{message}</span>) : '';
+    let errorContent = error ? (<span className="error text">{error}</span>) : '';
+    let messageContent = !error && message ? (<span className="message text">{message}</span>) : '';
 
     let content = (
       <div id="notifierContent" className="background">
