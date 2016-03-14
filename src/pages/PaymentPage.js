@@ -8,7 +8,7 @@ import Loader from 'components/GeneralLoader';
 import PaymentForm from 'components/PaymentForm';
 import UserInfo from 'components/UserInfo';
 
-export default class CartPage extends React.Component {
+export default class PaymentPage extends React.Component {
   constructor(props) {
     super(props);
 
