@@ -44,6 +44,7 @@ const pageHandlers = {
   '/': [hasCredentials, clearCartStore, clearCheckoutStore, clearOrderFormCookie, getOrderForm],
   '/shop': [hasCredentials, getOrderForm],
   '/cart': [hasCredentials, getOrderForm],
+  '/payment': [hasCredentials, getOrderForm],
   '/orderplaced': [hasCredentials]
 }
 
