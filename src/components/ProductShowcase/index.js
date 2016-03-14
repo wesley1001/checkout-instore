@@ -52,11 +52,6 @@ export default class ProductShowcase extends React.Component {
     return (
       <section className="ProductShowcase component">
         <OrderHeader />
-        {
-          this.state.checkout.get('typingBarcode') ? '' :
-          <button className="btn btn-default btn-lg type-button" onClick={this.showsBarcodeType}>Digitar código do produto</button>
-        }
-        {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader /> : ''}
 
         <section>
           <ProductList
@@ -64,6 +59,11 @@ export default class ProductShowcase extends React.Component {
             orderFormId={orderFormId}
             history={history}
           />
+          {
+            this.state.checkout.get('typingBarcode') ? '' :
+            <button className="btn btn-default btn-lg type-button" onClick={this.showsBarcodeType}>Digitar código do produto</button>
+          }
+          {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader /> : ''}
 
         </section>
       </section>
