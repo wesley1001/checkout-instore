@@ -5,7 +5,7 @@ import App from './components/App';
 
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
-import CartPage from './pages/CartPage';
+import CartPage from './pages/CartPage/CartPage';
 import OrderPlaced from './pages/OrderPlaced';
 import VendorLoginPage from './pages/VendorLoginPage/VendorLoginPage';
 import VendorLogoutPage from './pages/VendorLogoutPage';
