@@ -12,7 +12,7 @@ import ProductShowcase from 'components/ProductShowcase';
 import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
 
-import './index.less';
+import 'styles/cartpage.less';
 
 export default class CartPage extends React.Component {
   constructor(props) {

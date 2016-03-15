@@ -7,7 +7,7 @@ import VendorAuthentication from 'components/VendorAuthentication';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
 
-import 'pages/VendorLoginPage/VendorLoginPage.less';
+import 'styles/vendorloginpage.less';
 
 export default class VendorLogin extends React.Component {
   constructor(props) {
