@@ -6,11 +6,13 @@ import CartStore from 'stores/CartStore';
 import VendorStore from 'stores/VendorStore';
 import CookieHelper from 'utils/CookieHelper';
 import CartActions from 'actions/CartActions';
-import VendorActions from 'actions/VendorActions';
+import CheckoutActions from 'actions/CheckoutActions';
 import BarcodeReader from 'components/BarcodeReader';
 import ProductShowcase from 'components/ProductShowcase';
 import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
+import TypeBarcodeReader from 'components/TypeBarcodeReader';
+
 
 import 'styles/cartpage.less';
 
@@ -64,6 +66,11 @@ export default class CartPage extends React.Component {
     this.setState({vendor: state});
   }
 
+  showsBarcodeType() {
+    CheckoutActions.showTypeBarReaderForm();
+    CheckoutActions.hideTypeEmailForm();
+  }
+
   render() {
     const {cart, checkout, vendor, orderFormId} = this.state;
     const orderForm = cart.get('orderForm');
@@ -76,8 +83,12 @@ export default class CartPage extends React.Component {
 
         {orderForm ?
           <div>
-            <header>
-              <UserInfo email={checkout.get('customerEmail')} />
+            <header className="cartHeader">
+            {
+              checkout.get('typingBarcode') ? '' :
+              <a className="type-button" onClick={this.showsBarcodeType}>Código de barras danificado?</a>
+            }
+            {checkout.get('typingBarcode') ? <TypeBarcodeReader /> : ''}
             </header>
 
             <BarcodeReader orderForm={orderForm} searchingProduct={checkout.get('readingBarcode')} tradePolicy={tradePolicy}>
