@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react';
+import './index.less';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CheckoutActions from 'actions/CheckoutActions';
+import pinpad from 'assets/images/Pinpad_Bip.svg';
 
 import ProductList from 'components/ProductList';
 import OrderHeader from 'components/OrderHeader';
