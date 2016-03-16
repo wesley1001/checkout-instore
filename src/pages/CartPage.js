@@ -86,7 +86,7 @@ export default class CartPage extends React.Component {
             <header className="cartHeader">
             {
               checkout.get('typingBarcode') ? '' :
-              <a className="type-button" onClick={this.showsBarcodeType}>Código de barras danificado?</a>
+              <a className="type-button" onClick={this.showsBarcodeType}>Digitar código do produto</a>
             }
             {checkout.get('typingBarcode') ? <TypeBarcodeReader /> : ''}
             </header>
