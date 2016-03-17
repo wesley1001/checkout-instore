@@ -1,14 +1,12 @@
 import React, {PropTypes} from 'react';
+import './index.less';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CheckoutActions from 'actions/CheckoutActions';
+import pinpad from 'assets/images/Pinpad_Bip.svg';
 
 import ProductList from 'components/ProductList';
 import OrderHeader from 'components/OrderHeader';
-import TypeBarcodeReaderShowButton from 'components/TypeBarcodeReaderShowButton';
-import TypeBarcodeReader from 'components/TypeBarcodeReader';
-
-import './index.less';
 
 export default class ProductShowcase extends React.Component {
   static propTypes = {
@@ -23,27 +21,17 @@ export default class ProductShowcase extends React.Component {
     super(props);
 
     this.state = {
-      checkout: CheckoutStore.getState()
+      showNotification: true
     };
-
-    this.onCheckoutChange = this.onCheckoutChange.bind(this);
   }
 
-  onCheckoutChange(state) {
-    this.setState({checkout: state});
+  componentWillReceiveProps(nextProps){
+    if(nextProps.products.length > 1)
+      this.setState({showNotification: false});
   }
 
-  componentDidMount() {
-    CheckoutStore.listen(this.onCheckoutChange);
-  }
-
-  componentWillUnmount() {
-    CheckoutStore.unlisten(this.onCheckoutChange);
-  }
-
-  showsBarcodeType() {
-    CheckoutActions.showTypeBarReaderForm();
-    CheckoutActions.hideTypeEmailForm();
+  handleDismiss(){
+    this.setState({showNotification: false});
   }
 
   render() {
@@ -52,19 +40,26 @@ export default class ProductShowcase extends React.Component {
     return (
       <section className="ProductShowcase component">
         <OrderHeader />
-
+        {this.state.showNotification ?
+          <div>
+            <div className="alert alert-info info">
+              <div className="img-wrapper">
+                <img className="image" src={pinpad}/>
+              </div>
+              <div className="text">Utilize um dos botões laterais<br/>para adicionar novos produtos</div>
+              <div className="dismiss">
+                <a className="glyphicon glyphicon-remove remove-icon" onClick={this.handleDismiss.bind(this)}>
+                </a>
+              </div>
+            </div>
+          </div>
+        : ''}
         <section>
           <ProductList
             products={products}
             orderFormId={orderFormId}
             history={history}
           />
-          {
-            this.state.checkout.get('typingBarcode') ? '' :
-            <button className="btn btn-default btn-lg type-button" onClick={this.showsBarcodeType}>Digitar código do produto</button>
-          }
-          {this.state.checkout.get('typingBarcode') ? <TypeBarcodeReader /> : ''}
-
         </section>
       </section>
     );
