@@ -26,7 +26,7 @@ class VendorActions {
     this.dispatch();
 
     if (!id) {
-      this.actions.SetVendorDataFail({
+      this.actions.SetInstoreDataFail({
         message: `Você deve digitar ao menos 1 caractere de identificação`
       });
       return;
@@ -44,7 +44,7 @@ class VendorActions {
         this.actions.SetInstoreDataSuccess.defer(instoreData);
       });
     }, (err) => {
-      this.actions.SetVendorDataFail({message: err.message});
+      this.actions.SetInstoreDataFail({message: err.message});
     });
   }
 
