@@ -11,6 +11,7 @@ class CheckoutStore {
 
     this.state = Immutable.Map({
       customerEmail: '',
+      customerDocument: '',
       selectedPaymentId: 0,
       selectedInstallment: 0,
       sku: '',
@@ -26,9 +27,24 @@ class CheckoutStore {
     });
   }
 
-  onExecuteSetClientData(email) {
-    this.setState(this.state.set('customerEmail', email));
+  onUpdateClientDocument(cpf){
+    this.setState(this.state.set('customerDocument', cpf));
+  }
+
+  onSetClientData() {
     this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetAnonymousData(){
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetClientDataSuccess(email){
+    if(email){
+      this.setState(this.state.set('customerEmail', email));
+    }
+    this.setState(this.state.set('loading', false));
   }
 
   onSetClientDataFailed(errorMessage) {
@@ -99,13 +115,23 @@ class CheckoutStore {
     this.setState(this.state.set('loading', false));
   }
 
-
-
   onGetOrderGroupDataFail(err) {
     this.setState(this.state.set('orderGroup', undefined));
     this.setState(this.state.set('orderPlacedError', true));
-    this.setState(this.state.set('error', err));
+    if(err.status == 403){
+      this.setState(this.state.set('error', 'Acesso Negado'));
+    }
+    else if(err.status == 500){
+      this.setState(this.state.set('error', 'Houve um erro ao carregar a página.'));
+    }
+    else{
+      this.setState(this.state.set('error', 'Houve um erro ao carregar a página. \n HTTP Status: ' + err.status));
+    }
     this.setState(this.state.set('loading', false));
+  }
+
+  onDismissCurrentNotifications(){
+    this.setState(this.state.set('error', ''));
   }
 }
 

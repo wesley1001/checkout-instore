@@ -12,13 +12,16 @@ export default class Authentication extends React.Component {
   }
 
   handleAnonymous() {
-    CheckoutActions.setClientData({email: '', orderForm: this.props.orderForm.orderFormId});
+    CheckoutActions.setAnonymousData();
   }
 
   render() {
     return (
-      <div className="UserAnonymous">
-        <Link className="btn btn-default btn-lg btn-block btn-bottom" to="/shop" onClick={this.handleAnonymous}>Continuar sem identificação</Link>
+      <div className="UserAnonymous container">
+        <div className="text">ou</div>
+        <div className="container">
+          <Link className="btn btn-default btn-block" to="/shop" onClick={this.handleAnonymous}>Continuar sem identificação</Link>
+        </div>
       </div>
     );
   }

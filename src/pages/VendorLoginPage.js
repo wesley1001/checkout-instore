@@ -6,9 +6,8 @@ import VendorActions from 'actions/VendorActions';
 import VendorAuthentication from 'components/VendorAuthentication';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
-import ErrorNotifier from 'components/ErrorNotifier';
 
-import 'pages/VendorLoginPage/VendorLoginPage.less';
+import 'styles/vendorloginpage.less';
 
 export default class VendorLogin extends React.Component {
   constructor(props) {
@@ -49,8 +48,6 @@ export default class VendorLogin extends React.Component {
         <div className="email full-pannel full-pannel-show">
           <VendorAuthentication history={this.props.history}/>
         </div>
-
-        <ErrorNotifier message={vendor.get('error')} />
       </div>
     );
   }

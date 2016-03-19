@@ -10,7 +10,6 @@ import ScanIndicator from 'components/ScanIndicator';
 import OrderHeader from 'components/OrderHeader';
 import Loader from 'components/GeneralLoader';
 import UserInfo from 'components/UserInfo';
-import ErrorNotifier from 'components/ErrorNotifier';
 
 export default class ShopPage extends React.Component {
   constructor(props) {
@@ -22,39 +21,17 @@ export default class ShopPage extends React.Component {
       vendor: VendorStore.getState()
     };
 
-    if(!CartStore.getState().get('orderForm')){
-      this.props.history.pushState(null, '/');
-    }
-
     this.onCartChange = this.onCartChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onVendorChange = this.onVendorChange.bind(this);
   }
 
   componentDidMount() {
-    const shippingRequest = {
-        addressType: 'residental',
-        receiverName: 'cliente',
-        addressId: '-1387193636431',
-        postalCode: '02055-000',
-        city: 'Sao Paulo',
-        state: 'SP',
-        country: 'BRA',
-        street: 'Rua Jose Bernardo Pinto',
-        number: '333',
-        neighborhood: 'Vila Guilherme',
-        complement: 'Estande Loja do Futuro',
-        reference: null,
-        geoCoordinates: []
-    };
-
-    const orderForm = this.state.cart.get('orderForm');
-
-    CartActions.setShipping.defer({orderFormId: orderForm ? orderForm.orderFormId : undefined, address: shippingRequest});
-
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
+
+    this.setCartInfo();
   }
 
   componentWillUnmount() {
@@ -66,8 +43,28 @@ export default class ShopPage extends React.Component {
   onCartChange(state) {
     this.setState({cart: state});
 
-    if(state.get('orderForm').items && state.get('orderForm').items.length > 0) {
-      this.props.history.pushState(null, '/cart');
+    this.setCartInfo();
+  }
+
+  setCartInfo() {
+    const orderForm= this.state.cart.get('orderForm');
+
+    if(orderForm && orderForm.items) {
+      const loading = this.state.cart.get('loading');
+      const mktData = orderForm.marketingData;
+      const isCheckedIn = orderForm.isCheckedIn;
+
+      if(!loading) {
+        if(mktData == null || !mktData.utmSource) {
+          CartActions.setVendor.defer();
+        }
+        else if(isCheckedIn !== true) {
+          CartActions.checkIn.defer();
+        }
+        else if(orderForm.items.length > 0) {
+          this.props.history.pushState(null, '/cart');
+        }
+      }
     }
   }
 
@@ -81,9 +78,11 @@ export default class ShopPage extends React.Component {
 
   render() {
     const {cart, checkout, vendor} = this.state;
+    const user = vendor.get('user');
+    const store = vendor.get('store');
 
-    const vendorId = vendor.get('user').id;
-    const tradePolicy = vendor.get('store').tradePolicy;
+    const vendorId = user ? user.id : null;
+    const tradePolicy = store ? store.tradePolicy : null;
 
     return (
       <div className="content">
@@ -100,7 +99,6 @@ export default class ShopPage extends React.Component {
           vendor={vendorId}>
           <OrderHeader />
           <ScanIndicator />
-          <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
         </BarcodeReader>
       </div>
     );

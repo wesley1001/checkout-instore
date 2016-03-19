@@ -2,7 +2,9 @@ import React from 'react';
 
 import InstallmentOption from 'components/InstallmentOption';
 import CartActions from 'actions/CartActions';
+import CartStore from 'stores/CartStore';
 import CheckoutActions from 'actions/CheckoutActions';
+import CheckoutStore from 'stores/CheckoutStore';
 import ProductHelper from 'utils/ProductHelper';
 
 import './index.less';
@@ -20,26 +22,47 @@ export default class InstallmentList extends React.Component {
     super(props);
 
     this.state = {
-      cpf: '',
+      checkout: CheckoutStore.getState(),
+      cart: CartStore.getState(),
       isCpfValid: true
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onCheckoutChange = this.onCheckoutChange.bind(this);
+    this.onCartChange = this.onCartChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleConfirmPayment = this.handleConfirmPayment.bind(this);
     this.composePaymentOptions = this.composePaymentOptions.bind(this);
   }
 
+  componentDidMount() {
+    CheckoutStore.listen(this.onCheckoutChange);
+    CartStore.listen(this.onCartChange);
+  }
+
+  componentWillUnmount() {
+    CheckoutStore.unlisten(this.onCheckoutChange);
+    CartStore.unlisten(this.onCartChange);
+  }
+
+  onCheckoutChange(state) {
+    this.setState({checkout: state});
+  }
+
+  onCartChange(state) {
+    this.setState({cart: state});
+  }
+
   handleChange(e) {
     if(e.target.value.length === 15 ) return;
 
-    if(this.state.cpf.length < e.target.value.length && (e.target.value.length === 3 || e.target.value.length === 7)) {
-      this.setState({cpf: e.target.value + '.'});
-    } else if(this.state.cpf.length < e.target.value.length && e.target.value.length === 11) {
-      this.setState({cpf: e.target.value + '-'});
+    if(this.state.cart.get('couponDocument').length < e.target.value.length && (e.target.value.length === 3 || e.target.value.length === 7)) {
+      CartActions.updateCouponDocument(e.target.value + '.');
+    } else if(this.state.cart.get('couponDocument').length < e.target.value.length && e.target.value.length === 11) {
+      CartActions.updateCouponDocument(e.target.value + '-');
     } else {
-      this.setState({cpf: e.target.value});
+      CartActions.updateCouponDocument(e.target.value);
     }
   }
 
@@ -66,7 +89,10 @@ export default class InstallmentList extends React.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    CheckoutActions.setClientData.defer({cpf: this.state.cpf, email: this.props.email, orderForm: this.props.orderFormId});
+    const couponDocument = this.state.cart.get('couponDocument');
+    if(couponDocument){
+      CartActions.setClientCouponDocumentId.defer(couponDocument);
+    }
 
     if(this.props.selectedInstallment !== 0) {
       const {selectedPaymentId, selectedInstallment, orderFormId, price} = this.props;
@@ -121,19 +147,19 @@ export default class InstallmentList extends React.Component {
               className="form-control"
               type="tel"
               placeholder="999.999.999-99"
-              value={this.state.cpf}
+              value={this.state.cart.get('couponDocument')}
               onChange={this.handleChange}
               onKeyDown={this.handleKeyDown}
               onKeyUp={this.handleKeyUp}
             />
-            { !this.state.isCpfValid && this.state.cpf.length === 14 && <small>CPF Inválido</small> }
+            { !this.state.isCpfValid && this.state.cart.get('couponDocument').length === 14 && <small>CPF Inválido</small> }
           </p>
           <p className="confirm">
             <button ref="pinpadCall"
               className="btn btn-success btn-lg btn-block"
               onClick={this.handleConfirmPayment}
               disabled={!this.state.isCpfValid}>
-              { this.state.cpf.length > 0 ? 'Confirmar pagamento' : 'Confirmar sem CPF' }
+              { this.state.cart.get('couponDocument').length > 0 ? 'Confirmar pagamento' : 'Confirmar sem CPF' }
             </button>
           </p>
         </form>

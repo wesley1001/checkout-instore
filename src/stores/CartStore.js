@@ -1,8 +1,8 @@
 import flux from '../flux';
 import Immutable from 'immutable';
 import immutable from 'alt/utils/ImmutableUtil';
-
 import CartActions from 'actions/CartActions';
+import MessageUtils from 'utils/MessageUtils';
 
 @immutable
 class CartStore {
@@ -12,13 +12,12 @@ class CartStore {
     this.state = Immutable.Map({
       orderForm: undefined,
 
-      addLoading: false,
-      updateLoading: false,
+      couponDocument: '',
+
       loading: false,
 
-      addError: '',
-      updateError: '',
       error: '',
+      message: '',
 
       paymentObj: {},
       paymentUrl: '',
@@ -28,54 +27,43 @@ class CartStore {
 
   onGetOrderForm() {
     this.setState(this.state.set('error', ''));
-    this.setState(this.state.set('addError', ''));
-    this.setState(this.state.set('updateError', ''));
+    this.setState(this.state.set('loading', true));
   }
 
   onOrderFormSuccess(orderForm) {
     this.setState(this.state.set('orderForm', orderForm));
-    this.setState(this.state.set('addLoading', false));
-    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('loading', false));
+    this.setState(this.state.set('message', MessageUtils.getFirstMessageText(orderForm)));
   }
 
   onOrderFormFailed(errorMessage) {
     this.setState(this.state.set('orderForm', undefined));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
+    this.setState(this.state.set('message', ''));
   }
 
-  onExecuteAddToCart() {
-    this.setState(this.state.set('addLoading', true));
+  onAddToCart() {
     this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('addError', ''));
     this.setState(this.state.set('error', ''));
   }
 
   onAddFailed(errorMessage) {
-    this.setState(this.state.set('addLoading', false));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onExecuteUpdateCart() {
-    this.setState(this.state.set('updateLoading', true));
+  onUpdateCart() {
     this.setState(this.state.set('loading', true));
-    this.setState(this.state.set('updateError', ''));
     this.setState(this.state.set('error', ''));
   }
 
   onUpdateFailed(errorMessage) {
-    this.setState(this.state.set('updateLoading', false));
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
   }
 
-  onExecuteSetShipping() {
-    this.setState(this.state.set('error', ''));
-  }
-
-  onExecuteSetCheckedIn() {
+  onExecuteSetCheckIn() {
     this.setState(this.state.set('error', ''));
   }
 
@@ -92,6 +80,8 @@ class CartStore {
   onTransactionSuccess(orderForm) {
     const selectedPaymentId = orderForm.paymentData.payments[0].paymentSystem;
     const selectedPayment = orderForm.paymentData.paymentSystems.filter(item => item.id.toString() === selectedPaymentId.toString())[0];
+    const merchantName = (orderForm.merchantTransactions && orderForm.merchantTransactions[0]) ? orderForm.merchantTransactions[0].merchantName : null;
+
     const data = {
       paymentsArray: [{
         paymentSystem: selectedPaymentId,
@@ -102,12 +92,12 @@ class CartStore {
         installmentsValue: orderForm.paymentData.payments[0].merchantSellerPayments[0].installmentValue,
         value: orderForm.paymentData.payments[0].value,
         referenceValue: orderForm.paymentData.payments[0].referenceValue,
-        id: orderForm.merchantTransactions[0].merchantName,
+        id: merchantName,
         interestRate: 0,
         installmentValue: orderForm.paymentData.payments[0].merchantSellerPayments[0].installmentValue,
         transaction: {
           id: orderForm.merchantTransactions[0].transactionId,
-          merchantName: orderForm.merchantTransactions[0].merchantName
+          merchantName: merchantName
         },
         currencyCode: 'BRL'
       }],
@@ -122,6 +112,25 @@ class CartStore {
   onRequestFailed(errorMessage) {
     this.setState(this.state.set('loading', false));
     this.setState(this.state.set('error', errorMessage));
+  }
+
+  onDismissCurrentNotifications(){
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('message', ''));
+  }
+
+  onCheckIn() {
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
+  }
+
+  onSetVendor() {
+    this.setState(this.state.set('error', ''));
+    this.setState(this.state.set('loading', true));
+  }
+
+  onUpdateCouponDocument(cpf){
+    this.setState(this.state.set('couponDocument', cpf));
   }
 }
 

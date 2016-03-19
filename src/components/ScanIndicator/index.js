@@ -30,9 +30,7 @@ export default class ScanIndicator extends React.Component {
   }
 
   render() {
-    let showTypeBarReaderForm = this.state.checkout.get('showTypeBarReaderForm');
     let alternativeText;
-
     {this.state.checkout.get('typingBarcode') ?
       alternativeText = (<div className="text" id="ScanIndicatorForm"><br/>ou<br/><br/></div>) :
       alternativeText = null;
@@ -46,7 +44,8 @@ export default class ScanIndicator extends React.Component {
         <div className="image-wrapper">
           <img className="image" src={pinpad}/>
         </div>
-        {this.state.checkout.get('typingBarcode') ? '' : <TypeBarcodeReaderShowButton/>}
+        {this.state.checkout.get('typingBarcode') ? '' :
+        <div><div className="text">ou</div><TypeBarcodeReaderShowButton/></div>}
       </div>
     );
   }

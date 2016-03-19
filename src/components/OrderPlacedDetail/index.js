@@ -3,7 +3,6 @@ import React from 'react';
 import OrderPlacedPaymentDetail from 'components/OrderPlacedPaymentDetail';
 
 import check from 'assets/images/icon-check.svg';
-import './index.less';
 
 export default class OrderPlacedDetail extends React.Component {
   static defaultProps = {
@@ -30,6 +29,7 @@ export default class OrderPlacedDetail extends React.Component {
     const { order } = this.props;
 
     const clientProfile = order.clientProfileData;
+    const document = clientProfile.document;
 
     return (
       <div className="OrderPlacedDetail component">
@@ -42,17 +42,17 @@ export default class OrderPlacedDetail extends React.Component {
           <OrderPlacedPaymentDetail paymentData={order.paymentData} />
 
           <div className="receipts">
-            { clientProfile.email.endsWith('@vtex-instore.com') ?
+            { clientProfile.email.indexOf('@vtex-instore.com') > 0 ?
               <p>E-mail do cliente não foi fornecido.</p> :
               <p>Comprovantes enviados para <br/><strong>
               {clientProfile.email}
               </strong></p>
             }
             <div>
-              { clientProfile.document === '' ?
+              { document ?
+                <p><strong>CPF</strong>: {`${document.slice(0, 3)}.${document.slice(3, 6)}.${document.slice(6, 9)}-${document.slice(9,11)}`}</p>
+                :
                 ''
-                 :
-                <p><strong>CPF</strong>: {`${clientProfile.document.slice(0, 3)}.${clientProfile.document.slice(3, 6)}.${clientProfile.document.slice(6, 9)}-${clientProfile.document.slice(9,11)}`}</p>
               }
             </div>
             <p>

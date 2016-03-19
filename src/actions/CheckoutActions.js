@@ -1,36 +1,42 @@
 import flux from '../flux';
-
 import Fetcher from 'utils/Fetcher';
-import requestCache from 'utils/Cache';
 
 class CheckoutActions {
-  setClientData(data) {
-    if(!data.orderForm) {
-      Fetcher.getOrderForm().then((response) => {
-        data.orderForm = response.data.orderForm;
-        this.actions.executeSetClientData.defer(data);
+
+  setClientData(email) {
+    this.dispatch();
+
+    Fetcher.getPublicProfile(email).then((response) => {
+      const isNewUser = !response.data.userProfileId;
+      const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+
+      Fetcher.setClientProfile(orderFormId, email, isNewUser).then(() => {
+        this.actions.setClientDataSuccess.defer(email);
       }).catch(() => {
-        this.actions.orderFormFailed.defer('Ocorreu um erro ao inicializar o carrinho');
+        this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
       });
-    } else {
-      this.actions.executeSetClientData.defer(data);
-    }
-  }
-
-  executeSetClientData(data) {
-    this.dispatch(data.email);
-
-    data.email = data.email || Date.now().toString() + '@vtex-instore.com';
-
-    Fetcher.setClientProfile(data.orderForm, data.email, data.cpf).then(() => {
-      this.actions.setClientDataSuccess.defer();
-    }).catch(() => {
-      this.actions.setClientDataFailed.defer('Ocorreu um erro ao setar os dados do cliente');
     });
   }
 
-  setClientDataSuccess() {
+  setAnonymousData() {
     this.dispatch();
+
+    const generatedEmail = Date.now().toString() + '@vtex-instore.com';
+    const orderFormId = flux.getStore('CartStore').getState('orderForm').get('orderForm').orderFormId;
+
+    Fetcher.setDefaultClientProfile(orderFormId, generatedEmail).then(() => {
+      this.actions.setClientDataSuccess.defer();
+    }).catch(() => {
+      this.actions.setClientDataFail.defer('Ocorreu um erro ao setar os dados do cliente');
+    });
+  }
+
+  updateClientDocument(cpf){
+    this.dispatch(cpf);
+  }
+
+  setClientDataSuccess(email) {
+    this.dispatch(email);
   }
 
   setClientDataFailed(errorMessage) {
@@ -41,20 +47,14 @@ class CheckoutActions {
     this.dispatch();
   }
 
-  findProduct(code) {
+  findProduct(ean) {
     this.dispatch();
 
-    const sku = requestCache.get(code);
-    if(!sku) {
-      Fetcher.getProduct(code).then((response) => {
-        requestCache.put(code, response.data.Id);
-        this.actions.readSuccess.defer(response.data.Id);
-      }).catch((err) => {
-        this.actions.readFailed.defer('Produto não encontrado');
-      });
-    } else {
+    Fetcher.getSKUByEAN(ean).then((sku) => {
       this.actions.readSuccess.defer(sku);
-    }
+    }).catch((err) => {
+      this.actions.readFailed.defer('Produto não encontrado');
+    });
   }
 
   readSuccess(skuId) {
@@ -97,17 +97,16 @@ class CheckoutActions {
     this.dispatch();
     Fetcher.getOrderGroup(orderGroup).then((response) => {
       if(response.length === 0) {
-        this.actions.getOrderGroupDataFail({err: 'order not found'});
+        this.actions.getOrderGroupDataFail.defer({err: 'order not found'});
       }
       else {
-        this.actions.getOrderGroupDataSuccess(response[0]);
+        this.actions.getOrderGroupDataSuccess.defer(response[0]);
       }
     }, (err) => {
-      this.actions.getOrderGroupDataFail(err);
+      console.log('err: ', err);
+      this.actions.getOrderGroupDataFail.defer(err);
     });
   }
-
-
 
   getOrderGroupDataSuccess(data) {
     this.dispatch(data);
@@ -115,6 +114,10 @@ class CheckoutActions {
 
   getOrderGroupDataFail(err) {
     this.dispatch(err);
+  }
+
+  dismissCurrentNotifications(){
+    this.dispatch();
   }
 }
 

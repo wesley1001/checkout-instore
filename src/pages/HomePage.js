@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookie';
 
 import CheckoutStore from 'stores/CheckoutStore';
 import CartStore from 'stores/CartStore';
@@ -12,7 +11,7 @@ import UserAuthentication from 'components/UserAuthentication';
 import UserAnonymous from 'components/UserAnonymous';
 import Loader from 'components/GeneralLoader';
 import Footer from 'components/GeneralFooter';
-import ErrorNotifier from 'components/ErrorNotifier';
+import CookieHelper from 'utils/CookieHelper';
 
 import client from 'assets/images/client.svg';
 
@@ -28,41 +27,15 @@ export default class HomePage extends React.Component {
       vendor: VendorStore.getState()
     };
 
-    cookie.remove('checkout.vtex.com');
-
     this.onVendorChange = this.onVendorChange.bind(this);
     this.onCheckoutChange = this.onCheckoutChange.bind(this);
     this.onCartChange = this.onCartChange.bind(this);
-  }
-
-  componentWillMount() {
-    if(!this.state.vendor.get('logged')) {
-      let vendorData = window.localStorage.getItem('vendorData');
-
-      if(vendorData) {
-        vendorData = JSON.parse(vendorData);
-        VendorActions.SetVendorDataSuccess(vendorData);
-      } else  {
-        this.props.history.pushState(null, '/vendor/login');
-      }
-    }
   }
 
   componentDidMount() {
     CheckoutStore.listen(this.onCheckoutChange);
     CartStore.listen(this.onCartChange);
     VendorStore.listen(this.onVendorChange);
-
-    const orderForm = this.state.cart.get('orderForm');
-
-    if(!orderForm) {
-      CartActions.getOrderForm.defer();
-    }
-
-    const storeData = this.state.vendor.get('store');
-    if(storeData) {
-      VendorActions.GetStoreInfo.defer(storeData.store);
-    }
   }
 
   componentWillUnmount() {
@@ -83,16 +56,11 @@ export default class HomePage extends React.Component {
     this.setState({cart: state});
   }
 
-  componentDidUpdate() {
-    const orderForm = this.state.cart.get('orderForm');
-
-    if(orderForm) {
-      CartActions.clearCart.defer(orderForm);
-    }
-  }
-
   render() {
     const {cart, checkout} = this.state;
+    if(!this.state.cart.get('orderForm')){
+      return null;
+    }
     return (
       <div className="HomePage component">
         <Loader loading={cart.get('loading') || checkout.get('loading')} />
@@ -109,15 +77,17 @@ export default class HomePage extends React.Component {
             </h2>
 
             <div className="container">
-              <UserAuthentication orderForm={cart.get('orderForm')} history={this.props.history}/>
+              <UserAuthentication
+                orderForm={cart.get('orderForm')}
+                history={this.props.history}
+                customerEmail={checkout.get('customerEmail')} />
+
               <div className="help-block text">Ao identificar o cliente, ele terá a vantagem de receber o comprovante por email.</div>
             </div>
           </div>
         </div>
 
         <UserAnonymous orderForm={cart.get('orderForm')} history={this.props.history}/>
-
-        <ErrorNotifier message={cart.get('error') || checkout.get('error')} />
         <Footer />
       </div>
     );
